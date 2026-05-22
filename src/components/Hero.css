@@ -1,0 +1,385 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400&display=swap');
+
+/* ════════════════════════════════════════
+   STICKY SCROLL CONTAINER — 300vh
+   ════════════════════════════════════════ */
+.hero-sticky-container {
+  position: relative;
+  height: 300vh;
+}
+
+/* ════════════════════════════════════════
+   HERO SECTION
+   ════════════════════════════════════════ */
+.hero-section {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+/* ════════════════════════════════════════
+   VIGNETTE — 아주 연하게
+   ════════════════════════════════════════ */
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 80% at 50% 50%, transparent 35%, rgba(180, 160, 130, 0.28) 100%),
+    linear-gradient(to bottom, rgba(255,250,240,0.12) 0%, transparent 35%, transparent 65%, rgba(30,22,12,0.30) 100%);
+}
+
+/* ════════════════════════════════════════
+   LARGE BACKGROUND TYPOGRAPHY
+   ════════════════════════════════════════ */
+.hero-bg-text {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.hero-bg-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(88px, 15vw, 210px);
+  letter-spacing: 0.28em;
+  line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(60, 45, 30, 0.09);
+  white-space: nowrap;
+  user-select: none;
+  transition: -webkit-text-stroke-color 1.4s ease;
+}
+
+.hero--bloom .hero-bg-title {
+  -webkit-text-stroke: 1px rgba(180, 110, 115, 0.11);
+}
+
+.hero-bg-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: clamp(10px, 1.4vw, 18px);
+  letter-spacing: 0.55em;
+  color: rgba(80, 60, 40, 0.07);
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-top: 14px;
+  user-select: none;
+}
+
+/* ════════════════════════════════════════
+   3D FLOWER — z-index 2
+   ════════════════════════════════════════ */
+.hero-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* glow은 Flower3D 내부 .peony-glow로 처리 */
+
+/* ════════════════════════════════════════
+   FOREGROUND TEXT — z-index 3
+   ════════════════════════════════════════ */
+.hero-content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: clamp(52px, 9vh, 88px);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: clamp(9px, 1vw, 12px);
+  letter-spacing: 0.45em;
+  color: rgba(100, 140, 75, 0.70);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  transition: color 1.2s ease;
+}
+
+.hero--bloom .hero-eyebrow {
+  color: rgba(185, 105, 115, 0.65);
+}
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(28px, 5vw, 66px);
+  letter-spacing: 0.38em;
+  color: #2a1e18;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.hero-role {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: clamp(9px, 1.1vw, 13px);
+  letter-spacing: 0.42em;
+  color: rgba(80, 60, 45, 0.38);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(13px, 1.6vw, 20px);
+  letter-spacing: 0.05em;
+  color: rgba(90, 68, 50, 0.50);
+  margin: 0;
+  animation: taglineFade 0.7s ease;
+}
+
+@keyframes taglineFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════════════
+   NAVIGATION — z-index 4
+   ════════════════════════════════════════ */
+.hero-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(22px, 4vh, 42px) clamp(24px, 5vw, 62px);
+  pointer-events: all;
+}
+
+.hero-nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: 0.38em;
+  color: rgba(50, 36, 24, 0.72);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.hero-nav-logo:hover { color: rgba(30, 20, 12, 0.95); }
+
+.hero-nav-links {
+  display: flex;
+  gap: clamp(24px, 4vw, 50px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-nav-links a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  color: rgba(75, 58, 42, 0.40);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.hero-nav-links a:hover { color: rgba(40, 28, 18, 0.88); }
+
+/* ════════════════════════════════════════
+   BLOOM STAGE INDICATOR — 우하단
+   ════════════════════════════════════════ */
+.hero-stage-indicator {
+  position: absolute;
+  right: clamp(20px, 3.5vw, 48px);
+  bottom: clamp(60px, 10vh, 100px);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  pointer-events: none;
+}
+
+.stage-track {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(160, 130, 110, 0.18);
+  z-index: 0;
+}
+
+.stage-track-fill {
+  width: 100%;
+  background: rgba(195, 120, 130, 0.45);
+  transition: height 0.4s ease;
+}
+
+.stage-step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 0;
+}
+
+.stage-step-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(155, 125, 108, 0.20);
+  border: 1px solid rgba(160, 128, 110, 0.25);
+  transition: background 0.5s ease, transform 0.5s ease, border-color 0.5s ease;
+}
+
+.stage-step.active .stage-step-dot {
+  background: rgba(200, 120, 130, 0.82);
+  border-color: rgba(215, 140, 148, 0.70);
+  transform: scale(1.55);
+  box-shadow: 0 0 8px rgba(200, 115, 128, 0.35);
+}
+
+.stage-step.passed .stage-step-dot {
+  background: rgba(190, 130, 135, 0.42);
+  border-color: rgba(200, 140, 142, 0.38);
+}
+
+.stage-step-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  color: rgba(120, 95, 78, 0.28);
+  text-transform: uppercase;
+  transition: color 0.5s ease;
+}
+
+.stage-step.active .stage-step-label {
+  color: rgba(175, 105, 115, 0.70);
+}
+
+/* ════════════════════════════════════════
+   SIDE LABELS
+   ════════════════════════════════════════ */
+.hero-side-label {
+  position: absolute;
+  z-index: 4;
+  bottom: 50%;
+  pointer-events: none;
+}
+
+.hero-side-label--left {
+  left: clamp(18px, 2.5vw, 38px);
+  writing-mode: vertical-rl;
+  transform: translateY(50%) rotate(180deg);
+}
+
+.hero-side-label--right {
+  right: clamp(18px, 2.5vw, 38px);
+  writing-mode: vertical-rl;
+  transform: translateY(50%);
+}
+
+.hero-side-label span {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  color: rgba(100, 78, 58, 0.20);
+  text-transform: uppercase;
+}
+
+/* ════════════════════════════════════════
+   SCROLL INDICATOR
+   ════════════════════════════════════════ */
+.hero-scroll {
+  position: absolute;
+  bottom: clamp(18px, 3.5vh, 32px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.hero-scroll span {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.38em;
+  color: rgba(100, 78, 58, 0.28);
+  text-transform: uppercase;
+}
+
+.hero-scroll-line {
+  width: 1px;
+  height: 42px;
+  background: linear-gradient(to bottom, rgba(180, 120, 130, 0.45), transparent);
+  animation: scrollPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.35; transform: scaleY(1); }
+  50%       { opacity: 0.80; transform: scaleY(1.18); }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .hero-bg-title {
+    font-size: clamp(54px, 19vw, 88px);
+    letter-spacing: 0.16em;
+  }
+
+  .hero-side-label { display: none; }
+
+  .hero-stage-indicator {
+    right: 14px;
+    bottom: 50px;
+  }
+
+  .hero-nav-links { gap: 20px; }
+
+  .hero-content {
+    padding-bottom: clamp(64px, 13vh, 110px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-nav-links li:nth-child(3),
+  .hero-nav-links li:nth-child(4) {
+    display: none;
+  }
+}
