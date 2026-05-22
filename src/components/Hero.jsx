@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import Flower3D from './Flower3D';
+import PeonyScene from './PeonyScene';
 import './Hero.css';
 
 const STAGES = ['bud', 'opening', 'bloom'];
@@ -66,7 +66,7 @@ export default function Hero() {
 
         {/* 3D 작약꽃 — 중앙 main stage */}
         <div className="hero-3d">
-          <Flower3D stage={stage} scrollProgress={scrollProgress} />
+          <PeonyScene />
         </div>
 
         {/* Navigation */}
