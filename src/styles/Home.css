@@ -1,0 +1,16 @@
+.home-page {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.content > section,
+.content > .hero-sticky-container {
+  min-height: 100vh;
+}
