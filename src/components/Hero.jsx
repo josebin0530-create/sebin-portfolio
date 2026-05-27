@@ -1,124 +1,180 @@
-import { useRef, useState, useEffect } from 'react';
-import PeonyScene from './PeonyScene';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import mainFlower from '../assets/main_flower.png';
+import petalOne from '../assets/flower1.svg';
+import petalTwo from '../assets/flower2.svg';
+import petalThree from '../assets/flower3.svg';
+import petalFour from '../assets/flower4.svg';
+import petalFive from '../assets/flower5.svg';
 import './Hero.css';
 
-const STAGES = ['bud', 'opening', 'bloom'];
+const FULL_TEXT = 'Welcome to My Garden';
+const petals = [petalOne, petalTwo, petalThree, petalFour, petalFive];
 
-const STAGE_CONTENT = {
-  bud: {
-    tagline: 'Every idea begins as a seed.',
-    label: 'Bud',
-    labelKo: '씨앗',
-  },
-  opening: {
-    tagline: 'Growth happens in the quiet.',
-    label: 'Opening',
-    labelKo: '성장',
-  },
-  bloom: {
-    tagline: 'Ideas planted, experiences grown.',
-    label: 'Bloom',
-    labelKo: '개화',
-  },
-};
+const petalLayout = [
+  { left: '19%', size: 62, delay: 0.15, duration: 8.4, drift: -38, rotate: -24 },
+  { left: '34%', size: 48, delay: 1.05, duration: 9.6, drift: 54, rotate: 36 },
+  { left: '49%', size: 58, delay: 1.85, duration: 7.8, drift: -28, rotate: 18 },
+  { left: '62%', size: 46, delay: 2.65, duration: 9.1, drift: 46, rotate: -34 },
+  { left: '75%', size: 54, delay: 3.35, duration: 8.7, drift: -52, rotate: 42 },
+  { left: '28%', size: 42, delay: 4.25, duration: 9.9, drift: 34, rotate: -18 },
+  { left: '57%', size: 50, delay: 5.05, duration: 8.2, drift: -44, rotate: 28 },
+  { left: '68%', size: 40, delay: 5.8, duration: 10.4, drift: 26, rotate: -28 },
+];
 
 export default function Hero() {
   const containerRef = useRef(null);
-  const [stage, setStage] = useState('bud');
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [done, setDone] = useState(false);
+  const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false });
 
   useEffect(() => {
     const handleScroll = () => {
       const el = containerRef.current;
       if (!el) return;
 
-      // top이 음수로 증가 → 스크롤 진행률 0→1
       const totalScrollable = el.offsetHeight - window.innerHeight;
       const scrolled = -el.getBoundingClientRect().top;
-      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
-
-      setScrollProgress(progress);
-
-      if (progress < 0.34)      setStage('bud');
-      else if (progress < 0.68) setStage('opening');
-      else                       setStage('bloom');
+      const progress = totalScrollable > 0 ? scrolled / totalScrollable : 0;
+      setScrollProgress(Math.max(0, Math.min(1, progress)));
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const content = STAGE_CONTENT[stage];
-  const stageIndex = STAGES.indexOf(stage);
+  useEffect(() => {
+    let index = 0;
+    let timer;
+
+    const start = window.setTimeout(() => {
+      timer = window.setInterval(() => {
+        index += 1;
+        setDisplayText(FULL_TEXT.slice(0, index));
+
+        if (index >= FULL_TEXT.length) {
+          window.clearInterval(timer);
+          window.setTimeout(() => setDone(true), 700);
+        }
+      }, 105);
+    }, 320);
+
+    return () => {
+      window.clearTimeout(start);
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  const heroStyle = useMemo(() => {
+    const eased = Math.min(1, scrollProgress / 0.78);
+    const lookDown = Math.min(1, scrollProgress / 0.9);
+    const radius = 22 + eased * 54;
+    const y = -eased * 88;
+    const scaleX = 1 - eased * 0.05;
+    const opacity = Math.max(0, 1 - eased * 1.12);
+    const skyScale = 1.02 + lookDown * 0.24;
+    const skyY = lookDown * -22;
+    const floorScale = 1.25 + lookDown * 0.46;
+    const floorY = 30 - lookDown * 30;
+    const floorOpacity = Math.max(0, Math.min(1, (lookDown - 0.42) / 0.36));
+
+    return {
+      '--hero-radius': `${radius}vw`,
+      '--hero-y': `${y}vh`,
+      '--hero-scale-x': scaleX,
+      '--hero-panel-opacity': opacity,
+      '--sky-scale': skyScale,
+      '--sky-y': `${skyY}vh`,
+      '--floor-scale': floorScale,
+      '--floor-y': `${floorY}vh`,
+      '--floor-opacity': floorOpacity,
+    };
+  }, [scrollProgress]);
+
+  const mainOpacity = Math.max(0, 1 - scrollProgress / 0.62);
+  const petalOpacity = Math.min(1, Math.max(0, (scrollProgress - 0.12) / 0.24));
+  const scrollHintOpacity = Math.max(0, 1 - scrollProgress * 10);
 
   return (
-    /* 300vh 컨테이너 — 내부 section은 sticky로 고정 */
     <div className="hero-sticky-container" ref={containerRef}>
-      <section className={`hero-section hero--${stage}`}>
-
-        <div className="hero-vignette" />
-
-        {/* Large background typography — 3D 꽃 뒤에 깔림 */}
-        <div className="hero-bg-text" aria-hidden="true">
-          <span className="hero-bg-title">SEBIN</span>
-          <span className="hero-bg-subtitle">UX / UI Designer Garden</span>
+      <section
+        className="hero-section"
+        style={heroStyle}
+        onPointerMove={(event) => {
+          setCursor({ x: event.clientX, y: event.clientY, visible: true });
+        }}
+        onPointerLeave={() => {
+          setCursor((current) => ({ ...current, visible: false }));
+        }}
+      >
+        <div className="hero-background" aria-hidden="true">
+          <div className="hero-background__sky" />
+          <div className="hero-background__floor" />
+          <div className="hero-background__light" />
         </div>
 
-        {/* 3D 작약꽃 — 중앙 main stage */}
-        <div className="hero-3d">
-          <PeonyScene />
-        </div>
+        <img
+          src={petalOne}
+          alt=""
+          className={`hero-flower-cursor${cursor.visible ? ' hero-flower-cursor--visible' : ''}`}
+          style={{
+            '--cursor-x': `${cursor.x}px`,
+            '--cursor-y': `${cursor.y}px`,
+          }}
+          aria-hidden="true"
+        />
 
-        {/* Navigation */}
-        <nav className="hero-nav">
-          <a href="#" className="hero-nav-logo">Sebin</a>
-          <ul className="hero-nav-links">
-            <li><a href="#work">Work</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#process">Process</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-
-        {/* Foreground text */}
-        <div className="hero-content">
-          <p className="hero-eyebrow">Portfolio 2025</p>
-          <h1 className="hero-name">Sebin Portfolio</h1>
-          <p className="hero-role">UX/UI Designer Garden</p>
-          <p className="hero-tagline" key={stage}>{content.tagline}</p>
-        </div>
-
-        {/* Bloom stage indicator — 우측 하단 */}
-        <div className="hero-stage-indicator" role="status" aria-live="polite">
-          {STAGES.map((s, i) => (
-            <div key={s} className={`stage-step ${s === stage ? 'active' : ''} ${i < stageIndex ? 'passed' : ''}`}>
-              <div className="stage-step-dot" />
-              <span className="stage-step-label">{STAGE_CONTENT[s].labelKo}</span>
-            </div>
-          ))}
-          {/* Progress track */}
-          <div className="stage-track">
-            <div
-              className="stage-track-fill"
-              style={{ height: `${scrollProgress * 100}%` }}
+        <div className="hero-petal-field" style={{ opacity: petalOpacity }} aria-hidden="true">
+          {petalLayout.map((petal, index) => (
+            <img
+              className="hero-petal"
+              key={`${petal.left}-${petal.delay}`}
+              src={petals[index % petals.length]}
+              alt=""
+              style={{
+                '--petal-left': petal.left,
+                '--petal-size': `${petal.size}px`,
+                '--petal-delay': `${petal.delay}s`,
+                '--petal-duration': `${petal.duration}s`,
+                '--petal-drift': `${petal.drift}px`,
+                '--petal-rotate': `${petal.rotate}deg`,
+              }}
             />
+          ))}
+        </div>
+
+        <div className="hero-card">
+          <nav className="hero-nav">
+            <a href="#" className="hero-nav-logo">Sebin</a>
+            <ul className="hero-nav-links">
+              <li><a href="#work">Work</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#process">Process</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+
+          <div className="hero-main" style={{ opacity: mainOpacity }}>
+            <h1 className="hero-title">
+              {displayText}
+              <span className={`hero-cursor${done ? ' hero-cursor--hidden' : ''}`} aria-hidden="true">|</span>
+            </h1>
+
+            <div className="hero-flower-wrap">
+              <img src={mainFlower} alt="" className="hero-flower-ghost hero-flower-ghost--left" aria-hidden="true" />
+              <img src={mainFlower} alt="" className="hero-flower-ghost hero-flower-ghost--right" aria-hidden="true" />
+              <img src={mainFlower} alt="Pink flowers" className="hero-flower" />
+            </div>
+
+            <p className="hero-name-text">Sebin</p>
           </div>
         </div>
 
-        {/* Side labels */}
-        <div className="hero-side-label hero-side-label--left">
-          <span>Botanical Editorial</span>
-        </div>
-        <div className="hero-side-label hero-side-label--right">
-          <span>Scroll to bloom</span>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="hero-scroll" aria-hidden="true">
+        <div className="hero-scroll" style={{ opacity: scrollHintOpacity }} aria-hidden="true">
           <div className="hero-scroll-line" />
           <span>Scroll</span>
         </div>
-
       </section>
     </div>
   );

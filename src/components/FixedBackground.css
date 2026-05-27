@@ -1,6 +1,9 @@
 .fixed-background {
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100svh;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
