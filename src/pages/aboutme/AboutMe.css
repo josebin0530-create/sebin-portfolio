@@ -1,0 +1,347 @@
+@import url('https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/variable/pretendardvariable.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Niconne&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
+
+/* ── 전체 래퍼 ─────────────────────────────────── */
+.about {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── 타이틀 영역 (카드 밖) ─────────────────────── */
+.about-header {
+  position: absolute;
+  top: clamp(40px, 6vh, 80px);
+  left: clamp(28px, 4.5vw, 68px);
+  z-index: 3;
+}
+
+.about-title {
+  margin: 0;
+  font-family: 'Niconne', cursive;
+  font-size: 5.2vw;
+  font-weight: 400;
+  color: #a80202;
+  line-height: 1;
+}
+
+/* ── 카드 ──────────────────────────────────────── */
+.about-card {
+  position: relative;
+  z-index: 1;
+  width: 87vw;
+  height: 83vh;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(248, 244, 234, 0.88);
+  border-radius: 2.5vw;
+  padding: 2.8vh 4.5vw 4vh;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ── 소개문 ────────────────────────────────────── */
+.about-intro {
+  margin: 0 0 clamp(12px, 2vh, 22px);
+  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+  font-size: clamp(15px, 1.15vw, 20px);
+  font-weight: 600;
+  color: #001a62;
+  line-height: 2;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+/* ── 카드 바디 (좌우 컬럼) ─────────────────────── */
+.about-card-body {
+  display: flex;
+  gap: 8vw;
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── 왼쪽 컬럼 ─────────────────────────────────── */
+.about-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.9vh;
+  flex: 0 0 21vw;
+  min-height: 0;
+}
+
+.about-photo {
+  width: 13vw;
+  height: 13vw;
+  border-radius: 0.6vw;
+  background: #b8b0a8;
+  flex-shrink: 0;
+}
+
+.about-name {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6vw;
+  font-weight: 600;
+  color: #1a1a2a;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.about-dob {
+  margin: 0;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 1vw;
+  font-weight: 400;
+  color: #1a1a2a;
+  letter-spacing: 0.06em;
+}
+
+/* 성격 특성 */
+.about-traits {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.4vw;
+}
+
+.about-traits span {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 0.8vw;
+  font-weight: 400;
+  color: #1a1a2a;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.about-traits span + span::before {
+  content: '·';
+  margin-right: 0.4vw;
+}
+
+/* 스킬바 */
+.about-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+  width: 100%;
+  margin-top: auto;
+  align-items: center;
+}
+
+.skill-bar {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+.skill-icon {
+  width: 2.4vw;
+  height: 2.4vw;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 0.4vw;
+}
+
+.skill-track {
+  width: 12vw;
+  height: 1.4vh;
+  background: #c8d8ee;
+  border-radius: 0.5vh;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.skill-fill {
+  height: 100%;
+  background: #3a6db5;
+  border-radius: 0.5vh;
+}
+
+/* AI 툴 아이콘 행 */
+.about-ai-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+  margin-top: 0;
+  align-items: center;
+}
+
+.ai-tools-label {
+  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+  font-size: 0.85vw;
+  font-weight: 500;
+  color: #3a3a3a;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.ai-tools-icons {
+  display: flex;
+  gap: 0.8vw;
+}
+
+.about-ai-tools img {
+  width: 2.4vw;
+  height: 2.4vw;
+  object-fit: contain;
+  border-radius: 0.4vw;
+}
+
+/* ── 오른쪽 래퍼 (섹션 + 인용구) ───────────────── */
+.about-right-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7vh;
+}
+
+/* ── 오른쪽 컬럼 ────────────────────────────────── */
+.about-right {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+  overflow-y: auto;
+}
+
+.about-quote-wrap {
+  flex-shrink: 0;
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+}
+
+.info-section-title {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.82vw;
+  font-weight: 800;
+  font-style: normal;
+  color: #1a1a2a;
+  letter-spacing: 0.04em;
+}
+
+.info-section-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vh;
+  padding: 0 1vw;
+}
+
+.entry {
+  display: flex;
+  gap: 2vw;
+  align-items: flex-start;
+}
+
+.entry-year {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 1vw;
+  font-weight: 400;
+  color: #5a6a8a;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  min-width: 8vw;
+  line-height: 1.6;
+}
+
+.entry-desc {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: 1vw;
+  font-weight: 500;
+  color: #1a1a2a;
+  line-height: 1.6;
+}
+
+/* ── 인용구 ─────────────────────────────────────── */
+.about-quote {
+  margin: 0;
+  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+  font-size: 1.4vw;
+  font-weight: 700;
+  font-style: normal;
+  color: #a80202;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+/* ── 새싹 이미지 ─────────────────────────────────── */
+.about-seed {
+  position: absolute;
+  left: 1vw;
+  bottom: 1vh;
+  width: clamp(110px, 15vw, 220px);
+  height: auto;
+  z-index: 4;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ── 하단 편집 라인 ──────────────────────────────── */
+.about-line {
+  position: absolute;
+  bottom: 2.8vh;
+  left: 4%;
+  right: 4%;
+  height: 3px;
+  background: rgba(168, 2, 2, 0.55);
+  border-radius: 2px;
+  z-index: 2;
+}
+
+/* ── 1920px 이상 큰 화면 ─────────────────────────── */
+@media (min-width: 1920px) {
+  .info-section-title {
+    font-size: 2.2vw;
+  }
+}
+
+/* ── 반응형 (좁은 화면) ──────────────────────────── */
+@media (max-width: 768px) {
+  .about-card {
+    width: 94vw;
+    height: 88vh;
+  }
+
+  .about-title {
+    font-size: 12vw;
+  }
+
+  .about-card-body {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .about-left {
+    flex: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 3vw;
+  }
+
+  .about-photo    { width: 22vw; height: 22vw; }
+  .about-name     { font-size: 5vw; }
+  .about-dob,
+  .about-traits span,
+  .entry-desc     { font-size: 2.8vw; }
+  .entry-year     { font-size: 2.4vw; min-width: 18vw; }
+  .info-section-title { font-size: 4vw; }
+  .about-quote    { font-size: 3vw; }
+  .skill-icon     { width: 4vw; height: 4vw; }
+}

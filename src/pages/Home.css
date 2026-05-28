@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Niconne&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&display=swap');
+
+/* ── 전체 래퍼 ──────────────────────────────────── */
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  min-height: 580px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── 오버레이 ───────────────────────────────────── */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 65% at 50% 50%,
+      rgba(255, 252, 240, 0.10), transparent 72%),
+    linear-gradient(to bottom,
+      rgba(195, 210, 220, 0.06),
+      rgba(200, 215, 225, 0.04));
+  pointer-events: none;
+}
+
+/* 중앙 bloom 빛 */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 55% 42% at 48% 50%,
+    rgba(255, 244, 178, 0.18),
+    transparent 66%
+  );
+  animation: glowPulse 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.65; }
+  50%       { opacity: 1;    }
+}
+
+/* ── 메인 콘텐츠 영역 ───────────────────────────── */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ── 십자수 꽃 오브젝트 ─────────────────────────── */
+.hero-flower {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(360px, 55vw, 820px);
+  height: auto;
+  opacity: 0.45;
+  filter: blur(0.2px);
+  pointer-events: none;
+  user-select: none;
+  animation: flowerFloat 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes flowerFloat {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.014);
+    opacity: 0.55;
+  }
+}
+
+
+/* ── 메인 타이틀 ────────────────────────────────── */
+.hero-title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #a80202;
+  font-family: 'Niconne', cursive;
+  font-size: clamp(60px, 10vw, 200px);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-shadow:
+    0 2px 24px rgba(130, 8, 8, 0.10),
+    0 0   48px rgba(188, 21, 21, 0.06);
+  opacity: 0;
+  animation: fadeUp 2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+
+/* ── 서브 텍스트 ────────────────────────────────── */
+.hero-sub {
+  position: relative;
+  z-index: 1;
+  margin: clamp(12px, 2.2vh, 26px) 0 0;
+  color: #a80202;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 2.8vw, 46px);
+  font-weight: 300;
+  font-style: normal;
+  letter-spacing: 0.18em;
+  opacity: 0;
+  animation: fadeUp 2s cubic-bezier(0.22, 1, 0.36, 1) 1.0s forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── 하단 editorial 라인 ────────────────────────── */
+.hero-line {
+  position: absolute;
+  bottom: clamp(26px, 4.5vh, 50px);
+  left: 4%;
+  right: 4%;
+  height: 3px;
+  background: rgba(188, 21, 21, 0.55);
+  border-radius: 2px;
+  opacity: 0;
+  animation: fadeIn 1.4s ease 1.8s forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── 반응형 ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .hero-title {
+    letter-spacing: 0.005em;
+  }
+
+  .hero-sub {
+    letter-spacing: 0.12em;
+  }
+
+  .hero-flower {
+    width: clamp(200px, 72vw, 320px);
+  }
+}
