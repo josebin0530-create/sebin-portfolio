@@ -5,10 +5,39 @@
 body {
   margin: 0;
   padding: 0;
-  background: #f8f4ee;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-main {
-  width: 100%;
+/* GIF 배경 — 항상 고정 */
+.global-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('/main_visual.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.site-scroll {
+  position: relative;
+  z-index: 1;
+  height: 100svh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  /* 스크롤바 숨김 */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.site-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.site-panel {
+  width: 100vw;
+  height: 100svh;
+  scroll-snap-align: start;
+  overflow: hidden;
 }
