@@ -1,347 +1,300 @@
 @import url('https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/variable/pretendardvariable.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Niconne&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap');
 
-/* ── 전체 래퍼 ─────────────────────────────────── */
-.about {
-  position: relative;
-  width: 100vw;
-  height: 100svh;
-  min-height: 620px;
-  overflow: hidden;
+/* ══════════════════════════════════════
+   슬라이드 패널 (우측에서 등장)
+   ══════════════════════════════════════ */
+.about-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 63%;
+  z-index: 50;
+  background: #f7f0e5;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: clamp(22px, 3.8vh, 44px) clamp(28px, 4vw, 60px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: clamp(12px, 2vh, 26px);
+  transform: translateX(100%);
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.about-panel::-webkit-scrollbar { display: none; }
+
+.about-panel.open {
+  transform: translateX(0);
 }
 
-/* ── 타이틀 영역 (카드 밖) ─────────────────────── */
-.about-header {
+/* 닫기 버튼 */
+.about-close {
   position: absolute;
-  top: clamp(40px, 6vh, 80px);
-  left: clamp(28px, 4.5vw, 68px);
-  z-index: 3;
-}
-
-.about-title {
-  margin: 0;
-  font-family: 'Niconne', cursive;
-  font-size: 5.2vw;
-  font-weight: 400;
-  color: #a80202;
+  top: clamp(14px, 2.2vh, 24px);
+  right: clamp(16px, 2.2vw, 28px);
+  background: none;
+  border: none;
+  font-size: clamp(20px, 1.8vw, 28px);
+  color: #1a1a2e;
+  cursor: pointer;
   line-height: 1;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+  padding: 4px 8px;
+}
+.about-close:hover { opacity: 1; }
+
+/* ══════════════════════════════════════
+   배경 장식 꽃
+   ══════════════════════════════════════ */
+.about-flower-deco {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: clamp(180px, 25vw, 380px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.60;
+  z-index: 0;
 }
 
-/* ── 카드 ──────────────────────────────────────── */
-.about-card {
+/* ══════════════════════════════════════
+   상단: 사진 + 태그라인
+   ══════════════════════════════════════ */
+.about-top {
   position: relative;
   z-index: 1;
-  width: 87vw;
-  height: 83vh;
-  flex-shrink: 0;
   display: flex;
-  flex-direction: column;
-  background: rgba(248, 244, 234, 0.88);
-  border-radius: 2.5vw;
-  padding: 2.8vh 4.5vw 4vh;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-/* ── 소개문 ────────────────────────────────────── */
-.about-intro {
-  margin: 0 0 clamp(12px, 2vh, 22px);
-  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
-  font-size: clamp(15px, 1.15vw, 20px);
-  font-weight: 600;
-  color: #001a62;
-  line-height: 2;
-  letter-spacing: 0.02em;
-  text-align: center;
-}
-
-/* ── 카드 바디 (좌우 컬럼) ─────────────────────── */
-.about-card-body {
-  display: flex;
-  gap: 8vw;
-  flex: 1;
-  min-height: 0;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ── 왼쪽 컬럼 ─────────────────────────────────── */
-.about-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.9vh;
-  flex: 0 0 21vw;
-  min-height: 0;
-}
-
-.about-photo {
-  width: 13vw;
-  height: 13vw;
-  border-radius: 0.6vw;
-  background: #b8b0a8;
-  flex-shrink: 0;
-}
-
-.about-name {
-  margin: 0;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.6vw;
-  font-weight: 600;
-  color: #1a1a2a;
-  letter-spacing: 0.06em;
-  line-height: 1;
-}
-
-.about-dob {
-  margin: 0;
-  font-family: 'Pretendard Variable', sans-serif;
-  font-size: 1vw;
-  font-weight: 400;
-  color: #1a1a2a;
-  letter-spacing: 0.06em;
-}
-
-/* 성격 특성 */
-.about-traits {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 0.4vw;
-}
-
-.about-traits span {
-  font-family: 'Pretendard Variable', sans-serif;
-  font-size: 0.8vw;
-  font-weight: 400;
-  color: #1a1a2a;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-}
-
-.about-traits span + span::before {
-  content: '·';
-  margin-right: 0.4vw;
-}
-
-/* 스킬바 */
-.about-skills {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2vh;
+  align-items: flex-start;
+  gap: clamp(18px, 3vw, 44px);
   width: 100%;
-  margin-top: auto;
-  align-items: center;
 }
 
-.skill-bar {
+/* 우측 컬럼: 태그라인 + 스킬카드 */
+.about-top-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.8vh, 22px);
+}
+
+/* 프로필 사진 */
+.about-photo {
+  flex-shrink: 0;
+  width: clamp(130px, 13.5vw, 200px);
+  height: clamp(160px, 18vw, 265px);
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: top center;
+  margin-top: clamp(-16px, -2vh, -8px);
+}
+
+/* 태그라인 */
+.about-tagline {
+  margin: 0;
+  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+  font-size: clamp(24px, 2.8vw, 42px);
+  font-weight: 300;
+  line-height: 1.85;
+  color: #001A62;
+  letter-spacing: 0.01em;
+  text-align: center;
+  flex: 1;
+}
+.about-tagline strong {
+  font-weight: 800;
+  color: #001A62;
+}
+
+/* ══════════════════════════════════════
+   스킬 카드
+   ══════════════════════════════════════ */
+.about-skills-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.38);
+  border: 1px solid rgba(220, 227, 240, 0.7);
+  border-radius: clamp(12px, 1.2vw, 18px);
+  padding: clamp(10px, 1.5vh, 18px) clamp(14px, 2vw, 28px);
+  width: fit-content;
+}
+
+.skills-title {
+  margin: 0 0 clamp(10px, 1.6vh, 18px);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 1.8vw, 28px);
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: 0.02em;
+}
+
+.skills-body {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(20px, 4vw, 64px);
+}
+
+/* 스킬 바 컬럼 */
+.skill-bars-col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.6vh, 22px);
+  flex: 1;
+}
+
+/* 각 스킬 아이템: 아이콘+이름(좌) + 바(우) */
+.skill-item {
   display: flex;
   align-items: center;
-  gap: 1vw;
+  gap: clamp(10px, 1.2vw, 20px);
+}
+
+.skill-item-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  width: clamp(60px, 6.5vw, 96px); /* 고정 너비로 세 항목 바 시작점 통일 */
 }
 
 .skill-icon {
-  width: 2.4vw;
-  height: 2.4vw;
+  width: clamp(28px, 2.6vw, 42px);
+  height: clamp(28px, 2.6vw, 42px);
   object-fit: contain;
-  flex-shrink: 0;
-  border-radius: 0.4vw;
+  border-radius: 8px;
+}
+
+.skill-label {
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: clamp(9px, 0.8vw, 12px);
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .skill-track {
-  width: 12vw;
-  height: 1.4vh;
-  background: #c8d8ee;
-  border-radius: 0.5vh;
-  overflow: hidden;
+  width: clamp(80px, 10vw, 150px);
   flex-shrink: 0;
+  height: clamp(10px, 1vh, 15px);
+  background: #cdd9ee;
+  border-radius: 999px;
+  overflow: hidden;
 }
 
 .skill-fill {
   height: 100%;
   background: #3a6db5;
-  border-radius: 0.5vh;
+  border-radius: 999px;
 }
 
-/* AI 툴 아이콘 행 */
-.about-ai-tools {
+/* AI 툴 컬럼 */
+.ai-tools-col {
   display: flex;
   flex-direction: column;
-  gap: 0.5vh;
-  margin-top: 0;
-  align-items: center;
+  align-items: flex-start;
+  gap: clamp(10px, 1.4vh, 18px);
+  flex-shrink: 0;
 }
 
 .ai-tools-label {
-  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
-  font-size: 0.85vw;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-size: clamp(12px, 1.05vw, 17px);
   font-weight: 500;
-  color: #3a3a3a;
-  letter-spacing: 0.02em;
+  color: #444;
   white-space: nowrap;
+  letter-spacing: 0.01em;
 }
 
 .ai-tools-icons {
   display: flex;
-  gap: 0.8vw;
+  gap: clamp(6px, 0.7vw, 12px);
 }
 
-.about-ai-tools img {
-  width: 2.4vw;
-  height: 2.4vw;
+.ai-tools-icons img {
+  width: clamp(28px, 2.6vw, 42px);
+  height: clamp(28px, 2.6vw, 42px);
   object-fit: contain;
-  border-radius: 0.4vw;
+  border-radius: 8px;
 }
 
-/* ── 오른쪽 래퍼 (섹션 + 인용구) ───────────────── */
-.about-right-wrap {
-  flex: 1;
-  min-width: 0;
+/* ══════════════════════════════════════
+   정보 섹션 모음
+   ══════════════════════════════════════ */
+.about-info {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 7vh;
-}
-
-/* ── 오른쪽 컬럼 ────────────────────────────────── */
-.about-right {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3vh;
-  overflow-y: auto;
-}
-
-.about-quote-wrap {
-  flex-shrink: 0;
+  gap: clamp(16px, 2.8vh, 36px);
+  width: 100%;
 }
 
 .info-section {
   display: flex;
   flex-direction: column;
-  gap: 0.5vh;
+  gap: clamp(6px, 0.9vh, 12px);
 }
 
 .info-section-title {
   margin: 0;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.82vw;
-  font-weight: 800;
-  font-style: normal;
-  color: #1a1a2a;
-  letter-spacing: 0.04em;
+  font-size: clamp(20px, 2.1vw, 32px);
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: 0.01em;
 }
 
 .info-section-entries {
   display: flex;
   flex-direction: column;
-  gap: 0.4vh;
-  padding: 0 1vw;
+  gap: clamp(5px, 0.8vh, 10px);
+  padding-left: clamp(2px, 0.3vw, 6px);
 }
 
 .entry {
   display: flex;
-  gap: 2vw;
+  gap: clamp(16px, 2.4vw, 40px);
   align-items: flex-start;
 }
 
 .entry-year {
   font-family: 'Pretendard Variable', sans-serif;
-  font-size: 1vw;
+  font-size: clamp(12px, 1.05vw, 16px);
   font-weight: 400;
   color: #5a6a8a;
-  letter-spacing: 0.02em;
   flex-shrink: 0;
-  min-width: 8vw;
-  line-height: 1.6;
+  min-width: clamp(108px, 10.5vw, 160px);
+  line-height: 1.75;
+  letter-spacing: 0.005em;
 }
 
 .entry-desc {
   font-family: 'Pretendard Variable', sans-serif;
-  font-size: 1vw;
+  font-size: clamp(12px, 1.05vw, 16px);
   font-weight: 500;
-  color: #1a1a2a;
-  line-height: 1.6;
+  color: #1a1a2e;
+  line-height: 1.75;
 }
 
-/* ── 인용구 ─────────────────────────────────────── */
-.about-quote {
-  margin: 0;
-  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
-  font-size: 1.4vw;
-  font-weight: 700;
-  font-style: normal;
-  color: #a80202;
-  letter-spacing: 0.03em;
-  line-height: 1.5;
-}
-
-/* ── 새싹 이미지 ─────────────────────────────────── */
-.about-seed {
-  position: absolute;
-  left: 1vw;
-  bottom: 1vh;
-  width: clamp(110px, 15vw, 220px);
-  height: auto;
-  z-index: 4;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* ── 하단 편집 라인 ──────────────────────────────── */
-.about-line {
-  position: absolute;
-  bottom: 2.8vh;
-  left: 4%;
-  right: 4%;
-  height: 3px;
-  background: rgba(168, 2, 2, 0.55);
-  border-radius: 2px;
-  z-index: 2;
-}
-
-/* ── 1920px 이상 큰 화면 ─────────────────────────── */
-@media (min-width: 1920px) {
-  .info-section-title {
-    font-size: 2.2vw;
+/* ══════════════════════════════════════
+   반응형
+   ══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .about-panel {
+    width: 100%;
   }
-}
-
-/* ── 반응형 (좁은 화면) ──────────────────────────── */
-@media (max-width: 768px) {
-  .about-card {
-    width: 94vw;
-    height: 88vh;
-  }
-
-  .about-title {
-    font-size: 12vw;
-  }
-
-  .about-card-body {
+  .about-top {
     flex-direction: column;
-    overflow-y: auto;
+    align-items: center;
   }
-
-  .about-left {
-    flex: none;
-    flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: 3vw;
+  .about-tagline {
+    text-align: center;
   }
-
-  .about-photo    { width: 22vw; height: 22vw; }
-  .about-name     { font-size: 5vw; }
-  .about-dob,
-  .about-traits span,
-  .entry-desc     { font-size: 2.8vw; }
-  .entry-year     { font-size: 2.4vw; min-width: 18vw; }
-  .info-section-title { font-size: 4vw; }
-  .about-quote    { font-size: 3vw; }
-  .skill-icon     { width: 4vw; height: 4vw; }
 }

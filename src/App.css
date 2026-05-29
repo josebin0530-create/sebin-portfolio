@@ -8,36 +8,15 @@ body {
   overflow: hidden;
 }
 
-/* GIF 배경 — 항상 고정 */
-.global-bg {
+/* 패널 열릴 때 배경 딤 */
+.about-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 0;
-  background-image: url('/main_visual.gif');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  z-index: 49;
+  background: transparent;
+  pointer-events: none;
 }
 
-.site-scroll {
-  position: relative;
-  z-index: 1;
-  height: 100svh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  /* 스크롤바 숨김 */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.site-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.site-panel {
-  width: 100vw;
-  height: 100svh;
-  scroll-snap-align: start;
-  overflow: hidden;
+.about-backdrop.open {
+  pointer-events: all;
 }
