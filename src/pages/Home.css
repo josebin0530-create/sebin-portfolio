@@ -1,124 +1,186 @@
-@import url('https://fonts.googleapis.com/css2?family=Niconne&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap');
 
-/* ── 전체 래퍼 ──────────────────────────────────── */
+/* ── 전체 래퍼 ── */
 .hero {
   position: relative;
   width: 100vw;
   height: 100svh;
   min-height: 580px;
   overflow: hidden;
+  cursor: none; /* 커스텀 커서 사용 */
+}
+
+/* ── 비디오 배경 (blur 없음) ── */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── 다크 오버레이 ── */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.32);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── 상단 네비게이션 (글래스 pill) ── */
+.hero-nav,
+.hero-bottom,
+.hero-flower {
+  transition: opacity 0.35s ease;
+}
+
+.hero-nav {
+  position: absolute;
+  top: clamp(20px, 3.5vh, 44px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: clamp(24px, 4vw, 64px);
+  padding: clamp(10px, 1.4vh, 16px) clamp(32px, 4vw, 60px);
+  background: rgba(160, 175, 210, 0.22);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  opacity: 0;
+  animation: fadeIn 1.2s ease 0.3s forwards;
 }
 
-/* ── 오버레이 ───────────────────────────────────── */
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 65% at 50% 50%,
-      rgba(255, 252, 240, 0.10), transparent 72%),
-    linear-gradient(to bottom,
-      rgba(195, 210, 220, 0.06),
-      rgba(200, 215, 225, 0.04));
-  pointer-events: none;
-}
-
-/* 중앙 bloom 빛 */
-.hero-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 55% 42% at 48% 50%,
-    rgba(255, 244, 178, 0.18),
-    transparent 66%
-  );
-  animation: glowPulse 8s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.65; }
-  50%       { opacity: 1;    }
-}
-
-/* ── 메인 콘텐츠 영역 ───────────────────────────── */
-.hero-content {
+.hero-nav-link {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(17px, 1.7vw, 26px);
+  font-weight: 700;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  cursor: pointer;
   position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  padding-bottom: 3px;
+  transition: color 0.25s ease, transform 0.2s ease;
 }
 
-/* ── 십자수 꽃 오브젝트 ─────────────────────────── */
+/* 호버 시 언더라인이 왼쪽에서 오른쪽으로 슬라이드 */
+.hero-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0.7px;
+  background: rgba(255, 255, 255, 0.90);
+  border-radius: 2px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-nav-link:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.hero-nav-link:hover::after {
+  width: 100%;
+}
+
+/* 클릭 시 살짝 눌리는 느낌 */
+.hero-nav-link:active {
+  transform: translateY(1px) scale(0.96);
+  color: rgba(255, 255, 255, 0.70);
+  transition: transform 0.08s ease, color 0.08s ease;
+}
+
+/* ── 꽃 심볼 (우측 고정) ── */
 .hero-flower {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(360px, 55vw, 820px);
+  right: clamp(10px, 1.5vw, 36px);
+  bottom: clamp(20px, 5vh, 90px);
+  width: clamp(220px, 32vw, 520px);
   height: auto;
-  opacity: 0.45;
-  filter: blur(0.2px);
+  opacity: 0.88;
   pointer-events: none;
   user-select: none;
-  animation: flowerFloat 14s ease-in-out infinite;
-  will-change: transform, opacity;
+  z-index: 5;
+  animation: flowerFloat 13s ease-in-out infinite;
 }
 
 @keyframes flowerFloat {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.45;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.014);
-    opacity: 0.55;
-  }
+  0%, 100% { transform: scale(1);      opacity: 0.88; }
+  50%       { transform: scale(1.018); opacity: 0.96; }
 }
 
+/* ── 하단 타이틀 영역 ── */
+.hero-bottom {
+  position: absolute;
+  bottom: -0.28em;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: clamp(10px, 0.8vw, 20px);
+}
 
-/* ── 메인 타이틀 ────────────────────────────────── */
-.hero-title {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  color: #a80202;
-  font-family: 'Niconne', cursive;
-  font-size: clamp(60px, 10vw, 200px);
+/* ── 하단 힌트 텍스트 ── */
+.hero-hint {
+  margin: 0 0 clamp(2px, 0.6vh, 8px);
+  padding-left: 6px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: clamp(12px, 1.1vw, 16px);
   font-weight: 400;
+  letter-spacing: 0.22em;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
+  animation: hintPulse 3.4s ease-in-out 2.2s infinite;
+}
+
+@keyframes hintPulse {
+  0%   { opacity: 0;    }
+  25%  { opacity: 0.72; }
+  75%  { opacity: 0.72; }
+  100% { opacity: 0;    }
+}
+
+/* ── 메인 타이틀 (유리 효과) ── */
+.hero-title {
+  margin: 0;
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: clamp(100px, 27vw, 520px);
+  font-weight: 600;
   font-style: normal;
-  line-height: 1;
-  letter-spacing: 0.01em;
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+
+  /* 유리 효과: 반투명 + 흰 테두리 + 위/아래 그림자로 두께감 */
+  color: rgba(208, 216, 178, 0.52);
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.28);
   text-shadow:
-    0 2px 24px rgba(130, 8, 8, 0.10),
-    0 0   48px rgba(188, 21, 21, 0.06);
+    0  -2px  0   rgba(255, 255, 255, 0.35),
+    0   2px  0   rgba(0,   0,   0,   0.10),
+    0   8px 40px rgba(0,   0,   0,   0.12);
+
   opacity: 0;
   animation: fadeUp 2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
 }
 
-/* ── 서브 텍스트 ────────────────────────────────── */
-.hero-sub {
-  position: relative;
-  z-index: 1;
-  margin: clamp(12px, 2.2vh, 26px) 0 0;
-  color: #a80202;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(22px, 2.8vw, 46px);
-  font-weight: 300;
-  font-style: normal;
-  letter-spacing: 0.18em;
-  opacity: 0;
-  animation: fadeUp 2s cubic-bezier(0.22, 1, 0.36, 1) 1.0s forwards;
-}
-
+/* ── 공통 애니메이션 ── */
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(22px);
   }
   to {
     opacity: 1;
@@ -126,35 +188,131 @@
   }
 }
 
-/* ── 하단 editorial 라인 ────────────────────────── */
-.hero-line {
-  position: absolute;
-  bottom: clamp(26px, 4.5vh, 50px);
-  left: 4%;
-  right: 4%;
-  height: 3px;
-  background: rgba(188, 21, 21, 0.55);
-  border-radius: 2px;
-  opacity: 0;
-  animation: fadeIn 1.4s ease 1.8s forwards;
-}
-
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { opacity: 0;    }
+  to   { opacity: 0.88; }
 }
 
-/* ── 반응형 ─────────────────────────────────────── */
-@media (max-width: 640px) {
-  .hero-title {
-    letter-spacing: 0.005em;
-  }
+/* ══════════════════════════════════════════════════
+   씨앗 커서 & 낙하 & 먼지 이펙트
+   ══════════════════════════════════════════════════ */
 
-  .hero-sub {
-    letter-spacing: 0.12em;
+/* 커스텀 커서 */
+.seed-cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;                      /* mousemove 시 JS로 1로 변경 */
+  left: -100px;                    /* 초기 위치 화면 밖 */
+  top: -100px;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.18s ease;
+  will-change: left, top, opacity;
+}
+.seed-cursor img {
+  width: 36px;
+  height: 36px;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.28));
+}
+
+/* 낙하 씨앗 래퍼 */
+.seed-fall-wrap {
+  position: absolute;
+  pointer-events: none;
+  z-index: 50;
+  transform: translate(-50%, -50%);
+}
+
+/* 낙하 씨앗 */
+.seed-fall-img {
+  width: 36px;
+  height: 36px;
+  display: block;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.22));
+  will-change: transform, opacity;
+  animation: seedDrop 0.82s cubic-bezier(0.42, 0, 0.78, 0.92) forwards;
+}
+
+@keyframes seedDrop {
+  0%   { transform: translateY(0)    rotate(0deg)   scale(1);    opacity: 1;    }
+  38%  { transform: translateY(105px) rotate(82deg)  scale(0.86); opacity: 0.95; }
+  72%  { transform: translateY(238px) rotate(198deg) scale(0.50); opacity: 0.62; }
+  100% { transform: translateY(292px) rotate(248deg) scale(0.12); opacity: 0;    }
+}
+
+/* 착지 글로우 링 */
+.seed-glow {
+  position: absolute;
+  left: 50%;
+  top: 278px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(165, 220, 95, 0.88) 0%,
+    rgba(130, 200, 65, 0.30) 55%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  animation: glowRing 0.68s ease-out 0.73s forwards;
+}
+
+@keyframes glowRing {
+  0%   { transform: translate(-50%, -50%) scale(0);   opacity: 0.92; }
+  50%  { transform: translate(-50%, -50%) scale(3.6); opacity: 0.58; }
+  100% { transform: translate(-50%, -50%) scale(6.2); opacity: 0;    }
+}
+
+/* 먼지 파티클 */
+.dust-dot {
+  position: absolute;
+  left: 50%;
+  top: 278px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(150, 210, 82, 0.80);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: dustFly 0.62s ease-out var(--di, 0.76s) forwards;
+}
+
+@keyframes dustFly {
+  0%   {
+    transform: translate(-50%, -50%) translate(0, 0) scale(1.4);
+    opacity: 0.88;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ── 패널 열릴 때: 히어로 텍스트 요소 페이드아웃 ── */
+.hero.panel-open .hero-nav,
+.hero.panel-open .hero-bottom,
+.hero.panel-open .hero-flower,
+.hero.panel-open .hero-hint {
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+/* 커서도 숨김 */
+.hero.panel-open .seed-cursor {
+  opacity: 0 !important;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  .hero-title {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.25);
   }
 
   .hero-flower {
-    width: clamp(200px, 72vw, 320px);
+    width: clamp(100px, 24vw, 160px);
+    right: 6px;
   }
 }
