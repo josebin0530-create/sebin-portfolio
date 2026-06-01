@@ -1,300 +1,534 @@
 @import url('https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/variable/pretendardvariable.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@600;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap');
 
-/* ══════════════════════════════════════
-   슬라이드 패널 (우측에서 등장)
-   ══════════════════════════════════════ */
 .about-panel {
   position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 63%;
+  inset: 0;
   z-index: 50;
-  background: #f7f0e5;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding: clamp(22px, 3.8vh, 44px) clamp(28px, 4vw, 60px);
+  --about-card-radius: 18px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(rgba(246, 242, 218, 0.06), rgba(246, 242, 218, 0.08)),
+    rgba(12, 28, 18, 0.05);
+  transition: opacity 0.68s ease;
+}
+
+.about-panel.open {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.about-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 20% 86%, rgba(218, 231, 151, 0.22), transparent 24%),
+    rgba(255, 255, 255, 0.03);
+  pointer-events: none;
+}
+
+.about-close {
+  position: absolute;
+  top: clamp(16px, 2.4vh, 30px);
+  right: clamp(16px, 2.5vw, 42px);
+  z-index: 8;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.86);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(14px, 1vw, 18px);
+  font-weight: 700;
+  line-height: 1;
+  padding: 8px 15px 9px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.about-close:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transform: translateY(-1px);
+}
+
+.about-field {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
+.about-intro {
+  position: absolute;
+  left: 50%;
+  top: clamp(70px, 7.5vh, 92px);
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(12px, 2vh, 26px);
-  transform: translateX(100%);
-  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  width: min(44vw, 620px);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 18px);
+}
+
+.about-panel.open .about-intro {
+  animation: introFade 1s ease 0.48s forwards;
+}
+
+.about-intro p {
+  margin: 0;
+  color: rgba(0, 26, 98, 0.92);
+  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+  font-size: clamp(24px, 2.1vw, 40px);
+  font-weight: 300;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 1px 16px rgba(255, 255, 255, 0.26);
+}
+
+.about-intro strong {
+  font-weight: 800;
+}
+
+.about-profile {
+  width: clamp(230px, 23vw, 420px);
+  max-height: clamp(360px, 55vh, 610px);
+  margin-top: clamp(36px, 7vh, 90px);
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 18px 36px rgba(12, 22, 20, 0.18));
+  user-select: none;
+}
+
+.about-card {
+  position: absolute;
+  width: clamp(160px, 13.8vw, 264px);
+  height: clamp(250px, 44vh, 500px);
+  perspective: 900px;
+  opacity: 0;
+  transform: translateY(-58vh) rotate(var(--drop-tilt, 0deg)) scale(0.98);
+  transform-origin: top center;
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+}
+
+.about-panel.open .about-card {
+  animation: cardDrop 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(0.2s + var(--card-index) * 0.22s);
+}
+
+.about-card-surface {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: clamp(6px, 1vh, 12px);
+  width: 100%;
+  height: 100%;
+  padding: clamp(12px, 1.5vw, 24px);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: var(--about-card-radius);
+  background:
+    radial-gradient(
+      circle at var(--mx) var(--my),
+      rgba(255, 255, 255, 0.22),
+      transparent 36%
+    ),
+    rgba(235, 239, 224, 0.22);
+  color: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 22px 72px rgba(10, 20, 16, 0.14);
+  backdrop-filter: blur(4px) saturate(0.92);
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(1);
+  transform-style: preserve-3d;
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.42s ease, background 0.42s ease;
   will-change: transform;
 }
-.about-panel::-webkit-scrollbar { display: none; }
 
-.about-panel.open {
-  transform: translateX(0);
+.about-card:hover .about-card-surface {
+  box-shadow: 0 32px 92px rgba(10, 20, 16, 0.24);
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(1.055);
 }
 
-/* 닫기 버튼 */
-.about-close {
+.about-card-surface::after {
+  content: '';
   position: absolute;
-  top: clamp(14px, 2.2vh, 24px);
-  right: clamp(16px, 2.2vw, 28px);
-  background: none;
-  border: none;
-  font-size: clamp(20px, 1.8vw, 28px);
-  color: #1a1a2e;
-  cursor: pointer;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: var(--about-card-radius);
+  pointer-events: none;
+}
+
+.about-card-caption {
+  position: absolute;
+  left: var(--mx);
+  top: var(--my);
+  z-index: 4;
+  padding: 5px 11px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: var(--about-card-radius);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 700;
   line-height: 1;
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
-  z-index: 10;
-  padding: 4px 8px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(12px, 12px);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
-.about-close:hover { opacity: 1; }
 
-/* ══════════════════════════════════════
-   배경 장식 꽃
-   ══════════════════════════════════════ */
-.about-flower-deco {
+.about-card:hover .about-card-caption {
+  opacity: 1;
+  transform: translate(14px, 14px);
+}
+
+.about-card-flower {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: clamp(180px, 25vw, 380px);
+  left: 50%;
+  top: 11%;
+  width: clamp(86px, 9.6vw, 182px);
+  max-height: 42%;
+  object-fit: contain;
+  opacity: 0.78;
+  filter: grayscale(1) brightness(1.68) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.13));
+  transform: translateX(-50%);
   pointer-events: none;
   user-select: none;
-  opacity: 0.60;
-  z-index: 0;
 }
 
-/* ══════════════════════════════════════
-   상단: 사진 + 태그라인
-   ══════════════════════════════════════ */
-.about-top {
+.about-card h2 {
   position: relative;
   z-index: 1;
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(18px, 3vw, 44px);
-  width: 100%;
-}
-
-/* 우측 컬럼: 태그라인 + 스킬카드 */
-.about-top-right {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(12px, 1.8vh, 22px);
-}
-
-/* 프로필 사진 */
-.about-photo {
-  flex-shrink: 0;
-  width: clamp(130px, 13.5vw, 200px);
-  height: clamp(160px, 18vw, 265px);
-  border-radius: 10px;
-  object-fit: cover;
-  object-position: top center;
-  margin-top: clamp(-16px, -2vh, -8px);
-}
-
-/* 태그라인 */
-.about-tagline {
   margin: 0;
-  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
-  font-size: clamp(24px, 2.8vw, 42px);
-  font-weight: 300;
-  line-height: 1.85;
-  color: #001A62;
-  letter-spacing: 0.01em;
-  text-align: center;
-  flex: 1;
-}
-.about-tagline strong {
-  font-weight: 800;
-  color: #001A62;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 2vw, 34px);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.94);
+  letter-spacing: 0;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
 }
 
-/* ══════════════════════════════════════
-   스킬 카드
-   ══════════════════════════════════════ */
-.about-skills-card {
+.about-card-content {
   position: relative;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.38);
-  border: 1px solid rgba(220, 227, 240, 0.7);
-  border-radius: clamp(12px, 1.2vw, 18px);
-  padding: clamp(10px, 1.5vh, 18px) clamp(14px, 2vw, 28px);
-  width: fit-content;
-}
-
-.skills-title {
-  margin: 0 0 clamp(10px, 1.6vh, 18px);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(18px, 1.8vw, 28px);
-  font-weight: 700;
-  color: #1a1a2e;
-  letter-spacing: 0.02em;
-}
-
-.skills-body {
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(20px, 4vw, 64px);
-}
-
-/* 스킬 바 컬럼 */
-.skill-bars-col {
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 1.6vh, 22px);
-  flex: 1;
+  gap: clamp(5px, 0.8vh, 10px);
+  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+  font-size: clamp(10px, 0.72vw, 13px);
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.18);
 }
 
-/* 각 스킬 아이템: 아이콘+이름(좌) + 바(우) */
+.about-card-bio {
+  --drop-tilt: -3deg;
+  left: clamp(44px, 3.4vw, 66px);
+  bottom: clamp(42px, 4.4vh, 56px);
+  width: clamp(190px, 14.1vw, 264px);
+  height: clamp(430px, 56vh, 596px);
+}
+
+.about-card-skills {
+  --drop-tilt: 2.5deg;
+  left: clamp(310px, 21.6vw, 416px);
+  top: clamp(38px, 5vh, 54px);
+  width: clamp(190px, 13.2vw, 252px);
+  height: clamp(420px, 49vh, 532px);
+}
+
+.about-card-history {
+  --drop-tilt: -2deg;
+  right: clamp(300px, 19.2vw, 368px);
+  top: clamp(250px, 24.4vh, 264px);
+  width: clamp(210px, 13.6vw, 260px);
+  height: clamp(360px, 46.5vh, 504px);
+}
+
+.about-card-bloom {
+  --drop-tilt: 3deg;
+  right: clamp(26px, 1.4vw, 42px);
+  top: clamp(24px, 2.4vh, 36px);
+  width: clamp(210px, 14.6vw, 280px);
+  height: clamp(410px, 51vh, 552px);
+}
+
+.about-card-bloom .about-card-surface {
+  justify-content: center;
+}
+
+.about-card-bloom .about-card-flower {
+  top: 11%;
+  width: clamp(138px, 11.2vw, 214px);
+}
+
+.bio-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.5vh, 16px);
+  color: rgba(255, 255, 255, 0.94);
+  font-size: clamp(22px, 1.65vw, 32px);
+  line-height: 1.2;
+}
+
+.bio-list strong {
+  font-size: clamp(26px, 1.85vw, 36px);
+  font-weight: 500;
+}
+
+.tool-note {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(10px, 0.78vw, 13px);
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-group h3 {
+  margin: 0;
+  color: rgba(24, 30, 18, 0.86);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(15px, 1.05vw, 18px);
+  line-height: 1.1;
+  text-shadow: none;
+}
+
 .skill-item {
   display: flex;
   align-items: center;
-  gap: clamp(10px, 1.2vw, 20px);
+  gap: 8px;
 }
 
 .skill-item-left {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 22px minmax(58px, 1fr);
   align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-  width: clamp(60px, 6.5vw, 96px); /* 고정 너비로 세 항목 바 시작점 통일 */
+  gap: 6px;
+  min-width: 92px;
 }
 
-.skill-icon {
-  width: clamp(28px, 2.6vw, 42px);
-  height: clamp(28px, 2.6vw, 42px);
+.skill-icon,
+.about-tool-row img {
+  width: clamp(19px, 1.5vw, 26px);
+  height: clamp(19px, 1.5vw, 26px);
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 5px;
 }
 
 .skill-label {
-  font-family: 'Pretendard Variable', sans-serif;
-  font-size: clamp(9px, 0.8vw, 12px);
-  font-weight: 500;
-  color: #333;
-  text-align: center;
+  font-size: clamp(9px, 0.7vw, 11px);
   white-space: nowrap;
 }
 
 .skill-track {
-  width: clamp(80px, 10vw, 150px);
-  flex-shrink: 0;
-  height: clamp(10px, 1vh, 15px);
-  background: #cdd9ee;
+  flex: 1;
+  min-width: 42px;
+  height: 6px;
   border-radius: 999px;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.34);
 }
 
 .skill-fill {
   height: 100%;
-  background: #3a6db5;
-  border-radius: 999px;
+  border-radius: inherit;
+  background: rgba(220, 230, 150, 0.94);
 }
 
-/* AI 툴 컬럼 */
-.ai-tools-col {
+.about-tool-row {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(10px, 1.4vh, 18px);
-  flex-shrink: 0;
-}
-
-.ai-tools-label {
-  font-family: 'Pretendard Variable', sans-serif;
-  font-size: clamp(12px, 1.05vw, 17px);
-  font-weight: 500;
-  color: #444;
-  white-space: nowrap;
-  letter-spacing: 0.01em;
-}
-
-.ai-tools-icons {
-  display: flex;
-  gap: clamp(6px, 0.7vw, 12px);
-}
-
-.ai-tools-icons img {
-  width: clamp(28px, 2.6vw, 42px);
-  height: clamp(28px, 2.6vw, 42px);
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-/* ══════════════════════════════════════
-   정보 섹션 모음
-   ══════════════════════════════════════ */
-.about-info {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(16px, 2.8vh, 36px);
-  width: 100%;
-}
-
-.info-section {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(6px, 0.9vh, 12px);
-}
-
-.info-section-title {
-  margin: 0;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(20px, 2.1vw, 32px);
-  font-weight: 700;
-  color: #1a1a2e;
-  letter-spacing: 0.01em;
-}
-
-.info-section-entries {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(5px, 0.8vh, 10px);
-  padding-left: clamp(2px, 0.3vw, 6px);
+  gap: 6px;
+  padding-top: 2px;
 }
 
 .entry {
   display: flex;
-  gap: clamp(16px, 2.4vw, 40px);
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .entry-year {
-  font-family: 'Pretendard Variable', sans-serif;
-  font-size: clamp(12px, 1.05vw, 16px);
-  font-weight: 400;
-  color: #5a6a8a;
-  flex-shrink: 0;
-  min-width: clamp(108px, 10.5vw, 160px);
-  line-height: 1.75;
-  letter-spacing: 0.005em;
+  color: rgba(0, 0, 0, 0.82);
+  font-size: clamp(9px, 0.7vw, 11px);
+  font-weight: 700;
 }
 
 .entry-desc {
-  font-family: 'Pretendard Variable', sans-serif;
-  font-size: clamp(12px, 1.05vw, 16px);
-  font-weight: 500;
-  color: #1a1a2e;
-  line-height: 1.75;
+  color: rgba(0, 0, 0, 0.86);
 }
 
-/* ══════════════════════════════════════
-   반응형
-   ══════════════════════════════════════ */
-@media (max-width: 900px) {
-  .about-panel {
-    width: 100%;
+@keyframes introFade {
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
   }
-  .about-top {
-    flex-direction: column;
-    align-items: center;
+}
+
+@keyframes cardDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-54vh) rotate(var(--drop-tilt, 0deg)) scale(0.985);
   }
-  .about-tagline {
-    text-align: center;
+  42% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+@media (max-width: 1200px) {
+  .about-intro {
+    width: 46vw;
+  }
+
+  .about-intro p {
+    font-size: clamp(22px, 2.4vw, 30px);
+  }
+
+  .about-profile {
+    width: clamp(220px, 28vw, 330px);
+    margin-top: clamp(42px, 7vh, 68px);
+  }
+
+  .about-card {
+    width: clamp(132px, 18vw, 210px);
+    height: clamp(230px, 42vh, 380px);
+  }
+
+  .about-card-surface {
+    padding: 12px;
+  }
+
+  .about-card-bio {
+    left: 3.2vw;
+    bottom: 5vh;
+    height: 52vh;
+  }
+
+  .about-card-skills {
+    left: 23vw;
+    top: 6vh;
+    height: 43vh;
+  }
+
+  .about-card-history {
+    right: 21vw;
+    top: 34vh;
+    height: 40vh;
+  }
+
+  .about-card-bloom {
+    right: 3vw;
+    top: 5vh;
+    height: 48vh;
+  }
+}
+
+@media (max-width: 760px) {
+  .about-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .about-intro {
+    top: 10vh;
+    width: 58vw;
+  }
+
+  .about-intro p {
+    font-size: 18px;
+  }
+
+  .about-profile {
+    width: 220px;
+    max-height: 40vh;
+    margin-top: 24px;
+  }
+
+  .about-card {
+    width: 32vw;
+    height: 25vh;
+    min-height: 0;
+  }
+
+  .about-card-surface {
+    padding: 9px;
+  }
+
+  .about-card h2 {
+    font-size: 18px;
+  }
+
+  .about-card-content {
+    font-size: 9px;
+    line-height: 1.35;
+  }
+
+  .about-card-flower {
+    width: 80px;
+    top: 12%;
+  }
+
+  .about-card-bio {
+    left: 4vw;
+    top: 40vh;
+  }
+
+  .about-card-skills {
+    left: 4vw;
+    top: 10vh;
+  }
+
+  .about-card-history {
+    right: 4vw;
+    top: 42vh;
+  }
+
+  .about-card-bloom {
+    right: 4vw;
+    top: 10vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-panel,
+  .about-card,
+  .about-card-surface {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .about-panel.open,
+  .about-panel.open .about-card,
+  .about-panel.open .about-card-surface {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (hover: none) {
+  .about-card-caption {
+    display: none;
+  }
+
+  .about-card:hover .about-card-surface {
+    transform: none;
   }
 }
