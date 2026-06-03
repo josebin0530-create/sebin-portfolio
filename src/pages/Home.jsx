@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import './Home.css';
 
-export default function Home({ onEnter, panelOpen }) {
+export default function Home({ onEnter, panelOpen, isReturning }) {
   const heroRef = useRef(null);
   const cursorRef = useRef(null);
   const hasEntered = useRef(false);
@@ -75,6 +75,7 @@ export default function Home({ onEnter, panelOpen }) {
       className={[
         'hero',
         panelOpen ? 'panel-open' : '',
+        isReturning ? 'returning' : '',
         isHoverTitle ? 'title-hovered' : '',
         isClicked ? 'title-clicked' : '',
         isTransitioning ? 'hero-transitioning' : '',
@@ -117,21 +118,31 @@ export default function Home({ onEnter, panelOpen }) {
         </div>
       )}
 
-      <nav className="hero-nav" onClick={e => e.stopPropagation()}>
-        <a className="hero-nav-link" onClick={() => onEnter?.()}>About Me</a>
-        <a className="hero-nav-link">My Projects</a>
-        <a className="hero-nav-link">Contact Me</a>
+      {/* 왼쪽 사이드바 네비게이션 */}
+      <nav className="hero-sidebar" onClick={e => e.stopPropagation()}>
+        <div className="sidebar-item">
+          <div className="sidebar-node">
+            <img src="/aboutme_label.png" className="sidebar-icon" alt="" aria-hidden="true" draggable="false" />
+          </div>
+          <a className="sidebar-link" onClick={() => onEnter?.()}>ABout me</a>
+        </div>
+        <div className="sidebar-item">
+          <div className="sidebar-node">
+            <img src="/myproject_label.png" className="sidebar-icon" alt="" aria-hidden="true" draggable="false" />
+          </div>
+          <a className="sidebar-link">MY Projects</a>
+        </div>
+        <div className="sidebar-item">
+          <div className="sidebar-node">
+            <img src="/contactme_label.png" className="sidebar-icon" alt="" aria-hidden="true" draggable="false" />
+          </div>
+          <a className="sidebar-link">Contact me</a>
+        </div>
       </nav>
 
-      <img
-        src="/background_flower.png"
-        className="hero-flower"
-        alt=""
-        aria-hidden="true"
-        draggable="false"
-      />
 
-      <div className="hero-bottom">
+      {/* 중앙 메인 콘텐츠 */}
+      <div className="hero-center">
         <p className="hero-hint">Click anywhere to begin</p>
         <h1
           className="hero-title"
@@ -154,7 +165,11 @@ export default function Home({ onEnter, panelOpen }) {
           <span className="title-char">n</span>
           <span className="title-char">g</span>
         </h1>
+        <p className="hero-sub">
+          <strong>작은 경험</strong>을 천천히 <strong>꽃</strong>피우는 디자이너, <strong>조세빈</strong> 입니다.
+        </p>
       </div>
+
       <p className="hero-monogram-label">SeBin</p>
     </div>
   );

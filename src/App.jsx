@@ -5,13 +5,18 @@ import './App.css';
 
 export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
+  const [isReturning, setIsReturning] = useState(false);
 
-  const handleEnter = useCallback(() => setPanelOpen(true),  []);
-  const handleClose = useCallback(() => setPanelOpen(false), []);
+  const handleEnter = useCallback(() => setPanelOpen(true), []);
+  const handleClose = useCallback(() => {
+    setIsReturning(true);
+    setPanelOpen(false);
+    setTimeout(() => setIsReturning(false), 100);
+  }, []);
 
   return (
     <>
-      <Home onEnter={handleEnter} panelOpen={panelOpen} />
+      <Home onEnter={handleEnter} panelOpen={panelOpen} isReturning={isReturning} />
 
       {/* 배경 딤 */}
       <div

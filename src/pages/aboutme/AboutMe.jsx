@@ -11,6 +11,10 @@ import ai1Icon from './images/ai_1.svg';
 import ai2Icon from './images/ai_2.svg';
 import ai3Icon from './images/ai_3.svg';
 import ai4Icon from './images/ai_4.svg';
+import hobby1Icon from './images/hobby_1.svg';
+import hobby2Icon from './images/hobby_2.svg';
+import hobby3Icon from './images/hobby_3.svg';
+import hobby4Icon from './images/hobby_4.svg';
 
 const cards = [
   {
@@ -19,12 +23,30 @@ const cards = [
     flower: flower1Img,
     content: (
       <div className="bio-list">
-        <strong>2003.05.30</strong>
-        <span>취미</span>
-        <span>악기 배우기</span>
-        <span>미싱하기</span>
-        <span>드라이브</span>
-        <span>음악듣기</span>
+        <div className="bio-info">
+          <span>2003.05.30</span>
+          <span>서울특별시 광진구</span>
+          <span>jsb20324@naver.com</span>
+        </div>
+        <span className="bio-hobby-label">Things I Love</span>
+        <div className="bio-hobby-grid">
+          <div className="bio-hobby-item">
+            <img src={hobby1Icon} alt="사진찍기" />
+            <span>사진찍기</span>
+          </div>
+          <div className="bio-hobby-item">
+            <img src={hobby2Icon} alt="패브릭공예" />
+            <span>패브릭공예</span>
+          </div>
+          <div className="bio-hobby-item">
+            <img src={hobby3Icon} alt="드라이브" />
+            <span>드라이브</span>
+          </div>
+          <div className="bio-hobby-item">
+            <img src={hobby4Icon} alt="음악듣기" />
+            <span>음악듣기</span>
+          </div>
+        </div>
       </div>
     ),
   },
@@ -34,9 +56,9 @@ const cards = [
     flower: flower2Img,
     content: (
       <>
-        <SkillBar icon={figmaIcon} label="Figma" pct={75} />
+        <SkillBar icon={figmaIcon} label="Figma" pct={80} />
         <SkillBar icon={adobeIcon} label="Adobe Illustrator" pct={43} />
-        <SkillBar icon={vscodeIcon} label="VS Code" pct={55} />
+        <SkillBar icon={vscodeIcon} label="VS Code" pct={75} />
         <span className="tool-note">그외 사용가능 툴</span>
         <div className="about-tool-row" aria-label="AI tools">
           {[ai1Icon, ai2Icon, ai3Icon, ai4Icon].map((icon, index) => (
@@ -53,11 +75,11 @@ const cards = [
     content: (
       <>
         <InfoGroup title="Education">
-          <Entry year="2019.03 - 2022.01" desc="성지고등학교 졸업" />
-          <Entry year="2025.12 - 2026.06" desc="UX/UI 디자인 & 프론트엔드 과정 수료" />
+          <Entry year="2019.03 - 2022.01" desc="태광고등학교 졸업" />
+          <Entry year="2025.12 - 2026.06" desc={<>UX/UI 디자인 & 프론트엔드<br />과정 수료</>} />
         </InfoGroup>
         <InfoGroup title="Experience">
-          <Entry year="2022.02 - 2025.07" desc="주식회사 이디비코리아 카페 매니저" />
+          <Entry year="2022.02 - 2025.07" desc={<>주식회사 더케이비코리아<br />카페 매니저</>} />
         </InfoGroup>
         <InfoGroup title="License">
           <Entry year="2025" desc="웹디자인개발기능사 필기" />
@@ -68,9 +90,24 @@ const cards = [
   },
   {
     className: 'about-card-bloom',
-    title: 'Bloom',
+    title: 'Values',
     flower: flower4Img,
-    content: null,
+    content: (
+      <div className="values-list">
+        <div className="value-item">
+          <span className="value-title">👀 관찰</span>
+          <span className="value-desc">작은 변화도 놓치지 않고<br />바라봅니다.</span>
+        </div>
+        <div className="value-item">
+          <span className="value-title">✨ 실행</span>
+          <span className="value-desc">생각에 머무르지 않고 직접<br />만들어봅니다.</span>
+        </div>
+        <div className="value-item">
+          <span className="value-title">🌱 성장</span>
+          <span className="value-desc">끊임없이 배우고 발전해<br />나아갑니다.</span>
+        </div>
+      </div>
+    ),
   },
 ];
 
