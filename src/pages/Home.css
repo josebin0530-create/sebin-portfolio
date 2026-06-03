@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Alumni+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
 /* ── 전체 래퍼 ── */
 .hero {
@@ -8,10 +9,10 @@
   min-height: 580px;
   overflow: hidden;
   transition: opacity 0.7s ease, filter 0.7s ease;
-  cursor: none; /* 커스텀 커서 사용 */
+  cursor: none;
 }
 
-/* ── 비디오 배경 (blur 없음) ── */
+/* ── 비디오 배경 ── */
 .hero-video {
   position: absolute;
   inset: 0;
@@ -44,73 +45,119 @@
   opacity: 0.72;
 }
 
-/* ── 상단 네비게이션 (글래스 pill) ── */
-.hero-nav,
-.hero-bottom,
+/* ══════════════════════════════════════════════════
+   왼쪽 사이드바 네비게이션
+   ══════════════════════════════════════════════════ */
+
+.hero-sidebar,
+.hero-center,
 .hero-flower {
   transition: opacity 0.35s ease;
 }
 
-.hero-nav {
+.hero-sidebar {
   position: absolute;
-  top: clamp(20px, 3.5vh, 44px);
-  left: 50%;
-  transform: translateX(-50%);
+  left: clamp(24px, 3vw, 52px);
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 10;
   display: flex;
-  align-items: center;
-  gap: clamp(24px, 4vw, 64px);
-  padding: clamp(10px, 1.4vh, 16px) clamp(32px, 4vw, 60px);
-  background: rgba(160, 175, 210, 0.22);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 999px;
+  flex-direction: column;
+  justify-content: space-between;
+  height: clamp(440px, 86vh, 760px);
   opacity: 0;
   animation: fadeIn 1.2s ease 0.3s forwards;
 }
 
-.hero-nav-link {
+/* 수직 라인 */
+.hero-sidebar::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 8%,
+    rgba(255, 255, 255, 0.55) 92%,
+    transparent 100%
+  );
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.2vw, 18px);
+  position: relative;
+}
+
+/* 아이콘 자리 (나중에 이미지 교체) */
+.sidebar-node {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.sidebar-icon {
+  width: clamp(32px, 3vw, 48px);
+  height: clamp(32px, 3vw, 48px);
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.28));
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.sidebar-item:hover .sidebar-icon {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.55));
+  transform: scale(1.12);
+}
+
+.sidebar-link {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(17px, 1.7vw, 26px);
-  font-weight: 700;
+  font-size: clamp(16px, 1.4vw, 22px);
+  font-weight: 600;
   font-style: italic;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.80);
   text-decoration: none;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   white-space: nowrap;
   cursor: pointer;
   position: relative;
-  padding-bottom: 3px;
+  padding-bottom: 2px;
   transition: color 0.25s ease, transform 0.2s ease;
 }
 
-/* 호버 시 언더라인이 왼쪽에서 오른쪽으로 슬라이드 */
-.hero-nav-link::after {
+.sidebar-link::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   width: 0;
-  height: 0.7px;
-  background: rgba(255, 255, 255, 0.90);
+  height: 0.6px;
+  background: rgba(255, 255, 255, 0.88);
   border-radius: 2px;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hero-nav-link:hover {
+.sidebar-link:hover {
   color: #fff;
-  transform: translateY(-1px);
+  transform: translateX(2px);
 }
 
-.hero-nav-link:hover::after {
+.sidebar-link:hover::after {
   width: 100%;
 }
 
-/* 클릭 시 살짝 눌리는 느낌 */
-.hero-nav-link:active {
-  transform: translateY(1px) scale(0.96);
-  color: rgba(255, 255, 255, 0.70);
+.sidebar-link:active {
+  transform: translateX(2px) scale(0.96);
+  color: rgba(255, 255, 255, 0.65);
   transition: transform 0.08s ease, color 0.08s ease;
 }
 
@@ -133,62 +180,66 @@
   50%       { transform: scale(1.018); opacity: 0.96; }
 }
 
-/* ── 하단 타이틀 영역 ── */
-.hero-bottom {
+/* ══════════════════════════════════════════════════
+   중앙 메인 콘텐츠
+   ══════════════════════════════════════════════════ */
+
+.hero-center {
   position: absolute;
-  bottom: -0.28em;
+  top: 50%;
   left: 0;
   right: 0;
+  transform: translateY(-50%);
   z-index: 3;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding-left: clamp(10px, 0.8vw, 20px);
+  align-items: center;
+  pointer-events: none;
 }
 
-/* ── 하단 힌트 텍스트 ── */
+/* ── 힌트 텍스트 ── */
 .hero-hint {
   align-self: center;
-  margin: 0 0 clamp(2px, 0.6vh, 8px);
-  padding-left: 0;
-  color: rgba(255, 255, 255, 0.72);
+  margin: 0 0 clamp(4px, 0.8vh, 12px);
+  color: rgba(255, 255, 255, 0.70);
   font-family: 'Alumni Sans', sans-serif;
-  font-size: clamp(12px, 1.1vw, 16px);
+  font-size: clamp(12px, 1vw, 15px);
   font-weight: 400;
   letter-spacing: 0.22em;
   text-align: center;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
   animation: hintPulse 3.4s ease-in-out 2.2s infinite;
+  pointer-events: none;
 }
 
 @keyframes hintPulse {
   0%   { opacity: 0;    }
-  25%  { opacity: 0.72; }
-  75%  { opacity: 0.72; }
+  25%  { opacity: 0.70; }
+  75%  { opacity: 0.70; }
   100% { opacity: 0;    }
 }
 
-/* ── 메인 타이틀 (유리 효과) ── */
+/* ── 메인 타이틀 (Allura 스크립트) ── */
 .hero-title {
   margin: 0;
-  font-family: 'Alumni Sans', sans-serif;
-  font-size: clamp(100px, 27vw, 520px);
-  font-weight: 600;
+  font-family: 'Allura', cursive;
+  font-size: clamp(60px, 18vw, 280px);
+  font-weight: 400;
   font-style: normal;
-  line-height: 0.85;
-  letter-spacing: -0.01em;
+  line-height: 1;
+  letter-spacing: 0.02em;
   white-space: nowrap;
 
-  /* 유리 효과: 반투명 + 흰 테두리 + 위/아래 그림자로 두께감 */
   color: rgba(208, 216, 178, 0.52);
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.28);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.30);
   text-shadow:
-    0  -2px  0   rgba(255, 255, 255, 0.35),
+    0  -2px  0   rgba(255, 255, 255, 0.32),
     0   2px  0   rgba(0,   0,   0,   0.10),
     0   8px 40px rgba(0,   0,   0,   0.12);
 
   opacity: 0;
   animation: fadeUp 2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+  pointer-events: auto;
 }
 
 .title-char,
@@ -205,17 +256,17 @@
 }
 
 .title-space {
-  width: 0.18em;
+  width: 0.12em;
 }
 
 .hero.title-hovered .title-char {
-  opacity: 0.62;
-  filter: blur(0.6px);
+  opacity: 0.58;
+  filter: blur(0.5px);
 }
 
 .hero.title-hovered .title-char.is-s,
 .hero.title-hovered .title-char.is-b {
-  opacity: 0.9;
+  opacity: 0.92;
   filter: blur(0);
 }
 
@@ -229,8 +280,9 @@
 .hero.title-clicked .title-char.is-s,
 .hero.title-clicked .title-char.is-b {
   opacity: 0;
-  filter: blur(0);
-  transition-duration: 0.65s;
+  filter: blur(1.5px);
+  transform: scale(1.06);
+  transition-duration: 0.7s;
   transition-delay: 0.4s;
 }
 
@@ -245,21 +297,44 @@
   opacity: 0 !important;
 }
 
+/* ── 서브텍스트 ── */
+.hero-sub {
+  width: 100%;
+  margin: clamp(10px, 1.6vh, 22px) 0 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: 'Pretendard', sans-serif;
+  font-size: clamp(24px, 2.8vw, 40px);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  text-align: center;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.38);
+  opacity: 0;
+  animation: fadeUp 1.8s cubic-bezier(0.22, 1, 0.36, 1) 1.1s forwards;
+  pointer-events: auto;
+}
+
+.hero-sub strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ── 전환 모노그램 레이블 ── */
 .hero-monogram-label {
   position: fixed;
   left: 50%;
   top: 48%;
   z-index: 6;
   margin: 0;
-  color: rgba(208, 216, 178, 0.58);
-  font-family: 'Alumni Sans', sans-serif;
+  color: rgba(208, 216, 178, 0.52);
+  font-family: 'Allura', cursive;
   font-size: clamp(108px, 18vw, 320px);
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 0.85;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   white-space: nowrap;
-  -webkit-text-stroke: 1.3px rgba(255, 255, 255, 0.28);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.30);
   opacity: 0;
   pointer-events: none;
   text-shadow:
@@ -270,8 +345,8 @@
   transition:
     left 0.95s cubic-bezier(0.22, 1, 0.36, 1),
     top 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.75s ease 0.38s,
-    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.85s ease 0.45s,
+    transform 1.0s cubic-bezier(0.22, 1, 0.36, 1) 0.45s;
 }
 
 .hero.title-clicked .hero-monogram-label {
@@ -300,6 +375,11 @@
   transition: none;
 }
 
+.hero.returning .hero-monogram-label {
+  opacity: 0 !important;
+  transition: none !important;
+}
+
 /* ── 공통 애니메이션 ── */
 @keyframes fadeUp {
   from {
@@ -321,13 +401,12 @@
    씨앗 커서 & 낙하 & 먼지 이펙트
    ══════════════════════════════════════════════════ */
 
-/* 커스텀 커서 */
 .seed-cursor {
   position: absolute;
   pointer-events: none;
   z-index: 50;
-  opacity: 0;                      /* mousemove 시 JS로 1로 변경 */
-  left: -100px;                    /* 초기 위치 화면 밖 */
+  opacity: 0;
+  left: -100px;
   top: -100px;
   transform: translate(-50%, -50%);
   transition: opacity 0.18s ease;
@@ -340,7 +419,6 @@
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.28));
 }
 
-/* 낙하 씨앗 래퍼 */
 .seed-fall-wrap {
   position: absolute;
   pointer-events: none;
@@ -349,7 +427,6 @@
   --drop-distance: calc(100svh - var(--seed-y, 0px) - clamp(48px, 8vh, 78px));
 }
 
-/* 낙하 씨앗 */
 .seed-fall-img {
   width: clamp(32px, 3.2vw, 46px);
   height: clamp(32px, 3.2vw, 46px);
@@ -365,7 +442,6 @@
   100% { transform: translateY(var(--drop-distance)) rotate(18deg) scale(0.9); opacity: 1; }
 }
 
-/* 착지 글로우 링 */
 .seed-glow {
   position: absolute;
   left: 50%;
@@ -389,7 +465,6 @@
   100% { transform: translate(-50%, -50%) scale(5.4); opacity: 0;    }
 }
 
-/* 먼지 파티클 */
 .dust-dot {
   position: absolute;
   left: 50%;
@@ -415,9 +490,9 @@
   }
 }
 
-/* ── 패널 열릴 때: 히어로 텍스트 요소 페이드아웃 ── */
-.hero.panel-open .hero-nav,
-.hero.panel-open .hero-bottom,
+/* ── 패널 열릴 때: 히어로 요소 페이드아웃 ── */
+.hero.panel-open .hero-sidebar,
+.hero.panel-open .hero-center,
 .hero.panel-open .hero-flower,
 .hero.panel-open .hero-hint {
   opacity: 0 !important;
@@ -425,7 +500,6 @@
   transition: opacity 0.35s ease;
 }
 
-/* 커서도 숨김 */
 .hero.panel-open .seed-cursor {
   opacity: 0 !important;
 }
@@ -433,13 +507,18 @@
 /* ── 반응형 ── */
 @media (max-width: 768px) {
   .hero-title {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.25);
+    -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.25);
   }
 
   .hero-flower {
     width: clamp(100px, 24vw, 160px);
     right: clamp(-58px, -10vw, -24px);
     bottom: clamp(16px, 5vh, 48px);
+  }
+
+  .hero-sidebar {
+    left: clamp(16px, 3vw, 28px);
+    height: clamp(220px, 50vh, 360px);
   }
 }
 

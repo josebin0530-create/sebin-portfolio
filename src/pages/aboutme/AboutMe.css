@@ -133,18 +133,18 @@
   width: 100%;
   height: 100%;
   padding: clamp(12px, 1.5vw, 24px);
-  border: 1px solid rgba(255, 255, 255, 0.92);
+  border: none;
   border-radius: var(--about-card-radius);
   background:
     radial-gradient(
       circle at var(--mx) var(--my),
-      rgba(255, 255, 255, 0.22),
+      rgba(255, 255, 255, 0.08),
       transparent 36%
     ),
-    rgba(235, 239, 224, 0.22);
+    rgba(111, 108, 108, 0.25);
   color: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 22px 72px rgba(10, 20, 16, 0.14);
-  backdrop-filter: blur(4px) saturate(0.92);
+  box-shadow: 0 22px 72px rgba(10, 20, 16, 0.28);
+  backdrop-filter: blur(6px) saturate(0.85);
   transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(1);
   transform-style: preserve-3d;
   transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.42s ease, background 0.42s ease;
@@ -160,7 +160,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: none;
   border-radius: var(--about-card-radius);
   pointer-events: none;
 }
@@ -197,11 +197,11 @@
   position: absolute;
   left: 50%;
   top: 11%;
-  width: clamp(86px, 9.6vw, 182px);
-  max-height: 42%;
+  width: clamp(64px, 7vw, 130px);
+  max-height: 34%;
   object-fit: contain;
   opacity: 0.78;
-  filter: grayscale(1) brightness(1.68) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.13));
+  filter: brightness(1.12) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.13));
   transform: translateX(-50%);
   pointer-events: none;
   user-select: none;
@@ -226,7 +226,7 @@
   flex-direction: column;
   gap: clamp(5px, 0.8vh, 10px);
   font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
-  font-size: clamp(10px, 0.72vw, 13px);
+  font-size: clamp(13px, 1.05vw, 17px);
   font-weight: 500;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.88);
@@ -253,8 +253,16 @@
   --drop-tilt: -2deg;
   right: clamp(300px, 19.2vw, 368px);
   top: clamp(250px, 24.4vh, 264px);
-  width: clamp(210px, 13.6vw, 260px);
-  height: clamp(360px, 46.5vh, 504px);
+  width: clamp(230px, 15vw, 290px);
+  height: clamp(400px, 52vh, 560px);
+}
+
+.about-card-history .about-card-content {
+  gap: clamp(12px, 2vh, 20px);
+}
+
+.about-card-history .info-group {
+  gap: 6px;
 }
 
 .about-card-bloom {
@@ -266,31 +274,97 @@
 }
 
 .about-card-bloom .about-card-surface {
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .about-card-bloom .about-card-flower {
-  top: 11%;
-  width: clamp(138px, 11.2vw, 214px);
+  top: 6%;
+  width: clamp(110px, 9vw, 170px);
+}
+
+.values-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.2vh, 14px);
+  text-align: center;
+}
+
+.value-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.value-title {
+  font-size: clamp(15px, 1.2vw, 20px);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.96);
+  line-height: 1.2;
+}
+
+.value-desc {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.45;
 }
 
 .bio-list {
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 1.5vh, 16px);
+  gap: clamp(10px, 1.6vh, 18px);
   color: rgba(255, 255, 255, 0.94);
-  font-size: clamp(22px, 1.65vw, 32px);
-  line-height: 1.2;
 }
 
-.bio-list strong {
-  font-size: clamp(26px, 1.85vw, 36px);
+.bio-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+  font-size: 20px;
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.90);
+}
+
+.bio-hobby-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.94);
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
+}
+
+.bio-hobby-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(8px, 1.2vh, 14px) clamp(6px, 0.8vw, 12px);
+}
+
+.bio-hobby-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.bio-hobby-item img {
+  width: clamp(44px, 4vw, 68px);
+  height: clamp(44px, 4vw, 68px);
+  object-fit: contain;
+}
+
+.bio-hobby-item span {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  text-align: center;
 }
 
 .tool-note {
   color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(10px, 0.78vw, 13px);
+  font-size: clamp(12px, 0.95vw, 15px);
 }
 
 .info-group {
@@ -301,43 +375,44 @@
 
 .info-group h3 {
   margin: 0;
-  color: rgba(24, 30, 18, 0.86);
+  color: rgba(255, 255, 255, 0.95);
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(15px, 1.05vw, 18px);
+  font-size: clamp(19px, 1.4vw, 24px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
   line-height: 1.1;
-  text-shadow: none;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
 }
 
 .skill-item {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .skill-item-left {
   display: grid;
-  grid-template-columns: 22px minmax(58px, 1fr);
+  grid-template-columns: 30px minmax(70px, 1fr);
   align-items: center;
-  gap: 6px;
-  min-width: 92px;
+  gap: 8px;
+  min-width: 108px;
 }
 
 .skill-icon,
 .about-tool-row img {
-  width: clamp(19px, 1.5vw, 26px);
-  height: clamp(19px, 1.5vw, 26px);
+  width: clamp(24px, 2vw, 34px);
+  height: clamp(24px, 2vw, 34px);
   object-fit: contain;
   border-radius: 5px;
 }
 
 .skill-label {
-  font-size: clamp(9px, 0.7vw, 11px);
+  font-size: clamp(13px, 1.1vw, 17px);
   white-space: nowrap;
 }
 
 .skill-track {
-  flex: 1;
-  min-width: 42px;
+  width: 100%;
   height: 6px;
   border-radius: 999px;
   overflow: hidden;
@@ -363,13 +438,14 @@
 }
 
 .entry-year {
-  color: rgba(0, 0, 0, 0.82);
-  font-size: clamp(9px, 0.7vw, 11px);
+  color: rgba(255, 255, 255, 0.70);
+  font-size: clamp(12px, 0.95vw, 15px);
   font-weight: 700;
 }
 
 .entry-desc {
-  color: rgba(0, 0, 0, 0.86);
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 700;
 }
 
 @keyframes introFade {
