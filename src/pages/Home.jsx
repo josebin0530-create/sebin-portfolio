@@ -9,6 +9,7 @@ export default function Home({ onEnter, panelOpen }) {
   const [isHoverTitle, setIsHoverTitle] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [seedFall, setSeedFall] = useState(null);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -35,9 +36,19 @@ export default function Home({ onEnter, panelOpen }) {
     };
   }, []);
 
-  const handleHeroClick = useCallback(() => {
+  const handleHeroClick = useCallback((e) => {
     if (hasEntered.current) return;
     hasEntered.current = true;
+
+    const hero = heroRef.current;
+    const rect = hero?.getBoundingClientRect();
+    if (rect) {
+      setSeedFall({
+        id: Date.now(),
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    }
 
     if (cursorRef.current) cursorRef.current.style.opacity = '0';
 
@@ -49,13 +60,14 @@ export default function Home({ onEnter, panelOpen }) {
     }
 
     setIsClicked(true);
-    setTimeout(() => setIsTransitioning(true), 1050);
-    setTimeout(() => onEnter?.(), 1320);
+    setTimeout(() => setIsTransitioning(true), 820);
+    setTimeout(() => onEnter?.(), 1120);
     setTimeout(() => {
       setIsClicked(false);
       setIsTransitioning(false);
+      setSeedFall(null);
       hasEntered.current = false;
-    }, 2400);
+    }, 2300);
   }, [onEnter]);
 
   return (
@@ -77,6 +89,33 @@ export default function Home({ onEnter, panelOpen }) {
       <div ref={cursorRef} className="seed-cursor" aria-hidden="true">
         <img src="/seed.svg" alt="" draggable="false" />
       </div>
+
+      {seedFall && (
+        <div
+          key={seedFall.id}
+          className="seed-fall-wrap"
+          aria-hidden="true"
+          style={{
+            left: `${seedFall.x}px`,
+            top: `${seedFall.y}px`,
+            '--seed-y': `${seedFall.y}px`,
+          }}
+        >
+          <img src="/seed.svg" className="seed-fall-img" alt="" draggable="false" />
+          <span className="seed-glow" />
+          {Array.from({ length: 10 }).map((_, index) => (
+            <span
+              key={index}
+              className="dust-dot"
+              style={{
+                '--tx': `${Math.cos(index * 0.8) * (26 + index * 2)}px`,
+                '--ty': `${Math.sin(index * 0.8) * (18 + index)}px`,
+                '--di': `${0.78 + index * 0.025}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <nav className="hero-nav" onClick={e => e.stopPropagation()}>
         <a className="hero-nav-link" onClick={() => onEnter?.()}>About Me</a>
