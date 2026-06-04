@@ -31,28 +31,6 @@
   pointer-events: none;
 }
 
-.about-close {
-  position: absolute;
-  top: clamp(16px, 2.4vh, 30px);
-  right: clamp(16px, 2.5vw, 42px);
-  z-index: 8;
-  border: 1px solid rgba(255, 255, 255, 0.64);
-  background: rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.86);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(14px, 1vw, 18px);
-  font-weight: 700;
-  line-height: 1;
-  padding: 8px 15px 9px;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.about-close:hover {
-  background: rgba(255, 255, 255, 0.32);
-  transform: translateY(-1px);
-}
 
 .about-field {
   position: relative;
@@ -518,11 +496,6 @@
 }
 
 @media (max-width: 760px) {
-  .about-close {
-    top: 12px;
-    right: 12px;
-  }
-
   .about-intro {
     top: 10vh;
     width: 58vw;
