@@ -7,16 +7,3 @@ body {
   padding: 0;
   overflow: hidden;
 }
-
-/* 패널 열릴 때 배경 딤 */
-.about-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 49;
-  background: transparent;
-  pointer-events: none;
-}
-
-.about-backdrop.open {
-  pointer-events: all;
-}

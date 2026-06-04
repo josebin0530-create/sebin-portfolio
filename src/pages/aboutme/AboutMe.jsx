@@ -111,7 +111,7 @@ const cards = [
   },
 ];
 
-export default function AboutMe({ open = false, onClose }) {
+export default function AboutMe({ open = false }) {
   const handleCardMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -134,10 +134,6 @@ export default function AboutMe({ open = false, onClose }) {
 
   return (
     <section className={`about-panel${open ? ' open' : ''}`} aria-hidden={!open}>
-      <button className="about-close" onClick={onClose} aria-label="About Me 닫기">
-        Close
-      </button>
-
       <div className="about-intro" aria-label="조세빈 소개">
         <p>
           작은 경험의 <strong>씨앗</strong>을 모아<br />

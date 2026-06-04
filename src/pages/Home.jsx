@@ -1,154 +1,158 @@
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import './Home.css';
 
-export default function Home({ onEnter, panelOpen, isReturning }) {
-  const heroRef = useRef(null);
-  const cursorRef = useRef(null);
-  const hasEntered = useRef(false);
+export default function Home({ onEnter, panelOpen }) {
+  const heroRef        = useRef(null);
+  const flowerVideoRef = useRef(null);
+  const flowerWrapRef  = useRef(null);
+  const heroCenterRef  = useRef(null);
+  const heroNavRef     = useRef(null);
+  const progressBarRef = useRef(null);
+  const hasEntered     = useRef(false);
+  const progressRef    = useRef(0);
+  const targetRef      = useRef(0);
+  const rafRef         = useRef(null);
 
-  const [isHoverTitle, setIsHoverTitle] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [seedFall, setSeedFall] = useState(null);
 
   useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero) return;
+    if (panelOpen) return;
 
-    const onMove = (e) => {
-      const cur = cursorRef.current;
-      if (!cur) return;
-      const r = hero.getBoundingClientRect();
-      cur.style.left = `${e.clientX - r.left}px`;
-      cur.style.top = `${e.clientY - r.top}px`;
-      cur.style.opacity = '1';
+    const schedule = () => {
+      if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
     };
 
-    const onOut = () => {
-      if (cursorRef.current) cursorRef.current.style.opacity = '0';
+    const applyProgress = (p) => {
+      // 꽃: 화면 왼쪽 끝(오른쪽 기울기) → 중앙(직립) + 점점 커짐
+      if (flowerWrapRef.current) {
+        const xOffset  = (1 - p) * -46;        // vw: -46vw → 0  (왼쪽→중앙)
+        const rotation = (1 - p) * 24;         // deg: +24° → 0° (오른쪽 기울기→직립)
+        const scale    = 0.80 + p * 0.42;      // 0.80 → 1.22 (점점 커짐)
+        flowerWrapRef.current.style.transform =
+          `translateX(calc(-50% + ${xOffset}vw)) rotate(${rotation}deg) scale(${scale})`;
+      }
+
+      // 텍스트 페이드 아웃
+      const textOp = Math.max(0, 1 - p * 2.8);
+      if (heroCenterRef.current) heroCenterRef.current.style.opacity = textOp;
+      if (heroNavRef.current)    heroNavRef.current.style.opacity    = Math.max(0.12, textOp);
+
+      // 진행 바
+      if (progressBarRef.current) progressBarRef.current.style.width = `${p * 100}%`;
+
+      // 진행도 끝에서 패널 오픈
+      if (p >= 0.97 && !hasEntered.current) {
+        hasEntered.current = true;
+        setIsTransitioning(true);
+        setTimeout(() => {
+          onEnter?.();
+          setTimeout(() => {
+            setIsTransitioning(false);
+            progressRef.current = 1;
+            targetRef.current   = 1;
+            hasEntered.current  = false;
+            if (heroCenterRef.current)  heroCenterRef.current.style.opacity   = '';
+            if (heroNavRef.current)     heroNavRef.current.style.opacity      = '';
+            if (progressBarRef.current) progressBarRef.current.style.width    = '100%';
+          }, 1500);
+        }, 200);
+      }
     };
 
-    hero.addEventListener('mousemove', onMove);
-    hero.addEventListener('mouseleave', onOut);
+    const tick = () => {
+      rafRef.current = null;
+      const diff = targetRef.current - progressRef.current;
+      if (Math.abs(diff) < 0.0003) {
+        progressRef.current = targetRef.current;
+      } else {
+        progressRef.current += diff * 0.1;
+        schedule();
+      }
+      applyProgress(progressRef.current);
+    };
+
+    const onWheel = (e) => {
+      if (hasEntered.current) return;
+      e.preventDefault();
+      targetRef.current = Math.max(0, Math.min(1, targetRef.current + e.deltaY * 0.0007));
+      schedule();
+    };
+
+    let ty = 0;
+    const onTouchStart = (e) => { ty = e.touches[0].clientY; };
+    const onTouchMove  = (e) => {
+      if (hasEntered.current) return;
+      e.preventDefault();
+      const d = ty - e.touches[0].clientY;
+      ty = e.touches[0].clientY;
+      targetRef.current = Math.max(0, Math.min(1, targetRef.current + d * 0.003));
+      schedule();
+    };
+
+    window.addEventListener('wheel',      onWheel,      { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { passive: true  });
+    window.addEventListener('touchmove',  onTouchMove,  { passive: false });
+
     return () => {
-      hero.removeEventListener('mousemove', onMove);
-      hero.removeEventListener('mouseleave', onOut);
+      window.removeEventListener('wheel',      onWheel);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove',  onTouchMove);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
-
-  const handleHeroClick = useCallback((e) => {
-    if (hasEntered.current) return;
-    hasEntered.current = true;
-
-    const hero = heroRef.current;
-    const rect = hero?.getBoundingClientRect();
-    if (rect) {
-      setSeedFall({
-        id: Date.now(),
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-    }
-
-    if (cursorRef.current) cursorRef.current.style.opacity = '0';
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) {
-      onEnter?.();
-      hasEntered.current = false;
-      return;
-    }
-
-    setIsClicked(true);
-    setTimeout(() => setIsTransitioning(true), 820);
-    setTimeout(() => onEnter?.(), 1120);
-    setTimeout(() => {
-      setIsClicked(false);
-      setIsTransitioning(false);
-      setSeedFall(null);
-      hasEntered.current = false;
-    }, 2300);
-  }, [onEnter]);
+  }, [panelOpen, onEnter]);
 
   return (
     <div
       className={[
         'hero',
-        panelOpen ? 'panel-open' : '',
-        isReturning ? 'returning' : '',
-        isHoverTitle ? 'title-hovered' : '',
-        isClicked ? 'title-clicked' : '',
+        panelOpen       ? 'panel-open'        : '',
         isTransitioning ? 'hero-transitioning' : '',
       ].filter(Boolean).join(' ')}
       ref={heroRef}
-      onClick={handleHeroClick}
     >
-      <video className="hero-video" autoPlay muted loop playsInline aria-hidden="true">
-        <source src="/main_bg.mp4" type="video/mp4" />
-      </video>
+      {/* 배경 이미지 */}
+      <img className="hero-bg" src="/mainvisual.png" alt="" aria-hidden="true" draggable="false" />
 
-      <div ref={cursorRef} className="seed-cursor" aria-hidden="true">
-        <img src="/seed.svg" alt="" draggable="false" />
+      {/* 꽃 영상 — 스크롤 드리븐 */}
+      <div ref={flowerWrapRef} className="hero-flower-wrap" aria-hidden="true">
+        <video
+          ref={flowerVideoRef}
+          className="hero-flower-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        >
+          <source src="/main_flower.webm" type="video/webm" />
+          <source src="/main_flower.mov"  type="video/quicktime" />
+        </video>
       </div>
 
-      {seedFall && (
-        <div
-          key={seedFall.id}
-          className="seed-fall-wrap"
-          aria-hidden="true"
-          style={{
-            left: `${seedFall.x}px`,
-            top: `${seedFall.y}px`,
-            '--seed-y': `${seedFall.y}px`,
-          }}
-        >
-          <img src="/seed.svg" className="seed-fall-img" alt="" draggable="false" />
-          <span className="seed-glow" />
-          {Array.from({ length: 10 }).map((_, index) => (
-            <span
-              key={index}
-              className="dust-dot"
-              style={{
-                '--tx': `${Math.cos(index * 0.8) * (26 + index * 2)}px`,
-                '--ty': `${Math.sin(index * 0.8) * (18 + index)}px`,
-                '--di': `${0.78 + index * 0.025}s`,
-              }}
-            />
-          ))}
-        </div>
-      )}
+      {/* 스크롤 진행 바 */}
+      <div className="scroll-progress-track" aria-hidden="true">
+        <div ref={progressBarRef} className="scroll-progress-bar" />
+      </div>
 
-      {/* 왼쪽 사이드바 네비게이션 */}
-      <nav className="hero-sidebar" onClick={e => e.stopPropagation()}>
-        <div className="sidebar-item">
-          <div className="sidebar-node">
-            <img src="/aboutme_label.png" className="sidebar-icon" alt="" aria-hidden="true" draggable="false" />
-          </div>
-          <a className="sidebar-link" onClick={() => onEnter?.()}>ABout me</a>
+      {/* 상단 수평 네비게이션 */}
+      <nav ref={heroNavRef} className="hero-nav-top" onClick={e => e.stopPropagation()}>
+        <div className="nav-item">
+          <img src="/aboutme_label.png" className="nav-icon" alt="" aria-hidden="true" draggable="false" />
+          <a className="nav-link" onClick={() => onEnter?.()}>ABout me</a>
         </div>
-        <div className="sidebar-item">
-          <div className="sidebar-node">
-            <img src="/myproject_label.png" className="sidebar-icon" alt="" aria-hidden="true" draggable="false" />
-          </div>
-          <a className="sidebar-link">MY Projects</a>
+        <div className="nav-item center">
+          <img src="/myproject_label.png" className="nav-icon" alt="" aria-hidden="true" draggable="false" />
+          <a className="nav-link">MY Projects</a>
         </div>
-        <div className="sidebar-item">
-          <div className="sidebar-node">
-            <img src="/contactme_label.png" className="sidebar-icon" alt="" aria-hidden="true" draggable="false" />
-          </div>
-          <a className="sidebar-link">Contact me</a>
+        <div className="nav-item">
+          <img src="/contactme_label.png" className="nav-icon" alt="" aria-hidden="true" draggable="false" />
+          <a className="nav-link">Contact me</a>
         </div>
       </nav>
 
-
       {/* 중앙 메인 콘텐츠 */}
-      <div className="hero-center">
-        <p className="hero-hint">Click anywhere to begin</p>
-        <h1
-          className="hero-title"
-          onMouseEnter={() => setIsHoverTitle(true)}
-          onMouseLeave={() => setIsHoverTitle(false)}
-        >
+      <div ref={heroCenterRef} className="hero-center">
+        <h1 className="hero-title">
           <span className="title-char is-s">S</span>
           <span className="title-char">o</span>
           <span className="title-char">f</span>
@@ -167,6 +171,10 @@ export default function Home({ onEnter, panelOpen, isReturning }) {
         </h1>
         <p className="hero-sub">
           <strong>작은 경험</strong>을 천천히 <strong>꽃</strong>피우는 디자이너, <strong>조세빈</strong> 입니다.
+        </p>
+        <p className="hero-hint">
+          <span className="hint-arrow" aria-hidden="true" />
+          Scroll to bloom
         </p>
       </div>
 
