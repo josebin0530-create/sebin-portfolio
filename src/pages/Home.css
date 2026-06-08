@@ -42,6 +42,15 @@
   filter: blur(2px);
 }
 
+/* about 패널 진입 시점부터는 .hero에 stacking context가 생기지 않도록 즉시 초기화
+   (opacity/filter가 새 stacking context를 만들어 모노그램 라벨의 z-index가
+   .about-panel보다 뒤로 갇혀버리는 문제 방지) */
+.hero.panel-open.hero-transitioning {
+  opacity: 1;
+  filter: none;
+  transition: none;
+}
+
 .hero.hero-transitioning .hero-bg {
   filter: blur(4px);
   opacity: 0.72;
@@ -157,6 +166,12 @@
   pointer-events: none;
   z-index: 2;
   will-change: transform;
+  opacity: 1;
+  transition: opacity 0.72s ease;
+}
+
+.hero.project-active .hero-flower-wrap {
+  opacity: 0;
 }
 
 .hero-flower-video {
