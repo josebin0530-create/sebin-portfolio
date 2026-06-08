@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import './Home.css';
 
-export default function Home({ onEnter, panelOpen }) {
+export default function Home({ onEnter, panelOpen, projectActive = false }) {
   const heroRef        = useRef(null);
   const flowerVideoRef = useRef(null);
   const flowerWrapRef  = useRef(null);
@@ -106,6 +106,7 @@ export default function Home({ onEnter, panelOpen }) {
       className={[
         'hero',
         panelOpen       ? 'panel-open'        : '',
+        projectActive   ? 'project-active'    : '',
         isTransitioning ? 'hero-transitioning' : '',
       ].filter(Boolean).join(' ')}
       ref={heroRef}

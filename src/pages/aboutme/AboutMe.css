@@ -15,6 +15,28 @@
   transition: opacity 0.68s ease;
 }
 
+.about-scroll {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y proximity;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+}
+
+.about-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.about-section {
+  position: relative;
+  min-height: 100svh;
+  scroll-snap-align: start;
+}
+
 .about-panel.open {
   pointer-events: auto;
   opacity: 1;
@@ -36,7 +58,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  height: 100%;
+  height: 100svh;
 }
 
 .about-intro {
@@ -189,9 +211,9 @@
   position: relative;
   z-index: 1;
   margin: 0;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'PP Neue Montreal', 'Cormorant Garamond', serif;
   font-size: clamp(20px, 2vw, 34px);
-  font-weight: 700;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.94);
   letter-spacing: 0;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
@@ -212,11 +234,11 @@
 }
 
 .about-card-bio {
-  --drop-tilt: -3deg;
-  left: clamp(44px, 3.4vw, 66px);
-  bottom: clamp(42px, 4.4vh, 56px);
-  width: clamp(190px, 14.1vw, 264px);
-  height: clamp(430px, 56vh, 596px);
+  --drop-tilt: -2deg;
+  right: clamp(300px, 19.2vw, 368px);
+  top: clamp(250px, 24.4vh, 264px);
+  width: clamp(230px, 15vw, 290px);
+  height: clamp(400px, 52vh, 560px);
 }
 
 .about-card-skills {
@@ -228,11 +250,11 @@
 }
 
 .about-card-history {
-  --drop-tilt: -2deg;
-  right: clamp(300px, 19.2vw, 368px);
-  top: clamp(250px, 24.4vh, 264px);
-  width: clamp(230px, 15vw, 290px);
-  height: clamp(400px, 52vh, 560px);
+  --drop-tilt: -3deg;
+  left: clamp(44px, 3.4vw, 66px);
+  bottom: clamp(42px, 4.4vh, 56px);
+  width: clamp(190px, 14.1vw, 264px);
+  height: clamp(430px, 56vh, 596px);
 }
 
 .about-card-history .about-card-content {
@@ -264,7 +286,7 @@
   display: flex;
   flex-direction: column;
   gap: clamp(8px, 1.2vh, 14px);
-  text-align: center;
+  text-align: left;
 }
 
 .value-item {
@@ -274,17 +296,19 @@
 }
 
 .value-title {
-  font-size: clamp(15px, 1.2vw, 20px);
-  font-weight: 700;
+  font-family: 'PP Neue Montreal', 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 1.6vw, 28px);
+  font-weight: 400;
   color: rgba(255, 255, 255, 0.96);
   line-height: 1.2;
 }
 
 .value-desc {
-  font-size: 20px;
+  font-size: clamp(13px, 1vw, 18px);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.78);
   line-height: 1.45;
+  white-space: nowrap;
 }
 
 .bio-list {
@@ -298,19 +322,20 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  text-align: center;
+  text-align: left;
+  font-family: 'PP Neue Montreal', 'Pretendard Variable', 'Pretendard', sans-serif;
   font-size: 20px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.90);
 }
 
 .bio-hobby-label {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'PP Neue Montreal', 'Cormorant Garamond', serif;
   font-size: 30px;
-  font-weight: 700;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.94);
   letter-spacing: 0;
-  text-align: center;
+  text-align: left;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
 }
 
@@ -471,9 +496,9 @@
   }
 
   .about-card-bio {
-    left: 3.2vw;
-    bottom: 5vh;
-    height: 52vh;
+    right: 21vw;
+    top: 34vh;
+    height: 40vh;
   }
 
   .about-card-skills {
@@ -483,9 +508,9 @@
   }
 
   .about-card-history {
-    right: 21vw;
-    top: 34vh;
-    height: 40vh;
+    left: 3.2vw;
+    bottom: 5vh;
+    height: 52vh;
   }
 
   .about-card-bloom {
@@ -493,6 +518,7 @@
     top: 5vh;
     height: 48vh;
   }
+
 }
 
 @media (max-width: 760px) {
@@ -536,8 +562,8 @@
   }
 
   .about-card-bio {
-    left: 4vw;
-    top: 40vh;
+    right: 4vw;
+    top: 42vh;
   }
 
   .about-card-skills {
@@ -546,14 +572,15 @@
   }
 
   .about-card-history {
-    right: 4vw;
-    top: 42vh;
+    left: 4vw;
+    top: 40vh;
   }
 
   .about-card-bloom {
     right: 4vw;
     top: 10vh;
   }
+
 }
 
 @media (prefers-reduced-motion: reduce) {

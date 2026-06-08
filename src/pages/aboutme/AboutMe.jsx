@@ -1,4 +1,5 @@
 import './AboutMe.css';
+import Projects from '../projects/Projects';
 import profileImg from './images/profile_2.png';
 import flower1Img from './images/flower_1.png';
 import flower2Img from './images/flower_2.png';
@@ -95,23 +96,23 @@ const cards = [
     content: (
       <div className="values-list">
         <div className="value-item">
-          <span className="value-title">👀 관찰</span>
-          <span className="value-desc">작은 변화도 놓치지 않고<br />바라봅니다.</span>
+          <span className="value-title">Discover</span>
+          <span className="value-desc">작은 변화도 놓치지 않고 바라봅니다.</span>
         </div>
         <div className="value-item">
-          <span className="value-title">✨ 실행</span>
-          <span className="value-desc">생각에 머무르지 않고 직접<br />만들어봅니다.</span>
+          <span className="value-title">Build</span>
+          <span className="value-desc">생각에 머무르지 않고 직접 만들어봅니다.</span>
         </div>
         <div className="value-item">
-          <span className="value-title">🌱 성장</span>
-          <span className="value-desc">끊임없이 배우고 발전해<br />나아갑니다.</span>
+          <span className="value-title">Grow</span>
+          <span className="value-desc">끊임없이 배우고 발전해 나아갑니다.</span>
         </div>
       </div>
     ),
   },
 ];
 
-export default function AboutMe({ open = false }) {
+export default function AboutMe({ open = false, onProjectActiveChange }) {
   const handleCardMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -134,36 +135,42 @@ export default function AboutMe({ open = false }) {
 
   return (
     <section className={`about-panel${open ? ' open' : ''}`} aria-hidden={!open}>
-      <div className="about-intro" aria-label="조세빈 소개">
-        <p>
-          작은 경험의 <strong>씨앗</strong>을 모아<br />
-          <strong>오래 기억되는 경험</strong>으로 키워가는<br />
-          <strong>디자이너 조세빈</strong> 입니다.
-        </p>
-        <img src={profileImg} className="about-profile" alt="조세빈 프로필" draggable="false" />
-      </div>
+      <div className="about-scroll">
+        <section className="about-section about-section-profile">
+          <div className="about-intro" aria-label="조세빈 소개">
+            <p>
+              작은 경험의 <strong>씨앗</strong>을 모아<br />
+              <strong>오래 기억되는 경험</strong>으로 키워가는<br />
+              <strong>디자이너 조세빈</strong> 입니다.
+            </p>
+            <img src={profileImg} className="about-profile" alt="조세빈 프로필" draggable="false" />
+          </div>
 
-      <div className="about-field" aria-label="About Me">
-        {cards.map((card, index) => (
-          <article
-            key={card.title}
-            className={`about-card ${card.className}`}
-            style={{ '--card-index': index }}
-            onMouseMove={handleCardMove}
-            onMouseLeave={handleCardLeave}
-          >
-            <div className="about-card-surface">
-              <img src={card.flower} className="about-card-flower" aria-hidden="true" draggable="false" />
-              {card.content && (
-                <>
-                  <h2>{card.title}</h2>
-                  <div className="about-card-content">{card.content}</div>
-                </>
-              )}
-            </div>
-            <span className="about-card-caption">{card.title}</span>
-          </article>
-        ))}
+          <div className="about-field" aria-label="About Me">
+            {cards.map((card, index) => (
+              <article
+                key={card.title}
+                className={`about-card ${card.className}`}
+                style={{ '--card-index': index }}
+                onMouseMove={handleCardMove}
+                onMouseLeave={handleCardLeave}
+              >
+                <div className="about-card-surface">
+                  <img src={card.flower} className="about-card-flower" aria-hidden="true" draggable="false" />
+                  {card.content && (
+                    <>
+                      <h2>{card.title}</h2>
+                      <div className="about-card-content">{card.content}</div>
+                    </>
+                  )}
+                </div>
+                <span className="about-card-caption">{card.title}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <Projects onActiveChange={onProjectActiveChange} />
       </div>
     </section>
   );
