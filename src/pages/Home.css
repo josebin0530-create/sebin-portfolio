@@ -361,6 +361,11 @@
   transition: none;
 }
 
+.hero.project-active .hero-monogram-label {
+  opacity: 0;
+  visibility: hidden;
+}
+
 
 /* ── 공통 애니메이션 ── */
 @keyframes fadeUp {
