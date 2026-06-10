@@ -7,7 +7,10 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [projectActive, setProjectActive] = useState(false);
 
-  const handleEnter = useCallback(() => setPanelOpen(true), []);
+  const handleEnter = useCallback(() => {
+    setProjectActive(false);
+    setPanelOpen(true);
+  }, []);
 
   return (
     <>

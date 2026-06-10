@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import './AboutMe.css';
 import Projects from '../projects/Projects';
 import profileImg from './images/profile_2.png';
@@ -113,6 +114,14 @@ const cards = [
 ];
 
 export default function AboutMe({ open = false, onProjectActiveChange }) {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (open) {
+      onProjectActiveChange?.(false);
+    }
+  }, [open, onProjectActiveChange]);
+
   const handleCardMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -135,7 +144,7 @@ export default function AboutMe({ open = false, onProjectActiveChange }) {
 
   return (
     <section className={`about-panel${open ? ' open' : ''}`} aria-hidden={!open}>
-      <div className="about-scroll">
+      <div ref={scrollRef} className="about-scroll">
         <section className="about-section about-section-profile">
           <div className="about-intro" aria-label="조세빈 소개">
             <p>
@@ -170,7 +179,7 @@ export default function AboutMe({ open = false, onProjectActiveChange }) {
           </div>
         </section>
 
-        <Projects onActiveChange={onProjectActiveChange} />
+        <Projects active={open} scrollRootRef={scrollRef} onActiveChange={onProjectActiveChange} />
       </div>
     </section>
   );
