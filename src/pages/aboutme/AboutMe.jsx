@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import './AboutMe.css';
+import MyLife from '../mylife/MyLife';
 import Projects from '../projects/Projects';
 import profileImg from './images/profile_2.png';
 import flower1Img from './images/flower_1.png';
@@ -113,14 +114,50 @@ const cards = [
   },
 ];
 
-export default function AboutMe({ open = false, onProjectActiveChange }) {
+const sectionSelectors = {
+  about: '.about-section-profile',
+  mylife: '.mylife-section',
+  projects: '.project-intro-section',
+};
+
+export default function AboutMe({
+  open = false,
+  navigationTarget,
+  onMyLifeActiveChange,
+  onProjectActiveChange,
+}) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
     if (open) {
       onProjectActiveChange?.(false);
+      return;
     }
-  }, [open, onProjectActiveChange]);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+    onMyLifeActiveChange?.(false);
+    onProjectActiveChange?.(false);
+  }, [open, onMyLifeActiveChange, onProjectActiveChange]);
+
+  useEffect(() => {
+    if (!open || !navigationTarget?.target) return undefined;
+
+    const timeoutId = window.setTimeout(() => {
+      const scrollRoot = scrollRef.current;
+      const selector = sectionSelectors[navigationTarget.target];
+      const section = selector ? scrollRoot?.querySelector(selector) : null;
+
+      if (!scrollRoot || !section) return;
+
+      scrollRoot.scrollTo({
+        top: section.offsetTop,
+        behavior: 'smooth',
+      });
+    }, 80);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [open, navigationTarget]);
 
   const handleCardMove = (e) => {
     const card = e.currentTarget;
@@ -179,6 +216,11 @@ export default function AboutMe({ open = false, onProjectActiveChange }) {
           </div>
         </section>
 
+        <MyLife
+          active={open}
+          scrollRootRef={scrollRef}
+          onActiveChange={onMyLifeActiveChange}
+        />
         <Projects active={open} scrollRootRef={scrollRef} onActiveChange={onProjectActiveChange} />
       </div>
     </section>

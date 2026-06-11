@@ -1,22 +1,43 @@
 import { useRef, useEffect, useState } from 'react';
 import './Home.css';
 
-export default function Home({ onEnter, panelOpen, projectActive = false }) {
+export default function Home({
+  onEnter,
+  panelOpen,
+  myLifeActive = false,
+  projectActive = false,
+  resetKey = 0,
+}) {
   const heroRef        = useRef(null);
   const flowerVideoRef = useRef(null);
   const flowerWrapRef  = useRef(null);
   const heroCenterRef  = useRef(null);
-  const heroNavRef     = useRef(null);
   const progressBarRef = useRef(null);
   const hasEntered     = useRef(false);
   const progressRef    = useRef(0);
   const targetRef      = useRef(0);
   const rafRef         = useRef(null);
+  const enterTimeoutRef = useRef(null);
+  const finishTimeoutRef = useRef(null);
 
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     if (panelOpen) return;
+
+    window.clearTimeout(enterTimeoutRef.current);
+    window.clearTimeout(finishTimeoutRef.current);
+    enterTimeoutRef.current = null;
+    finishTimeoutRef.current = null;
+    progressRef.current = 0;
+    targetRef.current = 0;
+    hasEntered.current = false;
+    requestAnimationFrame(() => setIsTransitioning(false));
+    if (progressBarRef.current) progressBarRef.current.style.width = '0%';
+    if (heroCenterRef.current) heroCenterRef.current.style.opacity = '';
+    if (flowerWrapRef.current) {
+      flowerWrapRef.current.style.transform = '';
+    }
 
     const schedule = () => {
       if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
@@ -35,7 +56,6 @@ export default function Home({ onEnter, panelOpen, projectActive = false }) {
       // 텍스트 페이드 아웃
       const textOp = Math.max(0, 1 - p * 2.8);
       if (heroCenterRef.current) heroCenterRef.current.style.opacity = textOp;
-      if (heroNavRef.current)    heroNavRef.current.style.opacity    = Math.max(0.12, textOp);
 
       // 진행 바
       if (progressBarRef.current) progressBarRef.current.style.width = `${p * 100}%`;
@@ -44,15 +64,14 @@ export default function Home({ onEnter, panelOpen, projectActive = false }) {
       if (p >= 0.97 && !hasEntered.current) {
         hasEntered.current = true;
         setIsTransitioning(true);
-        setTimeout(() => {
+        enterTimeoutRef.current = window.setTimeout(() => {
           onEnter?.();
-          setTimeout(() => {
+          finishTimeoutRef.current = window.setTimeout(() => {
             setIsTransitioning(false);
             progressRef.current = 1;
             targetRef.current   = 1;
             hasEntered.current  = false;
             if (heroCenterRef.current)  heroCenterRef.current.style.opacity   = '';
-            if (heroNavRef.current)     heroNavRef.current.style.opacity      = '';
             if (progressBarRef.current) progressBarRef.current.style.width    = '100%';
           }, 1500);
         }, 200);
@@ -98,14 +117,20 @@ export default function Home({ onEnter, panelOpen, projectActive = false }) {
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove',  onTouchMove);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      window.clearTimeout(enterTimeoutRef.current);
+      window.clearTimeout(finishTimeoutRef.current);
+      hasEntered.current = false;
+      enterTimeoutRef.current = null;
+      finishTimeoutRef.current = null;
     };
-  }, [panelOpen, onEnter]);
+  }, [panelOpen, resetKey, onEnter]);
 
   return (
     <div
       className={[
         'hero',
         panelOpen       ? 'panel-open'        : '',
+        myLifeActive    ? 'mylife-active'     : '',
         projectActive   ? 'project-active'    : '',
         isTransitioning ? 'hero-transitioning' : '',
       ].filter(Boolean).join(' ')}
@@ -134,22 +159,6 @@ export default function Home({ onEnter, panelOpen, projectActive = false }) {
       <div className="scroll-progress-track" aria-hidden="true">
         <div ref={progressBarRef} className="scroll-progress-bar" />
       </div>
-
-      {/* 상단 수평 네비게이션 */}
-      <nav ref={heroNavRef} className="hero-nav-top" onClick={e => e.stopPropagation()}>
-        <div className="nav-item">
-          <img src="/aboutme_label.png" className="nav-icon" alt="" aria-hidden="true" draggable="false" />
-          <a className="nav-link" onClick={() => onEnter?.()}>ABout me</a>
-        </div>
-        <div className="nav-item center">
-          <img src="/myproject_label.png" className="nav-icon" alt="" aria-hidden="true" draggable="false" />
-          <a className="nav-link">MY Projects</a>
-        </div>
-        <div className="nav-item">
-          <img src="/contactme_label.png" className="nav-icon" alt="" aria-hidden="true" draggable="false" />
-          <a className="nav-link">Contact me</a>
-        </div>
-      </nav>
 
       {/* 중앙 메인 콘텐츠 */}
       <div ref={heroCenterRef} className="hero-center">
