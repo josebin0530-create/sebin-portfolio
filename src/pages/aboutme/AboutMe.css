@@ -81,7 +81,7 @@
 
 .about-intro p {
   margin: 0;
-  color: rgba(0, 26, 98, 0.92);
+  color: #1f3425;
   font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
   font-size: clamp(24px, 2.1vw, 40px);
   font-weight: 300;
@@ -269,7 +269,7 @@
   --drop-tilt: 3deg;
   right: clamp(26px, 1.4vw, 42px);
   top: clamp(24px, 2.4vh, 36px);
-  width: clamp(210px, 14.6vw, 280px);
+  width: clamp(240px, 17vw, 320px);
   height: clamp(410px, 51vh, 552px);
 }
 
@@ -308,7 +308,9 @@
   font-weight: 500;
   color: rgba(255, 255, 255, 0.78);
   line-height: 1.45;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .bio-list {
@@ -516,6 +518,7 @@
   .about-card-bloom {
     right: 3vw;
     top: 5vh;
+    width: clamp(210px, 23vw, 260px);
     height: 48vh;
   }
 
@@ -579,6 +582,7 @@
   .about-card-bloom {
     right: 4vw;
     top: 10vh;
+    width: min(42vw, 180px);
   }
 
 }
