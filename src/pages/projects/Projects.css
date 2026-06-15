@@ -12,10 +12,10 @@
 .project-intro-grid {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(260px, 0.45fr) minmax(980px, 1.55fr);
+  grid-template-columns: minmax(220px, 0.45fr) minmax(0, 1.55fr);
   align-items: center;
   gap: clamp(34px, 5vw, 96px);
-  width: min(96vw, 1840px);
+  width: min(100%, 1840px);
   min-height: calc(100svh - clamp(168px, 20vh, 264px));
   margin: 0 auto;
 }
@@ -53,6 +53,7 @@
   position: relative;
   z-index: 1;
   grid-column: 2;
+  min-width: 0;
   width: min(100%, 1260px);
   color: rgba(202, 67, 58, 0.9);
   font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
@@ -71,6 +72,7 @@
 }
 
 .project-copy p {
+  max-width: 100%;
   color: #61302c;
   font-size: clamp(31px, 2.65vw, 52px);
   font-weight: 300;
@@ -85,11 +87,11 @@
 
 .project-divider {
   display: block;
-  width: calc(50vw + 62%);
+  width: calc(50vw + 76%);
   height: 1px;
   margin-top: clamp(58px, 7vh, 92px);
   margin-right: calc(50% - 50vw);
-  margin-left: 38%;
+  margin-left: 30%;
   background: rgba(255, 255, 255, 0.66);
 }
 
@@ -201,11 +203,23 @@
   word-break: keep-all;
 }
 
-.project-link-button {
+.project-card-actions {
   position: absolute;
   right: clamp(18px, 1.8vw, 28px);
   bottom: clamp(18px, 1.8vw, 28px);
-  z-index: 2;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1vw, 14px);
+}
+
+.project-action-item {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.project-link-button {
   display: grid;
   width: clamp(48px, 4.5vw, 58px);
   aspect-ratio: 1;
@@ -230,6 +244,46 @@
   fill: none;
 }
 
+.project-doc-button svg {
+  width: 26px;
+  height: 26px;
+}
+
+.project-link-preview {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 14px);
+  width: clamp(168px, 17vw, 238px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgba(20, 20, 20, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 48px rgba(20, 20, 20, 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.96);
+  transform-origin: right bottom;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.project-link-preview iframe,
+.project-link-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+
+.project-action-item:hover .project-link-preview,
+.project-action-item:focus-within .project-link-preview {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 .project-link-button:hover,
 .project-link-button:focus-visible {
   background: #141414;
@@ -243,7 +297,7 @@
 
 @media (max-width: 1200px) {
   .project-intro-grid {
-    grid-template-columns: minmax(210px, 0.42fr) minmax(0, 1.58fr);
+    grid-template-columns: minmax(180px, 0.42fr) minmax(0, 1.58fr);
     gap: 28px;
   }
 
