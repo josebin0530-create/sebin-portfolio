@@ -9,6 +9,16 @@ import romandImg from './images/romand.png';
 
 const projects = [
   {
+    title: '팀프로젝트 오늘도락',
+    eyebrow: 'Team project',
+    desc: '도시락 주문 과정을 명확하고 사랑스럽게 풀어낸 모바일 서비스',
+    flower: flower3Img,
+    image: oneldorakImg,
+    imageAlt: '오늘도락 프로젝트 이미지',
+    link: 'https://oneuldorak-new.vercel.app/',
+    planLink: 'https://www.figma.com/deck/UJbjbycQZIvYqNoBI90UXa/-%ED%8C%80%ED%94%8C2-4%EC%A1%B0--%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C_oneuldorak-%EC%98%A4%EB%8A%98%EB%8F%84%EB%9D%BD---%EB%B3%B5%EC%82%AC---Copy---%EB%B3%B5%EC%82%AC-?node-id=4098-19290&t=2L0OSMqoiEnAdf4o-1',
+  },
+  {
     title: '개인앱 - 책책',
     eyebrow: 'Personal app',
     desc: '책을 고르고 기록하는 시간을 더 가볍고 즐겁게 만든 독서 경험 디자인',
@@ -16,6 +26,7 @@ const projects = [
     image: checkcheckImg,
     imageAlt: '책책 프로젝트 이미지',
     link: '',
+    planLink: '',
   },
   {
     title: '팀프로젝트 롬앤',
@@ -25,17 +36,13 @@ const projects = [
     image: romandImg,
     imageAlt: '롬앤 프로젝트 이미지',
     link: '',
-  },
-  {
-    title: '팀프로젝트 오늘도락',
-    eyebrow: 'Team project',
-    desc: '도시락 주문 과정을 명확하고 사랑스럽게 풀어낸 모바일 서비스',
-    flower: flower3Img,
-    image: oneldorakImg,
-    imageAlt: '오늘도락 프로젝트 이미지',
-    link: '',
+    planLink: 'https://www.figma.com/deck/0OH7ziBZ80BBaFYE6SR3yn/-%ED%8C%80%ED%94%8C1-2%EC%A1%B0--%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C_rom-nd-%EC%8B%9D%EC%8A%A4%EB%A7%A8---%EB%B3%B5%EC%82%AC---%EB%B3%B5%EC%82%AC-?node-id=2188-694&t=gTPpTyMvjJmJV8Bu-1',
   },
 ];
+
+const getFigmaEmbedUrl = (url) => (
+  `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`
+);
 
 export default function Projects({ active = true, scrollRootRef, onActiveChange }) {
   const copySectionRef = useRef(null);
@@ -211,25 +218,71 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
                 </div>
                 <h2>{project.title}</h2>
                 <p>{project.desc}</p>
-                <a
-                  className={`project-link-button${project.link ? '' : ' is-disabled'}`}
-                  href={project.link || '#'}
-                  aria-label={`${project.title} 프로젝트 보기`}
-                  target={project.link ? '_blank' : undefined}
-                  rel={project.link ? 'noreferrer' : undefined}
-                  onClick={(event) => {
-                    if (!project.link) event.preventDefault();
-                  }}
-                >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    focusable="false"
-                  >
-                    <path d="M7 17L17 7" />
-                    <path d="M8 7H17V16" />
-                  </svg>
-                </a>
+                <div className="project-card-actions">
+                  <span className="project-action-item">
+                    <a
+                      className={`project-link-button project-doc-button${project.planLink ? '' : ' is-disabled'}`}
+                      href={project.planLink || '#'}
+                      aria-label={`${project.title} 기획서 보기`}
+                      target={project.planLink ? '_blank' : undefined}
+                      rel={project.planLink ? 'noreferrer' : undefined}
+                      onClick={(event) => {
+                        if (!project.planLink) event.preventDefault();
+                      }}
+                    >
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        focusable="false"
+                      >
+                        <path d="M6 3.5H14.5L18 7V20.5H6V3.5Z" />
+                        <path d="M14.5 3.5V7H18" />
+                        <path d="M9 11H15" />
+                        <path d="M9 14.5H15" />
+                        <path d="M9 18H13.5" />
+                      </svg>
+                    </a>
+                    {project.planLink && (
+                      <span className="project-link-preview project-link-preview-deck" aria-hidden="true">
+                        <iframe
+                          title={`${project.title} 기획서 미리보기`}
+                          src={getFigmaEmbedUrl(project.planLink)}
+                          loading="lazy"
+                        />
+                      </span>
+                    )}
+                  </span>
+                  <span className="project-action-item">
+                    <a
+                      className={`project-link-button${project.link ? '' : ' is-disabled'}`}
+                      href={project.link || '#'}
+                      aria-label={`${project.title} 프로젝트 보기`}
+                      target={project.link ? '_blank' : undefined}
+                      rel={project.link ? 'noreferrer' : undefined}
+                      onClick={(event) => {
+                        if (!project.link) event.preventDefault();
+                      }}
+                    >
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        focusable="false"
+                      >
+                        <path d="M7 17L17 7" />
+                        <path d="M8 7H17V16" />
+                      </svg>
+                    </a>
+                    {project.link && (
+                      <span className="project-link-preview project-link-preview-site" aria-hidden="true">
+                        <iframe
+                          title={`${project.title} 사이트 미리보기`}
+                          src={project.link}
+                          loading="lazy"
+                        />
+                      </span>
+                    )}
+                  </span>
+                </div>
               </article>
             ))}
           </div>

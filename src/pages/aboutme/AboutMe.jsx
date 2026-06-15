@@ -79,10 +79,10 @@ const cards = [
       <>
         <InfoGroup title="Education">
           <Entry year="2019.03 - 2022.01" desc="태광고등학교 졸업" />
-          <Entry year="2025.12 - 2026.06" desc={<>UX/UI 디자인 & 프론트엔드<br />과정 수료</>} />
+          <Entry year="2025.12 - 2026.06" desc="UX/UI 디자인 & 프론트엔드 과정 수료" />
         </InfoGroup>
         <InfoGroup title="Experience">
-          <Entry year="2022.02 - 2025.07" desc={<>주식회사 더케이비코리아<br />카페 매니저</>} />
+          <Entry year="2022.02 - 2025.07" desc="주식회사 더케이비코리아 카페 매니저" />
         </InfoGroup>
         <InfoGroup title="License">
           <Entry year="2025" desc="웹디자인개발기능사 필기" />
