@@ -267,7 +267,8 @@
 }
 
 .hero.mylife-active .hero-monogram-label,
-.hero.project-active .hero-monogram-label {
+.hero.project-active .hero-monogram-label,
+.hero.contact-active .hero-monogram-label {
   opacity: 0;
   visibility: hidden;
 }

@@ -6,6 +6,7 @@ export default function Home({
   panelOpen,
   myLifeActive = false,
   projectActive = false,
+  contactActive = false,
   resetKey = 0,
 }) {
   const heroRef        = useRef(null);
@@ -132,6 +133,7 @@ export default function Home({
         panelOpen       ? 'panel-open'        : '',
         myLifeActive    ? 'mylife-active'     : '',
         projectActive   ? 'project-active'    : '',
+        contactActive   ? 'contact-active'    : '',
         isTransitioning ? 'hero-transitioning' : '',
       ].filter(Boolean).join(' ')}
       ref={heroRef}

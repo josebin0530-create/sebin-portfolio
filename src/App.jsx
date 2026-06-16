@@ -9,18 +9,21 @@ const menuItems = [
   { label: 'About Me', ariaLabel: 'Go to About Me section', target: 'about' },
   { label: 'My Life', ariaLabel: 'Go to My Life section', target: 'mylife' },
   { label: 'Projects', ariaLabel: 'Go to Projects section', target: 'projects' },
+  { label: 'Contact Me', ariaLabel: 'Go to Contact Me section', target: 'contact' },
 ];
 
 export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [myLifeActive, setMyLifeActive] = useState(false);
   const [projectActive, setProjectActive] = useState(false);
+  const [contactActive, setContactActive] = useState(false);
   const [navigationTarget, setNavigationTarget] = useState(null);
   const [homeResetKey, setHomeResetKey] = useState(0);
 
   const handleEnter = useCallback(() => {
     setMyLifeActive(false);
     setProjectActive(false);
+    setContactActive(false);
     setPanelOpen(true);
   }, []);
 
@@ -28,6 +31,7 @@ export default function App() {
     if (target === 'home') {
       setMyLifeActive(false);
       setProjectActive(false);
+      setContactActive(false);
       setPanelOpen(false);
       setNavigationTarget(null);
       setHomeResetKey((key) => key + 1);
@@ -36,6 +40,7 @@ export default function App() {
 
     setMyLifeActive(false);
     setProjectActive(false);
+    setContactActive(false);
     setPanelOpen(true);
     setNavigationTarget({ target, key: Date.now() });
   }, []);
@@ -54,6 +59,7 @@ export default function App() {
         panelOpen={panelOpen}
         myLifeActive={myLifeActive}
         projectActive={projectActive}
+        contactActive={contactActive}
         resetKey={homeResetKey}
       />
       <AboutMe
@@ -61,6 +67,7 @@ export default function App() {
         navigationTarget={navigationTarget}
         onMyLifeActiveChange={setMyLifeActive}
         onProjectActiveChange={setProjectActive}
+        onContactActiveChange={setContactActive}
       />
     </>
   );

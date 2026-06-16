@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import './AboutMe.css';
 import MyLife from '../mylife/MyLife';
 import Projects from '../projects/Projects';
+import ContactMe from '../contactme/ContactMe';
 import profileImg from './images/profile_2.png';
 import flower1Img from './images/flower_1.png';
 import flower2Img from './images/flower_2.png';
@@ -118,6 +119,7 @@ const sectionSelectors = {
   about: '.about-section-profile',
   mylife: '.mylife-section',
   projects: '.project-intro-section',
+  contact: '.contact-section',
 };
 
 export default function AboutMe({
@@ -125,12 +127,14 @@ export default function AboutMe({
   navigationTarget,
   onMyLifeActiveChange,
   onProjectActiveChange,
+  onContactActiveChange,
 }) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
     if (open) {
       onProjectActiveChange?.(false);
+      onContactActiveChange?.(false);
       return;
     }
     if (scrollRef.current) {
@@ -138,7 +142,8 @@ export default function AboutMe({
     }
     onMyLifeActiveChange?.(false);
     onProjectActiveChange?.(false);
-  }, [open, onMyLifeActiveChange, onProjectActiveChange]);
+    onContactActiveChange?.(false);
+  }, [open, onMyLifeActiveChange, onProjectActiveChange, onContactActiveChange]);
 
   useEffect(() => {
     if (!open || !navigationTarget?.target) return undefined;
@@ -222,6 +227,7 @@ export default function AboutMe({
           onActiveChange={onMyLifeActiveChange}
         />
         <Projects active={open} scrollRootRef={scrollRef} onActiveChange={onProjectActiveChange} />
+        <ContactMe active={open} scrollRootRef={scrollRef} onActiveChange={onContactActiveChange} />
       </div>
     </section>
   );
