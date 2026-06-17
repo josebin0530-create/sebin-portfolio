@@ -48,6 +48,7 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
   const copySectionRef = useRef(null);
   const gridSectionRef = useRef(null);
   const projectGridRef = useRef(null);
+  const flowerRef = useRef(null);
   const visibleSectionsRef = useRef(new Set());
   const [isVisible, setIsVisible] = useState(false);
   const [isFlowerVisible, setIsFlowerVisible] = useState(false);
@@ -102,7 +103,7 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
     const projectGrid = projectGridRef.current;
     if (!projectGrid) return undefined;
 
-    const copySection = copySectionRef.current;
+    const flower = flowerRef.current;
     const scrollRoot = scrollRootRef?.current ?? null;
     let rafId = null;
 
@@ -117,15 +118,21 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
       const endY = rootCenterY;
       const rawProgress = (startY - gridRect.top) / (startY - endY);
       const nextProgress = Math.max(0, Math.min(1, rawProgress));
+
+      // fade out as grid scrolls off the top
+      const fadeOutStartY = rootRect.top + rootRect.height * 0.55;
+      const fadeOutEndY = rootRect.top;
+      const rawFadeOut = (gridRect.bottom - fadeOutStartY) / (fadeOutEndY - fadeOutStartY);
+      const fadeOutProgress = Math.max(0, Math.min(1, rawFadeOut));
+
       const flowerX = -18 + nextProgress * 18;
       const flowerScale = 0.88 + nextProgress * 0.12;
-      const flowerOpacity = nextProgress * 0.9;
+      const flowerOpacity = nextProgress * (1 - fadeOutProgress) * 0.9;
 
-      if (copySection) {
-        copySection.style.setProperty('--project-flower-progress', nextProgress.toFixed(3));
-        copySection.style.setProperty('--project-flower-x', `${flowerX.toFixed(2)}vw`);
-        copySection.style.setProperty('--project-flower-scale', flowerScale.toFixed(3));
-        copySection.style.setProperty('--project-flower-opacity', flowerOpacity.toFixed(3));
+      if (flower) {
+        flower.style.setProperty('--project-flower-x', `${flowerX.toFixed(2)}vw`);
+        flower.style.setProperty('--project-flower-scale', flowerScale.toFixed(3));
+        flower.style.setProperty('--project-flower-opacity', flowerOpacity.toFixed(3));
       }
 
       setIsFlowerVisible(nextProgress > 0);
@@ -146,45 +153,48 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
       eventTarget.removeEventListener('scroll', scheduleUpdate);
       window.removeEventListener('resize', scheduleUpdate);
       if (rafId) cancelAnimationFrame(rafId);
-      copySection?.style.setProperty('--project-flower-progress', '0');
-      copySection?.style.setProperty('--project-flower-x', '-18vw');
-      copySection?.style.setProperty('--project-flower-scale', '0.88');
-      copySection?.style.setProperty('--project-flower-opacity', '0');
+      if (flower) {
+        flower.style.setProperty('--project-flower-x', '-18vw');
+        flower.style.setProperty('--project-flower-scale', '0.88');
+        flower.style.setProperty('--project-flower-opacity', '0');
+      }
     };
   }, [active, scrollRootRef]);
 
   return (
     <>
+      <div
+        ref={flowerRef}
+        className={`project-flower-wrap${shouldShowFlower ? ' is-visible' : ''}`}
+        aria-hidden="true"
+        style={{
+          '--project-flower-x': '-18vw',
+          '--project-flower-scale': 0.88,
+          '--project-flower-opacity': 0,
+        }}
+      >
+        <video
+          className="project-flower-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        >
+          <source src="/main_flower.webm" type="video/webm" />
+          <source src="/main_flower.mov" type="video/quicktime" />
+        </video>
+      </div>
+
       <section
         ref={copySectionRef}
         className={[
           'about-section project-section project-intro-section',
           shouldShowSection ? 'is-visible' : '',
-          shouldShowFlower ? 'is-flower-visible' : '',
         ].filter(Boolean).join(' ')}
-        style={{
-          '--project-flower-progress': 0,
-          '--project-flower-x': '-18vw',
-          '--project-flower-scale': 0.88,
-          '--project-flower-opacity': 0,
-        }}
         aria-label="My Projects"
       >
         <div className="project-intro-grid">
-          <div className="project-flower-wrap" aria-hidden="true">
-            <video
-              className="project-flower-video"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-            >
-              <source src="/main_flower.webm" type="video/webm" />
-              <source src="/main_flower.mov" type="video/quicktime" />
-            </video>
-          </div>
-
           <div className="project-copy">
             <span className="project-kicker">My Projects</span>
             <p>

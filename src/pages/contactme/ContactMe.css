@@ -1,0 +1,218 @@
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/ppneuemontreal-thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/ppneuemontreal-book.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/ppneuemontreal-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/ppneuemontreal-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/ppneuemontreal-italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/ppneuemontreal-semibolditalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+.contact-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* background image */
+.contact-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('/mainvisual.png') center center / cover fixed no-repeat;
+}
+
+/* bottom vignette */
+.contact-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(20, 16, 10, 0.45) 0%, transparent 30%),
+    linear-gradient(to bottom, rgba(20, 16, 10, 0.08) 0%, transparent 18%);
+}
+
+/* main content wrapper */
+.contact-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(12px, 2vh, 24px);
+  padding: clamp(48px, 6vh, 86px) clamp(20px, 4vw, 56px) clamp(120px, 18vh, 190px);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+}
+
+.contact-section.is-visible .contact-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* title */
+.contact-title {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 300;
+  font-size: clamp(56px, 9vw, 130px);
+  line-height: 1.05;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-shadow: 0 2px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* korean subtitle */
+.contact-subtitle {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 300;
+  font-size: clamp(14px, 1.6vw, 20px);
+  color: rgba(255, 255, 255, 0.82);
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* glass contact card */
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.8vh, 22px);
+  padding: clamp(28px, 4vh, 48px) clamp(48px, 8vw, 100px);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  min-width: clamp(300px, 44vw, 580px);
+  box-shadow:
+    0 4px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.contact-row {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(24px, 4vw, 60px);
+}
+
+.contact-label {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 1.2vw, 17px);
+  color: rgba(38, 30, 22, 0.72);
+  min-width: clamp(60px, 7vw, 96px);
+  text-align: left;
+  letter-spacing: 0.01em;
+}
+
+.contact-value {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 100;
+  font-size: 40px;
+  color: rgba(38, 30, 22, 0.88);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+}
+
+.contact-value:hover {
+  color: #ca433a;
+}
+
+.contact-instagram {
+  font-size: 40px;
+  font-weight: 100;
+  letter-spacing: -0.01em;
+}
+
+/* contact me button */
+.contact-button {
+  display: inline-block;
+  padding: clamp(12px, 1.6vh, 20px) clamp(36px, 6vw, 72px);
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 500;
+  font-size: clamp(16px, 1.6vw, 22px);
+  color: #ca433a;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 16px;
+  box-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.contact-button:hover {
+  background: rgba(255, 255, 255, 0.34);
+  box-shadow:
+    0 6px 28px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* flower video */
+.contact-flower-wrap {
+  position: absolute;
+  bottom: -72%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: clamp(480px, 68vw, 960px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.9s ease 0.3s;
+}
+
+.contact-section.is-visible .contact-flower-wrap {
+  opacity: 1;
+}
+
+.contact-flower-wrap video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 860px) {
+  .contact-bg {
+    background-attachment: scroll;
+  }
+}

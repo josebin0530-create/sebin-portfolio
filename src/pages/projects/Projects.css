@@ -7,14 +7,14 @@
 .project-intro-section,
 .project-list-section {
   overflow: visible;
+  background: url('/mainvisual.png') center center / cover fixed no-repeat;
 }
 
 .project-intro-grid {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(220px, 0.45fr) minmax(0, 1.55fr);
+  display: flex;
   align-items: center;
-  gap: clamp(34px, 5vw, 96px);
+  justify-content: center;
   width: min(100%, 1840px);
   min-height: calc(100svh - clamp(168px, 20vh, 264px));
   margin: 0 auto;
@@ -24,7 +24,7 @@
   position: fixed;
   left: clamp(-220px, -12vw, -90px);
   top: 62svh;
-  z-index: 0;
+  z-index: 60;
   width: clamp(620px, 54vw, 920px);
   margin-left: 0;
   opacity: var(--project-flower-opacity, 0);
@@ -35,10 +35,6 @@
     scale(var(--project-flower-scale, 0.88));
   transform-origin: 18% 82%;
   will-change: transform, opacity;
-}
-
-.project-intro-section.is-visible.is-flower-visible .project-flower-wrap {
-  opacity: var(--project-flower-opacity, 0);
 }
 
 .project-flower-video {
@@ -52,7 +48,6 @@
 .project-copy {
   position: relative;
   z-index: 1;
-  grid-column: 2;
   min-width: 0;
   width: min(100%, 1260px);
   color: rgba(202, 67, 58, 0.9);
@@ -96,14 +91,18 @@
 }
 
 .project-list-section {
+  position: relative;
   display: grid;
   place-items: center;
+  padding-bottom: clamp(120px, 30vh, 280px);
 }
 
 .project-list-shell {
   position: relative;
   z-index: 1;
   width: min(92vw, 1180px);
+  margin-left: clamp(160px, 18vw, 320px);
+  margin-right: auto;
 }
 
 .project-grid {
@@ -296,11 +295,6 @@
 }
 
 @media (max-width: 1200px) {
-  .project-intro-grid {
-    grid-template-columns: minmax(180px, 0.42fr) minmax(0, 1.58fr);
-    gap: 28px;
-  }
-
   .project-flower-wrap {
     left: clamp(-170px, -14vw, -80px);
     top: 62svh;
@@ -327,8 +321,13 @@
     padding: 92px 18px 56px;
   }
 
+  .project-intro-section,
+  .project-list-section {
+    background-attachment: scroll;
+  }
+
   .project-intro-grid {
-    display: block;
+    display: flex;
     width: min(100%, 430px);
     min-height: calc(100svh - 148px);
   }
@@ -342,7 +341,7 @@
     transform: translate(72px, -50%) scale(0.92);
   }
 
-  .project-intro-section.is-visible.is-flower-visible .project-flower-wrap {
+  .project-flower-wrap.is-visible {
     opacity: 0.78;
     transform: translate(0, -50%) scale(1);
   }
@@ -352,7 +351,6 @@
   }
 
   .project-copy {
-    grid-column: auto;
     margin-left: auto;
     padding-left: 92px;
     padding-top: clamp(54px, 11vh, 96px);
