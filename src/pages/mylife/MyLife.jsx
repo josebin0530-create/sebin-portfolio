@@ -10,6 +10,7 @@ import myImg6 from './images/optimized/myimg_6.jpg';
 import myImg7 from './images/optimized/myimg_7.jpg';
 import myImg12 from './images/optimized/myimg_12.jpg';
 import myImg18 from './images/optimized/myimg_18.jpg';
+import myPage20 from './images/optimized/mypage_20.jpg';
 
 const galleryItems = [
   { image: myImg1, text: '커피를 내리는 시간을 좋아합니다' },
@@ -21,6 +22,7 @@ const galleryItems = [
   { image: myImg7, text: '디저트도 많이 좋아합니다' },
   { image: myImg12, text: '소중한 사람들과 계절을 같이 즐깁니다' },
   { image: myImg18, text: '팀원들과 소통하는것을 중요시 합니다' },
+  { image: myPage20, text: '런닝크루 가방제작도 했습니다' },
 ];
 
 const notes = [
