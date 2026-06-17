@@ -7,7 +7,7 @@
 @font-face {
   font-family: 'PP Neue Montreal';
   src: url('/fonts/ppneuemontreal-book.otf') format('opentype');
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
 }
 @font-face {
@@ -37,9 +37,6 @@
 
 .contact-section {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 100svh;
   min-height: 100svh;
   overflow: hidden;
@@ -60,20 +57,17 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to top, rgba(20, 16, 10, 0.45) 0%, transparent 30%),
-    linear-gradient(to bottom, rgba(20, 16, 10, 0.08) 0%, transparent 18%);
+    linear-gradient(to top, rgba(27, 31, 12, 0.34) 0%, transparent 38%),
+    linear-gradient(to bottom, rgba(24, 18, 11, 0.16) 0%, transparent 22%),
+    rgba(92, 79, 44, 0.08);
 }
 
 /* main content wrapper */
 .contact-content {
   position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(12px, 2vh, 24px);
-  padding: clamp(48px, 6vh, 86px) clamp(20px, 4vw, 56px) clamp(120px, 18vh, 190px);
-  text-align: center;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
@@ -87,115 +81,192 @@
 /* title */
 .contact-title {
   font-family: 'PP Neue Montreal', sans-serif;
-  font-weight: 300;
-  font-size: clamp(56px, 9vw, 130px);
-  line-height: 1.05;
+  position: absolute;
+  top: clamp(110px, 15.5vh, 166px);
+  left: clamp(34px, 3.6vw, 64px);
+  font-weight: 100;
+  font-size: clamp(74px, 6.6vw, 120px);
+  line-height: 1.16;
   color: #ffffff;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   margin: 0;
-  text-shadow: 0 2px 32px rgba(0, 0, 0, 0.18);
+  text-align: left;
+  text-shadow: 0 2px 28px rgba(36, 29, 17, 0.16);
+}
+
+.contact-title span {
+  display: inline-block;
+}
+
+.contact-title-indent {
+  margin-left: clamp(150px, 22vw, 438px);
 }
 
 /* korean subtitle */
 .contact-subtitle {
   font-family: 'PP Neue Montreal', sans-serif;
+  position: absolute;
+  top: clamp(380px, 47vh, 500px);
+  left: clamp(50px, 5.2vw, 92px);
   font-weight: 300;
-  font-size: clamp(14px, 1.6vw, 20px);
-  color: rgba(255, 255, 255, 0.82);
-  letter-spacing: 0.02em;
+  font-size: clamp(28px, 2.15vw, 40px);
+  color: rgba(255, 255, 255, 0.96);
+  letter-spacing: 0;
   margin: 0;
+  text-align: left;
+  text-shadow: 0 2px 20px rgba(26, 24, 16, 0.18);
 }
 
 /* glass contact card */
 .contact-card {
+  position: absolute;
+  top: clamp(265px, 26vh, 300px);
+  right: clamp(48px, 3vw, 52px);
   display: flex;
   flex-direction: column;
-  gap: clamp(12px, 1.8vh, 22px);
-  padding: clamp(28px, 4vh, 48px) clamp(48px, 8vw, 100px);
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px) saturate(1.1);
-  -webkit-backdrop-filter: blur(8px) saturate(1.1);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  min-width: clamp(300px, 44vw, 580px);
+  gap: clamp(18px, 2.2vh, 28px);
+  width: min(34.4vw, 592px);
+  min-width: 500px;
+  padding: clamp(32px, 3.5vh, 44px) clamp(48px, 2.8vw, 56px);
+  background: rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(9px) saturate(1.05);
+  -webkit-backdrop-filter: blur(9px) saturate(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   box-shadow:
-    0 4px 32px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    0 20px 54px rgba(35, 35, 20, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .contact-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 155px minmax(0, 1fr);
   align-items: baseline;
-  gap: clamp(24px, 4vw, 60px);
+  gap: clamp(20px, 2.2vw, 42px);
 }
 
 .contact-label {
   font-family: 'PP Neue Montreal', sans-serif;
-  font-weight: 400;
-  font-size: clamp(13px, 1.2vw, 17px);
-  color: rgba(38, 30, 22, 0.72);
-  min-width: clamp(60px, 7vw, 96px);
+  font-weight: 100;
+  font-size: clamp(22px, 1.45vw, 28px);
+  color: rgba(255, 255, 255, 0.92);
   text-align: left;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
 }
 
 .contact-value {
   font-family: 'PP Neue Montreal', sans-serif;
   font-weight: 100;
-  font-size: 40px;
-  color: rgba(38, 30, 22, 0.88);
+  font-size: clamp(22px, 1.45vw, 28px);
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
 .contact-value:hover {
-  color: #ca433a;
+  color: #d44946;
 }
 
 .contact-instagram {
-  font-size: 40px;
+  font-size: clamp(22px, 1.45vw, 28px);
   font-weight: 100;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+}
+
+.contact-form {
+  display: grid;
+  gap: 12px;
+  padding-top: clamp(4px, 0.8vh, 10px);
+}
+
+.contact-field {
+  display: grid;
+  gap: 8px;
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 100;
+  font-size: clamp(16px, 1vw, 18px);
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.contact-field span {
+  font-weight: 300;
+}
+
+.contact-field input,
+.contact-field textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font: inherit;
+  color: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.14);
+  outline: none;
+  resize: vertical;
+}
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* contact me button */
+.contact-button-magnet {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(118px, 14.8vh, 155px);
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.contact-button-magnet-inner {
+  display: inline-block;
+}
+
 .contact-button {
   display: inline-block;
-  padding: clamp(12px, 1.6vh, 20px) clamp(36px, 6vw, 72px);
+  padding: clamp(22px, 2.5vh, 28px) clamp(48px, 5vw, 64px);
   font-family: 'PP Neue Montreal', sans-serif;
   font-weight: 500;
-  font-size: clamp(16px, 1.6vw, 22px);
-  color: #ca433a;
-  letter-spacing: 0.04em;
+  font-size: clamp(28px, 1.85vw, 34px);
+  color: #c93d40;
+  letter-spacing: 0;
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.48);
   backdrop-filter: blur(14px) saturate(1.2);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
-  border: 1px solid rgba(255, 255, 255, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.34);
   border-radius: 16px;
   box-shadow:
     0 2px 16px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.32);
-  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .contact-button:hover {
-  background: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.62);
   box-shadow:
     0 6px 28px rgba(0, 0, 0, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
 }
 
 /* flower video */
 .contact-flower-wrap {
   position: absolute;
-  bottom: -72%;
+  bottom: clamp(-640px, -59vh, -550px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  width: clamp(480px, 68vw, 960px);
+  width: clamp(720px, 52vw, 900px);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.9s ease 0.3s;
@@ -214,5 +285,72 @@
 @media (max-width: 860px) {
   .contact-bg {
     background-attachment: scroll;
+  }
+
+  .contact-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 28px;
+    padding: 96px 24px 160px;
+    height: 100%;
+  }
+
+  .contact-title,
+  .contact-subtitle,
+  .contact-card,
+  .contact-button-magnet {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+  }
+
+  .contact-title {
+    font-size: clamp(54px, 14vw, 86px);
+  }
+
+  .contact-title-indent {
+    margin-left: clamp(76px, 19vw, 138px);
+  }
+
+  .contact-subtitle {
+    font-size: clamp(24px, 6.2vw, 34px);
+  }
+
+  .contact-card {
+    width: 100%;
+    min-width: 0;
+    margin-top: auto;
+    padding: 30px 24px;
+    gap: 22px;
+  }
+
+  .contact-row {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .contact-label,
+  .contact-value,
+  .contact-instagram {
+    font-size: clamp(18px, 4.8vw, 24px);
+  }
+
+  .contact-value {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-button-magnet {
+    align-self: center;
+    transform: none;
+    margin-bottom: 2px;
+  }
+
+  .contact-flower-wrap {
+    bottom: -390px;
+    width: min(660px, 130vw);
   }
 }
