@@ -184,11 +184,12 @@ export default function Home({
         <p className="hero-sub">
           <strong>작은 경험</strong>을 천천히 <strong>꽃</strong>피우는 디자이너, <strong>조세빈</strong> 입니다.
         </p>
-        <p className="hero-hint">
-          <span className="hint-arrow" aria-hidden="true" />
-          Scroll to bloom
-        </p>
       </div>
+
+      <p className="hero-hint">
+        <span className="hint-arrow" aria-hidden="true" />
+        Scroll to bloom
+      </p>
 
       <p className="hero-monogram-label">SeBin</p>
     </div>
