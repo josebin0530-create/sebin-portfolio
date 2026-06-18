@@ -9,16 +9,40 @@ import flower2Img from './images/flower_2.png';
 import flower3Img from './images/flower_3.png';
 import flower4Img from './images/flower_4.png';
 import figmaIcon from './images/figma.svg';
-import adobeIcon from './images/adobe.svg';
 import vscodeIcon from './images/vscode.svg';
 import ai1Icon from './images/ai_1.svg';
 import ai2Icon from './images/ai_2.svg';
 import ai3Icon from './images/ai_3.svg';
 import ai4Icon from './images/ai_4.svg';
+import ai5Icon from './images/ai_5.svg';
+import ai6Icon from './images/ai_6.svg';
+import ai7Icon from './images/ai_7.svg';
+import ai8Icon from './images/ai_8.svg';
+import ai9Icon from './images/ai_9.svg';
 import hobby1Icon from './images/hobby_1.svg';
 import hobby2Icon from './images/hobby_2.svg';
 import hobby3Icon from './images/hobby_3.svg';
 import hobby4Icon from './images/hobby_4.svg';
+
+const designSkills = [
+  { icon: figmaIcon, label: 'Figma', pct: 96 },
+  { icon: ai5Icon, label: 'Premiere Pro', pct: 46 },
+  { icon: ai9Icon, label: 'Photoshop', pct: 88 },
+];
+
+const aiSkills = [
+  { icon: ai1Icon, label: 'AI tool 1' },
+  { icon: ai2Icon, label: 'AI tool 2' },
+  { icon: ai3Icon, label: 'AI tool 3' },
+  { icon: ai6Icon, label: 'AI tool 4' },
+  { icon: ai4Icon, label: 'AI tool 5' },
+];
+
+const developmentSkills = [
+  { icon: ai7Icon, label: 'React' },
+  { icon: ai8Icon, label: 'GitHub' },
+  { icon: vscodeIcon, label: 'VS Code' },
+];
 
 const cards = [
   {
@@ -29,7 +53,7 @@ const cards = [
       <div className="bio-list">
         <div className="bio-info">
           <span>2003.05.30</span>
-          <span>서울특별시 광진구</span>
+          <span className="bio-location">서울특별시 광진구</span>
           <span>jsb20324@naver.com</span>
         </div>
         <span className="bio-hobby-label">Things I Love</span>
@@ -59,17 +83,42 @@ const cards = [
     title: 'Skills',
     flower: flower2Img,
     content: (
-      <>
-        <SkillBar icon={figmaIcon} label="Figma" pct={80} />
-        <SkillBar icon={adobeIcon} label="Adobe Illustrator" pct={43} />
-        <SkillBar icon={vscodeIcon} label="VS Code" pct={75} />
-        <span className="tool-note">그외 사용가능 툴</span>
-        <div className="about-tool-row" aria-label="AI tools">
-          {[ai1Icon, ai2Icon, ai3Icon, ai4Icon].map((icon, index) => (
-            <img key={index} src={icon} alt="" />
-          ))}
+      <div className="skills-panel" aria-label="Skills">
+        <div className="skills-section skills-section-design">
+          <h3>Design</h3>
+          <div className="design-skill-list">
+            {designSkills.map((skill) => (
+              <div className="design-skill-item" key={skill.label}>
+                <div className="design-skill-head">
+                  <img src={skill.icon} alt="" draggable="false" />
+                  <span>{skill.label}</span>
+                </div>
+                <div className="design-skill-track" aria-label={`${skill.label} ${skill.pct}%`}>
+                  <span style={{ width: `${skill.pct}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </>
+
+        <div className="skills-section">
+          <h3>AI</h3>
+          <div className="skills-icon-grid">
+            {aiSkills.map((skill) => (
+              <img key={skill.label} src={skill.icon} alt={skill.label} draggable="false" />
+            ))}
+          </div>
+        </div>
+
+        <div className="skills-section">
+          <h3>Development</h3>
+          <div className="skills-icon-grid">
+            {developmentSkills.map((skill) => (
+              <img key={skill.label} src={skill.icon} alt={skill.label} draggable="false" />
+            ))}
+          </div>
+        </div>
+      </div>
     ),
   },
   {
@@ -229,20 +278,6 @@ export default function AboutMe({
         <ContactMe active={open} scrollRootRef={scrollRef} onActiveChange={onContactActiveChange} />
       </div>
     </section>
-  );
-}
-
-function SkillBar({ icon, label, pct }) {
-  return (
-    <div className="skill-item">
-      <div className="skill-item-left">
-        <img src={icon} alt="" className="skill-icon" />
-        <span className="skill-label">{label}</span>
-      </div>
-      <div className="skill-track" aria-label={`${label} ${pct}%`}>
-        <div className="skill-fill" style={{ width: `${pct}%` }} />
-      </div>
-    </div>
   );
 }
 

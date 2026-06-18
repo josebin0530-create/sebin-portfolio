@@ -183,19 +183,24 @@
 
 /* ── 스크롤 힌트 ── */
 .hero-hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(38px, 6vh, 72px);
+  z-index: 4;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin: clamp(14px, 2vh, 24px) 0 0;
-  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  color: rgba(255, 255, 255, 1);
   font-family: 'Alumni Sans', sans-serif;
-  font-size: clamp(11px, 0.9vw, 14px);
+  font-size: clamp(13px, 1.05vw, 17px);
   font-weight: 400;
   letter-spacing: 0.22em;
   line-height: 1;
   text-align: center;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
+  transform: translateX(-50%);
   animation: hintPulse 3.4s ease-in-out 2.5s infinite;
 }
 
@@ -212,8 +217,8 @@
   content: '';
   width: 8px;
   height: 8px;
-  border-right: 1.5px solid rgba(255, 255, 255, 0.65);
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.65);
+  border-right: 1.5px solid rgba(255, 255, 255, 1);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 1);
   transform: rotate(45deg) translate(-1px, -1px);
 }
 
