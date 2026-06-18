@@ -210,7 +210,6 @@ export default function AboutMe({
                   <img src={card.flower} className="about-card-flower" aria-hidden="true" draggable="false" />
                   {card.content && (
                     <>
-                      <h2>{card.title}</h2>
                       <div className="about-card-content">{card.content}</div>
                     </>
                   )}

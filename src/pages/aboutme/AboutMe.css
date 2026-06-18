@@ -108,8 +108,8 @@
 
 .about-card {
   position: absolute;
-  width: clamp(160px, 13.8vw, 264px);
-  height: clamp(250px, 44vh, 500px);
+  width: clamp(240px, 17vw, 320px);
+  height: clamp(430px, 56vh, 596px);
   perspective: 900px;
   opacity: 0;
   transform: translateY(-58vh) rotate(var(--drop-tilt, 0deg)) scale(0.98);
@@ -129,7 +129,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   gap: clamp(6px, 1vh, 12px);
   width: 100%;
   height: 100%;
@@ -171,13 +171,13 @@
   left: var(--mx);
   top: var(--my);
   z-index: 4;
-  padding: 5px 11px 6px;
+  padding: 8px 15px 9px;
   border: 1px solid rgba(255, 255, 255, 0.82);
   border-radius: var(--about-card-radius);
   background: transparent;
   color: rgba(255, 255, 255, 0.92);
   font-family: 'TASA Explorer', 'Pretendard Variable', 'Pretendard', sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.02em;
@@ -201,27 +201,11 @@
   width: clamp(64px, 7vw, 130px);
   max-height: 34%;
   object-fit: contain;
-  opacity: 0.78;
-  filter: brightness(1.12) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.13));
+  opacity: 0.34;
+  filter: brightness(0.72) saturate(0.72) blur(0.4px) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.16));
   transform: translateX(-50%);
   pointer-events: none;
   user-select: none;
-}
-
-.about-card h2 {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  font-family: 'PP Neue Montreal', 'Cormorant Garamond', serif;
-  font-size: clamp(20px, 2vw, 34px);
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.94);
-  letter-spacing: 0;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
-}
-
-.about-card-history h2 {
-  display: none;
 }
 
 .about-card-content {
@@ -229,7 +213,7 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(5px, 0.8vh, 10px);
+  gap: clamp(14px, 2.2vh, 26px);
   font-family: 'TASA Explorer', 'Pretendard Variable', 'Pretendard', sans-serif;
   font-size: clamp(13px, 1.05vw, 17px);
   font-weight: 500;
@@ -240,26 +224,20 @@
 
 .about-card-bio {
   --drop-tilt: -2deg;
-  right: clamp(300px, 19.2vw, 368px);
+  right: clamp(310px, 21.6vw, 416px);
   top: clamp(250px, 24.4vh, 264px);
-  width: clamp(230px, 15vw, 290px);
-  height: clamp(400px, 52vh, 560px);
 }
 
 .about-card-skills {
   --drop-tilt: 2.5deg;
   left: clamp(310px, 21.6vw, 416px);
   top: clamp(38px, 5vh, 54px);
-  width: clamp(190px, 13.2vw, 252px);
-  height: clamp(420px, 49vh, 532px);
 }
 
 .about-card-history {
   --drop-tilt: -3deg;
   left: clamp(44px, 3.4vw, 66px);
   bottom: clamp(42px, 4.4vh, 56px);
-  width: clamp(190px, 14.1vw, 264px);
-  height: clamp(430px, 56vh, 596px);
 }
 
 .about-card-history .about-card-surface {
@@ -301,14 +279,8 @@
 
 .about-card-bloom {
   --drop-tilt: 3deg;
-  right: clamp(26px, 1.4vw, 42px);
+  right: clamp(44px, 3.4vw, 66px);
   top: clamp(24px, 2.4vh, 36px);
-  width: clamp(240px, 17vw, 320px);
-  height: clamp(410px, 51vh, 552px);
-}
-
-.about-card-bloom .about-card-surface {
-  justify-content: flex-end;
 }
 
 .about-card-bloom .about-card-flower {
@@ -319,7 +291,7 @@
 .values-list {
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 1.2vh, 14px);
+  gap: clamp(14px, 2.2vh, 26px);
   text-align: left;
 }
 
@@ -535,28 +507,23 @@
   }
 
   .about-card-bio {
-    right: 21vw;
+    right: 23vw;
     top: 34vh;
-    height: 40vh;
   }
 
   .about-card-skills {
     left: 23vw;
     top: 6vh;
-    height: 43vh;
   }
 
   .about-card-history {
-    left: 3.2vw;
+    left: 3vw;
     bottom: 5vh;
-    height: 52vh;
   }
 
   .about-card-bloom {
     right: 3vw;
     top: 5vh;
-    width: clamp(210px, 23vw, 260px);
-    height: 48vh;
   }
 
 }
@@ -587,10 +554,6 @@
     padding: 9px;
   }
 
-  .about-card h2 {
-    font-size: 18px;
-  }
-
   .about-card-content {
     font-size: 9px;
     line-height: 1.35;
@@ -619,7 +582,6 @@
   .about-card-bloom {
     right: 4vw;
     top: 10vh;
-    width: min(42vw, 180px);
   }
 
 }

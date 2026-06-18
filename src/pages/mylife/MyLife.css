@@ -13,7 +13,7 @@
   display: grid;
   grid-template-rows: auto minmax(360px, 1fr) auto;
   min-height: 100svh;
-  padding: clamp(70px, 8vh, 112px) 0 clamp(48px, 6vh, 76px);
+  padding: clamp(130px, 15vh, 210px) 0 clamp(48px, 6vh, 76px);
   overflow: hidden;
   isolation: isolate;
 }
@@ -97,6 +97,75 @@
   display: block;
 }
 
+.mylife-gallery-hint {
+  position: absolute;
+  left: 50%;
+  top: clamp(12px, 2vh, 24px);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  color: rgba(35, 51, 36, 0.68);
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: clamp(11px, 0.9vw, 14px);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%);
+}
+
+.mylife-section.is-visible .mylife-gallery-hint {
+  animation: mylifeHintPulse 3.4s ease-in-out 1s infinite;
+}
+
+.mylife-swipe-icon {
+  position: relative;
+  display: inline-grid;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 14px;
+  place-items: center;
+  animation: mylifeSwipeDrift 1.5s ease-in-out infinite;
+}
+
+.mylife-swipe-icon::before,
+.mylife-swipe-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid currentColor;
+  border-left: 1.5px solid currentColor;
+}
+
+.mylife-swipe-icon::before {
+  left: 4px;
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.mylife-swipe-icon::after {
+  right: 4px;
+  transform: translateY(-50%) rotate(135deg);
+}
+
+@keyframes mylifeSwipeDrift {
+  0%, 100% { transform: translateX(-3px); opacity: 0.5; }
+  50% { transform: translateX(3px); opacity: 1; }
+}
+
+@keyframes mylifeHintPulse {
+  0% { opacity: 0; }
+  25% { opacity: 0.72; }
+  75% { opacity: 0.72; }
+  100% { opacity: 0; }
+}
+
 .mylife-notes {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -157,7 +226,7 @@
 @media (max-width: 980px) {
   .mylife-section {
     grid-template-rows: auto minmax(320px, 46vh) auto;
-    padding-top: 80px;
+    padding-top: 132px;
   }
 
   .mylife-gallery-wrap {
@@ -176,7 +245,7 @@
 
 @media (max-width: 640px) {
   .mylife-section {
-    padding: 74px 0 48px;
+    padding: 118px 0 48px;
   }
 
   .mylife-copy {
@@ -197,6 +266,11 @@
     margin-top: 12px;
   }
 
+  .mylife-gallery-hint {
+    top: 10px;
+    font-size: 11px;
+  }
+
   .mylife-notes {
     gap: 10px;
     margin-top: 6px;
@@ -212,5 +286,14 @@
   .mylife-gallery-wrap,
   .mylife-note {
     transition: none !important;
+  }
+
+  .mylife-section.is-visible .mylife-gallery-hint,
+  .mylife-swipe-icon {
+    animation: none !important;
+  }
+
+  .mylife-section.is-visible .mylife-gallery-hint {
+    opacity: 0.72;
   }
 }

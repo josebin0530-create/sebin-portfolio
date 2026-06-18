@@ -75,6 +75,7 @@
   transition: opacity 0.72s ease;
 }
 
+.hero.mylife-active .hero-flower-wrap,
 .hero.project-active .hero-flower-wrap {
   opacity: 0;
 }
@@ -83,6 +84,10 @@
   width: 100%;
   height: auto;
   display: block;
+}
+
+.hero.panel-open .hero-flower-video {
+  filter: brightness(0.9) saturate(0.96);
 }
 
 /* ══════════════════════════════════════════════════
@@ -167,7 +172,6 @@
   letter-spacing: 0.04em;
   line-height: 1.6;
   text-align: center;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.38);
   opacity: 0;
   animation: fadeUp 1.8s cubic-bezier(0.22, 1, 0.36, 1) 1.0s forwards;
 }
@@ -179,33 +183,43 @@
 
 /* ── 스크롤 힌트 ── */
 .hero-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   margin: clamp(14px, 2vh, 24px) 0 0;
   color: rgba(255, 255, 255, 0.65);
   font-family: 'Alumni Sans', sans-serif;
   font-size: clamp(11px, 0.9vw, 14px);
   font-weight: 400;
   letter-spacing: 0.22em;
+  line-height: 1;
   text-align: center;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
   animation: hintPulse 3.4s ease-in-out 2.5s infinite;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .hint-arrow {
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  border-right: 1.5px solid rgba(255, 255, 255, 0.65);
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.65);
-  transform: rotate(45deg) translateY(-2px);
+  display: inline-grid;
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
+  place-items: center;
   animation: arrowBounce 1.4s ease-in-out infinite;
 }
 
+.hint-arrow::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.65);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.65);
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
 @keyframes arrowBounce {
-  0%, 100% { transform: rotate(45deg) translateY(-2px); opacity: 0.5; }
-  50%       { transform: rotate(45deg) translateY(3px);  opacity: 1;   }
+  0%, 100% { transform: translateY(-2px); opacity: 0.5; }
+  50%       { transform: translateY(3px);  opacity: 1;   }
 }
 
 @keyframes hintPulse {

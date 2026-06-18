@@ -99,6 +99,10 @@ export default function MyLife({ active = true, scrollRootRef, onActiveChange })
           scrollSpeed={1.6}
           scrollEase={0.045}
         />
+        <p className="mylife-gallery-hint" aria-hidden="true">
+          <span className="mylife-swipe-icon" />
+          Swipe to explore
+        </p>
       </div>
 
       <div className="mylife-notes" aria-label="나의 성격 키워드">

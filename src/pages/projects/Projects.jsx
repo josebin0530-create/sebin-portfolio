@@ -44,6 +44,58 @@ const getFigmaEmbedUrl = (url) => (
   `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`
 );
 
+const introCopyLines = [
+  [{ text: '씨앗이 천천히 자라 꽃을 피우듯,' }],
+  [
+    { text: '저 역시 ' },
+    { text: '다양한 경험', strong: true },
+    { text: '과 고민을 통해 ' },
+    { text: '성장', strong: true },
+    { text: '하고 있습니다.' },
+  ],
+  [{ text: '단순히 예쁜 화면을 넘어, 브랜드와 사용자의 경험이' }],
+  [{ text: '자연스럽게 이어지는 디자인을 만듭니다' }],
+];
+
+const introCopyText = introCopyLines
+  .map((line) => line.map((segment) => segment.text).join(''))
+  .join('\n');
+
+const introCopyCharCount = introCopyLines.reduce(
+  (lineTotal, line) => lineTotal + line.reduce(
+    (segmentTotal, segment) => segmentTotal + Array.from(segment.text).length,
+    0
+  ),
+  0
+);
+
+const renderTypedSegment = (segment, visibleCount, key) => {
+  const visibleText = Array.from(segment.text).slice(0, visibleCount).join('');
+
+  return segment.strong ? (
+    <strong key={key}>{visibleText}</strong>
+  ) : (
+    <span key={key}>{visibleText}</span>
+  );
+};
+
+const getVisibleSegmentCharCount = (typedCount, lineIndex, segmentIndex) => {
+  const charsBeforeSegment = introCopyLines.reduce((total, line, currentLineIndex) => {
+    if (currentLineIndex > lineIndex) return total;
+
+    return total + line.reduce((segmentTotal, segment, currentSegmentIndex) => {
+      if (currentLineIndex === lineIndex && currentSegmentIndex >= segmentIndex) {
+        return segmentTotal;
+      }
+
+      return segmentTotal + Array.from(segment.text).length;
+    }, 0);
+  }, 0);
+  const segmentLength = Array.from(introCopyLines[lineIndex][segmentIndex].text).length;
+
+  return Math.max(0, Math.min(segmentLength, typedCount - charsBeforeSegment));
+};
+
 export default function Projects({ active = true, scrollRootRef, onActiveChange }) {
   const copySectionRef = useRef(null);
   const gridSectionRef = useRef(null);
@@ -52,6 +104,7 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
   const visibleSectionsRef = useRef(new Set());
   const [isVisible, setIsVisible] = useState(false);
   const [isFlowerVisible, setIsFlowerVisible] = useState(false);
+  const [typedIntroCount, setTypedIntroCount] = useState(0);
   const shouldShowSection = active && isVisible;
   const shouldShowFlower = active && isFlowerVisible;
 
@@ -80,6 +133,7 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
         });
 
         const nextVisible = visibleSections.size > 0;
+        if (!nextVisible) setTypedIntroCount(0);
         setIsVisible(nextVisible);
         onActiveChange?.(nextVisible);
       },
@@ -161,6 +215,43 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
     };
   }, [active, scrollRootRef]);
 
+  useEffect(() => {
+    if (!shouldShowSection) {
+      return undefined;
+    }
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let typeTimer = null;
+
+    if (reduceMotion) {
+      typeTimer = window.setTimeout(() => {
+        setTypedIntroCount(introCopyCharCount);
+      }, 0);
+
+      return () => {
+        window.clearTimeout(typeTimer);
+      };
+    }
+
+    const startTimer = window.setTimeout(() => {
+      typeTimer = window.setInterval(() => {
+        setTypedIntroCount((currentCount) => {
+          if (currentCount >= introCopyCharCount) {
+            window.clearInterval(typeTimer);
+            return currentCount;
+          }
+
+          return currentCount + 1;
+        });
+      }, 40);
+    }, 200);
+
+    return () => {
+      window.clearTimeout(startTimer);
+      if (typeTimer) window.clearInterval(typeTimer);
+    };
+  }, [shouldShowSection]);
+
   return (
     <>
       <div
@@ -197,11 +288,16 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
         <div className="project-intro-grid">
           <div className="project-copy">
             <span className="project-kicker">My Projects</span>
-            <p>
-              씨앗이 천천히 자라 꽃을 피우듯,<br />
-              저 역시 <strong>다양한 경험</strong>과 고민을 통해 <strong>성장</strong>하고 있습니다.<br />
-              단순히 예쁜 화면을 넘어, 브랜드와 사용자의 경험이<br />
-              자연스럽게 이어지는 디자인을 만듭니다
+            <p aria-label={introCopyText}>
+              {introCopyLines.map((line, lineIndex) => (
+                <span key={`line-${lineIndex}`} className="project-copy-line" aria-hidden="true">
+                  {line.map((segment, segmentIndex) => renderTypedSegment(
+                    segment,
+                    getVisibleSegmentCharCount(typedIntroCount, lineIndex, segmentIndex),
+                    `segment-${lineIndex}-${segmentIndex}`
+                  ))}
+                </span>
+              ))}
             </p>
             <span className="project-divider" aria-hidden="true" />
           </div>
