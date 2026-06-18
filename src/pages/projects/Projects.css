@@ -10,12 +10,16 @@
   background: url('/mainvisual.png') center center / cover fixed no-repeat;
 }
 
+.project-section.project-intro-section {
+  padding-right: clamp(16px, 2vw, 40px);
+}
+
 .project-intro-grid {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: min(100%, 1840px);
+  justify-content: flex-end;
+  width: 100%;
   min-height: calc(100svh - clamp(168px, 20vh, 264px));
   margin: 0 auto;
 }
@@ -72,8 +76,14 @@
   font-size: clamp(31px, 2.65vw, 52px);
   font-weight: 300;
   line-height: 1.48;
+  text-align: right;
   letter-spacing: 0;
   word-break: keep-all;
+}
+
+.project-copy-line {
+  display: block;
+  min-height: 1.48em;
 }
 
 .project-copy strong {
@@ -99,9 +109,9 @@
 
 .project-list-shell {
   position: relative;
-  z-index: 1;
+  z-index: 80;
   width: min(92vw, 1180px);
-  margin-left: clamp(160px, 18vw, 320px);
+  margin-left: clamp(220px, 24vw, 440px);
   margin-right: auto;
 }
 
@@ -328,7 +338,7 @@
 
   .project-intro-grid {
     display: flex;
-    width: min(100%, 430px);
+    width: 100%;
     min-height: calc(100svh - 148px);
   }
 

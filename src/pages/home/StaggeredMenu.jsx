@@ -136,10 +136,6 @@ export default function StaggeredMenu({
     closeMenu(() => onSelect?.(item.target));
   }, [closeMenu, onSelect]);
 
-  const handleLogoClick = useCallback(() => {
-    closeMenu(() => onSelect?.('home'));
-  }, [closeMenu, onSelect]);
-
   useEffect(() => {
     if (!open) return undefined;
 
@@ -165,14 +161,6 @@ export default function StaggeredMenu({
       data-open={open || undefined}
     >
       <header className="staggered-menu-header" aria-label="Main navigation">
-        <button
-          className="sm-logo"
-          type="button"
-          aria-label="Go to Home section"
-          onClick={handleLogoClick}
-        >
-          SeBin
-        </button>
         <button
           ref={toggleBtnRef}
           className="sm-toggle"

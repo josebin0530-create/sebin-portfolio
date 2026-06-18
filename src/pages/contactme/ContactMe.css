@@ -40,6 +40,7 @@
   height: 100svh;
   min-height: 100svh;
   overflow: hidden;
+  background: url('/mainvisual.png') center center / cover fixed no-repeat;
   isolation: isolate;
 }
 
@@ -48,18 +49,12 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: url('/mainvisual.png') center center / cover fixed no-repeat;
+  background: inherit;
 }
 
 /* bottom vignette */
 .contact-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to top, rgba(27, 31, 12, 0.34) 0%, transparent 38%),
-    linear-gradient(to bottom, rgba(24, 18, 11, 0.16) 0%, transparent 22%),
-    rgba(92, 79, 44, 0.08);
+  content: none;
 }
 
 /* main content wrapper */
@@ -106,21 +101,20 @@
 .contact-subtitle {
   font-family: 'PP Neue Montreal', sans-serif;
   position: absolute;
-  top: clamp(370px, 38vh, 395px);
+  top: clamp(260px, 35vh, 395px);
   left: clamp(72px, 5.6vw, 96px);
-  font-weight: 300;
+  font-weight: 500;
   font-size: clamp(24px, 1.8vw, 34px);
   color: rgba(255, 255, 255, 0.96);
   letter-spacing: 0;
   margin: 0;
   text-align: left;
-  text-shadow: 0 2px 20px rgba(26, 24, 16, 0.18);
 }
 
 /* glass contact card */
 .contact-card {
   position: absolute;
-  top: clamp(475px, 48vh, 500px);
+  top: clamp(340px, 46vh, 500px);
   left: clamp(58px, 3.6vw, 72px);
   display: flex;
   flex-direction: column;
@@ -128,14 +122,14 @@
   width: min(42vw, 720px);
   min-width: 620px;
   padding: clamp(28px, 3.1vh, 34px) clamp(62px, 3.8vw, 68px) clamp(12px, 1.6vh, 18px);
-  background: rgba(255, 255, 255, 0.13);
-  backdrop-filter: blur(9px) saturate(1.05);
-  -webkit-backdrop-filter: blur(9px) saturate(1.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(37, 45, 30, 0.28);
+  backdrop-filter: blur(16px) saturate(1.12);
+  -webkit-backdrop-filter: blur(16px) saturate(1.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   box-shadow:
-    0 20px 54px rgba(35, 35, 20, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    0 20px 54px rgba(24, 30, 18, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .contact-row {
@@ -290,7 +284,49 @@
   height: auto;
 }
 
+@media (max-height: 820px) and (min-width: 861px) {
+  .contact-title {
+    top: clamp(56px, 7vh, 80px);
+    font-size: clamp(54px, 5vw, 86px);
+  }
+
+  .contact-subtitle {
+    top: clamp(230px, 32vh, 300px);
+    font-size: clamp(21px, 1.6vw, 28px);
+  }
+
+  .contact-card {
+    top: clamp(300px, 42vh, 370px);
+    gap: clamp(12px, 1.4vh, 18px);
+    min-width: 560px;
+    padding: clamp(20px, 2.4vh, 26px) clamp(42px, 3vw, 56px) clamp(10px, 1.2vh, 14px);
+  }
+
+  .contact-row {
+    grid-template-columns: 142px minmax(0, 1fr);
+  }
+
+  .contact-label,
+  .contact-value,
+  .contact-instagram {
+    font-size: clamp(22px, 1.5vw, 29px);
+  }
+
+  .contact-field {
+    font-size: clamp(18px, 1.2vw, 23px);
+  }
+
+  .contact-field input {
+    height: 34px;
+  }
+
+  .contact-field textarea {
+    height: 56px;
+  }
+}
+
 @media (max-width: 860px) {
+  .contact-section,
   .contact-bg {
     background-attachment: scroll;
   }
