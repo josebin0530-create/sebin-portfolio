@@ -50,10 +50,6 @@ export default function ContactMe({ active = true, scrollRootRef, onActiveChange
 
         <div className="contact-card">
           <div className="contact-row">
-            <span className="contact-label">Phone</span>
-            <span className="contact-value">010-2708-0240</span>
-          </div>
-          <div className="contact-row">
             <span className="contact-label">Email</span>
             <a
               className="contact-value"
@@ -101,21 +97,21 @@ export default function ContactMe({ active = true, scrollRootRef, onActiveChange
               />
             </label>
           </form>
-        </div>
 
-        <div className="contact-button-magnet">
-          <Magnet
-            padding={140}
-            disabled={false}
-            magnetStrength={8}
-            activeTransition="transform 0.16s ease-out"
-            inactiveTransition="transform 0.45s ease-in-out"
-            innerClassName="contact-button-magnet-inner"
-          >
-            <button className="contact-button" type="submit" form="contact-form">
-              Contact me
-            </button>
-          </Magnet>
+          <div className="contact-button-magnet">
+            <Magnet
+              padding={140}
+              disabled={false}
+              magnetStrength={8}
+              activeTransition="transform 0.16s ease-out"
+              inactiveTransition="transform 0.45s ease-in-out"
+              innerClassName="contact-button-magnet-inner"
+            >
+              <button className="contact-button" type="submit" form="contact-form">
+                Contact me
+              </button>
+            </Magnet>
+          </div>
         </div>
       </div>
 
