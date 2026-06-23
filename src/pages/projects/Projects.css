@@ -327,8 +327,8 @@
 
 @media (max-width: 860px) {
   .project-section {
-    min-height: 100svh;
-    padding: 92px 18px 56px;
+    min-height: auto;
+    padding: 88px 18px 64px;
   }
 
   .project-intro-section,
@@ -362,7 +362,7 @@
 
   .project-copy {
     margin-left: auto;
-    padding-left: 92px;
+    padding-left: 72px;
     padding-top: clamp(54px, 11vh, 96px);
     text-align: center;
   }
@@ -379,6 +379,13 @@
   .project-divider {
     width: 100%;
     margin-top: 28px;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .project-list-shell {
+    width: min(100%, 520px);
+    margin: 0 auto;
   }
 
   .project-grid {
@@ -389,7 +396,7 @@
 
   .project-card {
     min-height: 420px;
-    padding: 18px 18px 42px;
+    padding: 18px 18px 88px;
   }
 
   .project-thumb {
@@ -398,6 +405,52 @@
 
   .project-card h2 {
     font-size: 24px;
+  }
+
+  .project-link-preview {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-section {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .project-intro-grid {
+    align-items: flex-start;
+  }
+
+  .project-flower-wrap {
+    left: -128px;
+    top: 70svh;
+    width: 360px;
+  }
+
+  .project-copy {
+    padding-left: 48px;
+    padding-top: 72px;
+  }
+
+  .project-copy p {
+    font-size: clamp(18px, 5.2vw, 21px);
+    line-height: 1.62;
+    text-align: right;
+  }
+
+  .project-card {
+    min-height: 0;
+  }
+
+  .project-thumb {
+    aspect-ratio: 1.2 / 1;
+    margin-top: 30px;
+  }
+
+  .project-card-actions {
+    right: 18px;
+    bottom: 18px;
   }
 }
 

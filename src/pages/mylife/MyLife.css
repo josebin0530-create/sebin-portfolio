@@ -58,7 +58,7 @@
 
 .mylife-copy h2 {
   margin: 0;
-  color: #1f3425;
+  color: #61302c;
   font-family: 'PP Neue Montreal', 'Cormorant Garamond', serif;
   font-size: clamp(30px, 3.2vw, 58px);
   font-weight: 500;
@@ -70,7 +70,7 @@
 .mylife-copy p {
   width: min(100%, 720px);
   margin: clamp(18px, 2.2vh, 26px) auto 0;
-  color: rgba(34, 50, 36, 0.68);
+  color: #61302c;
   font-size: clamp(15px, 1.05vw, 18px);
   font-weight: 400;
   line-height: 1.7;
@@ -246,7 +246,10 @@
 
 @media (max-width: 640px) {
   .mylife-section {
-    padding: 118px 0 48px;
+    grid-template-rows: auto minmax(400px, 52vh) auto;
+    min-height: auto;
+    padding: 96px 0 48px;
+    overflow: visible;
   }
 
   .mylife-copy {
@@ -263,8 +266,8 @@
   }
 
   .mylife-gallery-wrap {
-    min-height: 300px;
-    margin-top: 12px;
+    min-height: 400px;
+    margin-top: 16px;
   }
 
   .mylife-gallery-hint {
@@ -274,11 +277,29 @@
 
   .mylife-notes {
     gap: 10px;
-    margin-top: 6px;
+    margin-top: 12px;
   }
 
   .mylife-note {
     padding: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .mylife-copy h2 {
+    font-size: 25px;
+  }
+
+  .mylife-copy p {
+    font-size: 13px;
+  }
+
+  .mylife-gallery-wrap {
+    min-height: 370px;
+  }
+
+  .mylife-notes {
+    width: min(90vw, 360px);
   }
 }
 

@@ -43,6 +43,7 @@ const notes = [
 export default function MyLife({ active = true, scrollRootRef, onActiveChange }) {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const shouldShow = active && isVisible;
 
   useEffect(() => {
@@ -75,6 +76,15 @@ export default function MyLife({ active = true, scrollRootRef, onActiveChange })
     };
   }, [active, scrollRootRef, onActiveChange]);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 640px)');
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+    updateIsMobile();
+    mediaQuery.addEventListener('change', updateIsMobile);
+    return () => mediaQuery.removeEventListener('change', updateIsMobile);
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -92,12 +102,15 @@ export default function MyLife({ active = true, scrollRootRef, onActiveChange })
       <div className="mylife-gallery-wrap" aria-label="나의 취향 갤러리">
         <CircularGallery
           items={galleryItems}
-          bend={2.7}
+          bend={isMobile ? 0.9 : 2.7}
           textColor="#ffffff"
           borderRadius={0.06}
-          font='500 24px "Gmarket Sans TTF"'
-          scrollSpeed={1.6}
-          scrollEase={0.045}
+          font={isMobile ? '500 15px "Gmarket Sans TTF"' : '500 24px "Gmarket Sans TTF"'}
+          scrollSpeed={isMobile ? 1.25 : 1.6}
+          scrollEase={isMobile ? 0.06 : 0.045}
+          itemWidth={isMobile ? 640 : 600}
+          itemHeight={isMobile ? 760 : 760}
+          itemPadding={isMobile ? 1.1 : 2}
         />
         <p className="mylife-gallery-hint" aria-hidden="true">
           <span className="mylife-swipe-icon" />
