@@ -137,6 +137,9 @@ class Media {
     textColor,
     borderRadius = 0,
     font,
+    itemWidth = 700,
+    itemHeight = 900,
+    itemPadding = 2,
   }) {
     this.extra = 0;
     this.geometry = geometry;
@@ -152,6 +155,9 @@ class Media {
     this.textColor = textColor;
     this.borderRadius = borderRadius;
     this.font = font;
+    this.itemWidth = itemWidth;
+    this.itemHeight = itemHeight;
+    this.itemPadding = itemPadding;
     this.createShader();
     this.createMesh();
     this.createTitle();
@@ -290,10 +296,10 @@ class Media {
     if (screen) this.screen = screen;
     if (viewport) this.viewport = viewport;
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
+    this.plane.scale.y = (this.viewport.height * (this.itemHeight * this.scale)) / this.screen.height;
+    this.plane.scale.x = (this.viewport.width * (this.itemWidth * this.scale)) / this.screen.width;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
-    this.padding = 2;
+    this.padding = this.itemPadding;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
@@ -311,6 +317,9 @@ class GalleryApp {
       font = 'bold 30px sans-serif',
       scrollSpeed = 2,
       scrollEase = 0.05,
+      itemWidth = 700,
+      itemHeight = 900,
+      itemPadding = 2,
     } = {}
   ) {
     this.container = container;
@@ -322,7 +331,7 @@ class GalleryApp {
     this.createScene();
     this.onResize();
     this.createGeometry();
-    this.createMedias(items, bend, textColor, borderRadius, font);
+    this.createMedias(items, bend, textColor, borderRadius, font, itemWidth, itemHeight, itemPadding);
     this.update();
     this.addEventListeners();
   }
@@ -355,7 +364,7 @@ class GalleryApp {
     });
   }
 
-  createMedias(items, bend = 1, textColor, borderRadius, font) {
+  createMedias(items, bend = 1, textColor, borderRadius, font, itemWidth, itemHeight, itemPadding) {
     const galleryItems = items && items.length ? items : [];
     this.mediasImages = galleryItems.concat(galleryItems);
     this.medias = this.mediasImages.map((data, index) => new Media({
@@ -372,6 +381,9 @@ class GalleryApp {
       textColor,
       borderRadius,
       font,
+      itemWidth,
+      itemHeight,
+      itemPadding,
     }));
   }
 
@@ -478,6 +490,9 @@ export default function CircularGallery({
   font = 'bold 30px sans-serif',
   scrollSpeed = 2,
   scrollEase = 0.05,
+  itemWidth = 700,
+  itemHeight = 900,
+  itemPadding = 2,
 }) {
   const containerRef = useRef(null);
 
@@ -496,6 +511,9 @@ export default function CircularGallery({
         font: resolvedFont,
         scrollSpeed,
         scrollEase,
+        itemWidth,
+        itemHeight,
+        itemPadding,
       });
     });
 
@@ -503,7 +521,7 @@ export default function CircularGallery({
       isMounted = false;
       if (app) app.destroy();
     };
-  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
+  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, itemWidth, itemHeight, itemPadding]);
 
   return <div className="circular-gallery" ref={containerRef} />;
 }

@@ -186,6 +186,8 @@ export default function StaggeredMenu({
         </button>
       </header>
 
+      <div className="sm-backdrop" aria-hidden="true" onClick={() => closeMenu()} />
+
       <aside
         id="staggered-menu-panel"
         ref={panelRef}

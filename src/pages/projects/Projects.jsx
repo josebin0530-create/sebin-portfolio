@@ -16,7 +16,7 @@ const projects = [
     image: oneldorakImg,
     imageAlt: '오늘도락 프로젝트 이미지',
     link: 'https://oneuldorak-new.vercel.app/',
-    planLink: 'https://www.figma.com/deck/UJbjbycQZIvYqNoBI90UXa/-%ED%8C%80%ED%94%8C2-4%EC%A1%B0--%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C_oneuldorak-%EC%98%A4%EB%8A%98%EB%8F%84%EB%9D%BD---%EB%B3%B5%EC%82%AC---Copy---%EB%B3%B5%EC%82%AC-?node-id=4098-19290&t=2L0OSMqoiEnAdf4o-1',
+    planLink: 'https://www.figma.com/deck/UJbjbycQZIvYqNoBI90UXa/-%ED%8C%80%ED%94%8C2-4%EC%A1%B0--%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C_oneuldorak-%EC%98%A4%EB%8A%98%EB%8F%84%EB%9D%BD-?node-id=4098-19290&t=04vgDOG1x8bOxQWJ-1',
   },
   {
     title: '개인앱 - 책책',
@@ -36,7 +36,7 @@ const projects = [
     image: romandImg,
     imageAlt: '롬앤 프로젝트 이미지',
     link: 'https://josebin0530-create.github.io/romand/',
-    planLink: 'https://www.figma.com/deck/0OH7ziBZ80BBaFYE6SR3yn/-%ED%8C%80%ED%94%8C1-2%EC%A1%B0--%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C_rom-nd-%EC%8B%9D%EC%8A%A4%EB%A7%A8---%EB%B3%B5%EC%82%AC---%EB%B3%B5%EC%82%AC-?node-id=2188-694&t=gTPpTyMvjJmJV8Bu-1',
+    planLink: 'https://www.figma.com/deck/oFyXPpvmCjEh4UMY23cSsU/-%ED%8C%80%ED%94%8C1-2%EC%A1%B0--%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C_rom-nd-%EC%8B%9D%EC%8A%A4%EB%A7%A8-?node-id=2547-1027&t=N8O18RDa5XDNvYJt-1',
   },
 ];
 

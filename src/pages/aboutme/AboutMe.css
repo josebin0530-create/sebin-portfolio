@@ -601,113 +601,180 @@
 }
 
 @media (max-width: 760px) {
+  .about-scroll {
+    scroll-snap-type: none;
+  }
+
+  .about-section-profile {
+    min-height: auto;
+    padding: 82px 18px 56px;
+  }
+
+  .about-field {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: min(100%, 430px);
+    height: auto;
+    margin: 26px auto 0;
+  }
+
   .about-intro {
-    top: 10vh;
-    width: 58vw;
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(100%, 430px);
+    margin: 0 auto;
+    transform: translateY(18px);
   }
 
   .about-intro p {
-    font-size: 18px;
+    font-size: clamp(19px, 5.3vw, 24px);
+    line-height: 1.5;
   }
 
   .about-profile {
-    width: 220px;
-    max-height: 40vh;
-    margin-top: 24px;
+    width: min(62vw, 250px);
+    max-height: none;
+    margin-top: 22px;
+  }
+
+  .about-panel.open .about-intro {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 
   .about-card {
-    width: 32vw;
-    height: 25vh;
-    min-height: 0;
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    min-height: 238px;
+    opacity: 1;
+    transform: none;
   }
 
   .about-card-surface {
-    padding: 9px;
+    height: auto;
+    min-height: inherit;
+    padding: 22px;
+    justify-content: flex-start;
+    background:
+      radial-gradient(
+        circle at var(--mx) var(--my),
+        rgba(255, 255, 255, 0.08),
+        transparent 36%
+      ),
+      rgba(71, 79, 61, 0.4);
   }
 
   .about-card-content {
-    font-size: 9px;
-    line-height: 1.35;
+    gap: 16px;
+    font-size: 14px;
+    line-height: 1.45;
   }
 
   .skills-panel {
-    gap: 9px;
+    gap: 18px;
   }
 
   .skills-section {
-    gap: 6px;
+    gap: 10px;
   }
 
   .skills-section h3 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .design-skill-list {
-    gap: 8px;
-    width: min(100%, 128px);
+    gap: 12px;
+    width: 100%;
   }
 
   .design-skill-item {
-    gap: 4px;
+    gap: 7px;
   }
 
   .design-skill-head {
-    gap: 6px;
+    gap: 10px;
   }
 
   .design-skill-head img {
-    width: 28px;
-    height: 28px;
-    border-radius: 5px;
+    width: 34px;
+    height: 34px;
+    border-radius: 7px;
   }
 
   .design-skill-head span {
-    font-size: 10px;
+    font-size: 14px;
   }
 
   .skills-icon-grid img {
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     border-radius: 7px;
   }
 
   .design-skill-track {
-    width: min(100%, 120px);
-    height: 4px;
+    width: 100%;
+    height: 5px;
   }
 
   .skills-icon-grid {
-    grid-template-columns: repeat(3, 28px);
-    gap: 8px;
+    grid-template-columns: repeat(3, 34px);
+    gap: 10px;
   }
 
   .about-card-flower {
-    width: 80px;
-    top: 12%;
+    width: 88px;
+    top: 14px;
+    opacity: 0.24;
   }
 
   .about-card-bio {
-    right: 4vw;
-    top: 42vh;
-    width: 28vw;
+    width: 100%;
   }
 
   .about-card-skills {
-    left: 4vw;
-    top: 10vh;
-    width: 28vw;
+    width: 100%;
   }
 
   .about-card-history {
-    left: 4vw;
-    top: 40vh;
+    width: 100%;
   }
 
   .about-card-bloom {
-    right: 4vw;
-    top: 10vh;
-    width: 28vw;
+    width: 100%;
+  }
+
+  .about-panel.open .about-card {
+    animation: none;
+  }
+
+  .about-card-bio .bio-info {
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+
+  .bio-hobby-grid {
+    gap: 12px;
+  }
+
+  .bio-hobby-item img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .about-card-history .entry-desc {
+    white-space: normal;
+  }
+
+  .values-list {
+    gap: 20px;
   }
 
 }

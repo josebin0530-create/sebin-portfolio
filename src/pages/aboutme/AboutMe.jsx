@@ -27,7 +27,7 @@ import hobby4Icon from './images/hobby_4.svg';
 const designSkills = [
   { icon: figmaIcon, label: 'Figma', pct: 96 },
   { icon: ai5Icon, label: 'Premiere Pro', pct: 46 },
-  { icon: ai9Icon, label: 'Photoshop', pct: 88 },
+  { icon: ai9Icon, label: 'Photoshop', pct: 50 },
 ];
 
 const aiSkills = [
