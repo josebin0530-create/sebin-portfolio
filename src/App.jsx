@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import Home from './pages/Home';
 import AboutMe from './pages/aboutme/AboutMe';
 import StaggeredMenu from './pages/home/StaggeredMenu';
@@ -13,12 +13,56 @@ const menuItems = [
 ];
 
 export default function App() {
+  const butterflyCursorRef = useRef(null);
   const [panelOpen, setPanelOpen] = useState(false);
   const [myLifeActive, setMyLifeActive] = useState(false);
   const [projectActive, setProjectActive] = useState(false);
   const [contactActive, setContactActive] = useState(false);
   const [navigationTarget, setNavigationTarget] = useState(null);
   const [homeResetKey, setHomeResetKey] = useState(0);
+
+  useEffect(() => {
+    const cursor = butterflyCursorRef.current;
+    const canUseCustomCursor = window.matchMedia('(pointer: fine)').matches;
+
+    if (!cursor || !canUseCustomCursor) return undefined;
+
+    let lastX = null;
+    let direction = 'right';
+
+    document.body.classList.add('has-butterfly-cursor');
+    cursor.classList.add('is-facing-right');
+
+    const handleMouseMove = (event) => {
+      if (lastX !== null) {
+        const deltaX = event.clientX - lastX;
+
+        if (Math.abs(deltaX) > 1) {
+          direction = deltaX > 0 ? 'right' : 'left';
+          cursor.classList.toggle('is-facing-right', direction === 'right');
+          cursor.classList.toggle('is-facing-left', direction === 'left');
+        }
+      }
+
+      lastX = event.clientX;
+      cursor.style.setProperty('--cursor-x', `${event.clientX}px`);
+      cursor.style.setProperty('--cursor-y', `${event.clientY}px`);
+      cursor.classList.add('is-visible');
+    };
+
+    const handleMouseLeave = () => {
+      cursor.classList.remove('is-visible');
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    document.documentElement.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
+      document.body.classList.remove('has-butterfly-cursor');
+    };
+  }, []);
 
   const handleEnter = useCallback(() => {
     setMyLifeActive(false);
@@ -47,6 +91,11 @@ export default function App() {
 
   return (
     <>
+      <span
+        ref={butterflyCursorRef}
+        className="butterfly-cursor"
+        aria-hidden="true"
+      />
       <StaggeredMenu
         items={menuItems}
         accentColor="#ca433a"

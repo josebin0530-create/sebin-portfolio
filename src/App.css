@@ -7,3 +7,50 @@ body {
   padding: 0;
   overflow: hidden;
 }
+
+body.has-butterfly-cursor,
+body.has-butterfly-cursor * {
+  cursor: none !important;
+}
+
+.butterfly-cursor {
+  --cursor-x: 50vw;
+  --cursor-y: 50vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 54px;
+  height: 58px;
+  pointer-events: none;
+  background: url('/cursor2.png') center / contain no-repeat;
+  opacity: 0;
+  transform: translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-72%, -50%);
+  transition: opacity 0.16s ease;
+  will-change: transform;
+}
+
+.butterfly-cursor.is-visible {
+  opacity: 1;
+}
+
+.butterfly-cursor.is-facing-left {
+  background-image: url('/cursor1.png');
+  transform: translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-28%, -50%);
+}
+
+.butterfly-cursor.is-facing-right {
+  background-image: url('/cursor2.png');
+  transform: translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-72%, -50%);
+}
+
+@media (pointer: coarse) {
+  body.has-butterfly-cursor,
+  body.has-butterfly-cursor * {
+    cursor: auto !important;
+  }
+
+  .butterfly-cursor {
+    display: none;
+  }
+}
