@@ -43,10 +43,9 @@ export default function ContactMe({ active = true, scrollRootRef, onActiveChange
       <div className="contact-content">
         <h1 className="contact-title">
           <span>Let&apos;s Bloom</span>
-          <br />
           <span className="contact-title-indent">Together</span>
         </h1>
-        <p className="contact-subtitle">함께 피워갈 다음 경험을 기다립니다.</p>
+        <p className="contact-subtitle"><span>함께 피워갈 </span><span>다음 경험을 기다립니다.</span></p>
 
         <div className="contact-card">
           <div className="contact-row">

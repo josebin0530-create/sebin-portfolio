@@ -4,30 +4,35 @@
   font-weight: 100;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'PP Neue Montreal';
   src: url('/fonts/ppneuemontreal-book.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'PP Neue Montreal';
   src: url('/fonts/ppneuemontreal-medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'PP Neue Montreal';
   src: url('/fonts/ppneuemontreal-bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'PP Neue Montreal';
   src: url('/fonts/ppneuemontreal-italic.otf') format('opentype');
   font-weight: 400;
   font-style: italic;
 }
+
 @font-face {
   font-family: 'PP Neue Montreal';
   src: url('/fonts/ppneuemontreal-semibolditalic.otf') format('opentype');
@@ -77,8 +82,8 @@
 .contact-title {
   font-family: 'PP Neue Montreal', sans-serif;
   position: absolute;
-  top: clamp(80px, 9.8vh, 100px);
-  left: clamp(48px, 3.8vw, 66px);
+  bottom: clamp(80px, 9.8vh, 100px);
+  right: clamp(48px, 3.8vw, 66px);
   font-weight: 100;
   font-size: clamp(64px, 5.7vw, 104px);
   line-height: 1.16;
@@ -90,7 +95,8 @@
 }
 
 .contact-title span {
-  display: inline-block;
+  display: block;
+  /* display: inline-block; */
 }
 
 .contact-title-indent {
@@ -100,28 +106,39 @@
 /* korean subtitle */
 .contact-subtitle {
   font-family: 'PP Neue Montreal', sans-serif;
+  text-shadow: -2px -8px 30px rgba(48, 50, 31, 0.10);
+  /* width: 50%; */
+  line-height: 1.1;
   position: absolute;
-  top: clamp(260px, 35vh, 395px);
+  /* top: clamp(260px, 35vh, 395px); */
+  top: clamp(80px, 9.8vh, 100px);
   left: clamp(72px, 5.6vw, 96px);
-  font-weight: 500;
-  font-size: clamp(24px, 1.8vw, 34px);
+  font-weight: 600;
+  font-size: clamp(44px, 4.7vw, 84px);
+  /* font-size: clamp(24px, 1.8vw, 34px); */
   color: rgba(255, 255, 255, 0.96);
   letter-spacing: 0;
   margin: 0;
   text-align: left;
 }
 
+.contact-subtitle span {
+  display: block;
+}
+
 /* glass contact card */
 .contact-card {
   position: absolute;
-  top: clamp(340px, 46vh, 500px);
+  /* inset: 0; */
+  top: clamp(340px, 36vh, 500px);
   left: clamp(58px, 3.6vw, 72px);
   display: flex;
   flex-direction: column;
   gap: clamp(18px, 2vh, 26px);
   width: min(42vw, 720px);
   min-width: 620px;
-  padding: clamp(28px, 3.1vh, 34px) clamp(62px, 3.8vw, 68px) clamp(12px, 1.6vh, 18px);
+  /* padding: clamp(28px, 3.1vh, 34px) clamp(62px, 3.8vw, 68px) clamp(12px, 1.6vh, 18px); */
+  padding: clamp(28px, 3.1vh, 34px) clamp(62px, 3.8vw, 68px);
   background: rgba(37, 45, 30, 0.28);
   backdrop-filter: blur(16px) saturate(1.12);
   -webkit-backdrop-filter: blur(16px) saturate(1.12);
@@ -141,7 +158,7 @@
 
 .contact-label {
   font-family: 'PP Neue Montreal', sans-serif;
-  font-weight: 100;
+  font-weight: 400;
   font-size: clamp(25px, 1.7vw, 34px);
   color: rgba(255, 255, 255, 0.92);
   text-align: left;
@@ -170,6 +187,7 @@
 }
 
 .contact-form {
+  margin-top: 2vh;
   display: grid;
   gap: 14px;
   padding-top: 6px;
@@ -310,6 +328,7 @@
   .contact-value,
   .contact-instagram {
     font-size: clamp(22px, 1.5vw, 29px);
+
   }
 
   .contact-field {
@@ -326,6 +345,7 @@
 }
 
 @media (max-width: 860px) {
+
   .contact-section,
   .contact-bg {
     background-attachment: scroll;
@@ -341,7 +361,8 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 28px;
+    /* gap: 28px; */
+    gap: 10px;
     min-height: 100svh;
     height: auto;
     padding: 78px 24px 250px;
@@ -356,26 +377,34 @@
     right: auto;
     bottom: auto;
     left: auto;
+
   }
 
   .contact-title {
     font-size: clamp(48px, 12vw, 74px);
+    display: flex;
+    justify-content: center;
+    text-align: center;
   }
 
   .contact-title-indent {
-    margin-left: clamp(76px, 19vw, 138px);
+    /* margin-left: clamp(76px, 19vw, 138px); */
+    margin-left: 0;
   }
 
   .contact-subtitle {
     font-size: clamp(19px, 4.8vw, 26px);
+    display: flex;
+    justify-content: center;
   }
 
   .contact-card {
     width: 100%;
     min-width: 0;
-    margin-top: 0;
+    margin-top: auto;
     padding: 28px 24px 18px;
     gap: 18px;
+    /* align-items: center; */
   }
 
   .contact-row {
