@@ -9,13 +9,14 @@ import romandImg from './images/romand.png';
 
 const projects = [
   {
-    title: '팀프로젝트 오늘도락',
+    title: '오늘도락 - 필요한 만큼, 맛있게 채우는 한 끼',
     eyebrow: 'Team project',
-    desc: '도시락 주문 과정을 명확하고 사랑스럽게 풀어낸 모바일 서비스',
+    desc: 'AI 챗봇과 맞춤형 식단 추천을 통해 1~2인 가구의 식생활 고민을 해결하는 스마트 도시락 플랫폼',
     flower: flower3Img,
     image: oneldorakImg,
     imageAlt: '오늘도락 프로젝트 이미지',
     link: 'https://oneuldorak-new.vercel.app/',
+    previewMode: 'mobile',
     planLink: 'https://www.figma.com/deck/UJbjbycQZIvYqNoBI90UXa/-%ED%8C%80%ED%94%8C2-4%EC%A1%B0--%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C_oneuldorak-%EC%98%A4%EB%8A%98%EB%8F%84%EB%9D%BD-?node-id=4098-19290&t=04vgDOG1x8bOxQWJ-1',
   },
   {
@@ -29,9 +30,9 @@ const projects = [
     planLink: '',
   },
   {
-    title: '팀프로젝트 롬앤',
+    title: 'rom&nd Global Renewal',
     eyebrow: 'Team project',
-    desc: '브랜드 무드와 제품 탐색 흐름이 자연스럽게 이어지는 뷰티 웹 경험',
+    desc: '글로벌 사용자의 탐색 경험을 개선하기 위한 롬앤 공식 웹사이트 리뉴얼 프로젝트',
     flower: flower2Img,
     image: romandImg,
     imageAlt: '롬앤 프로젝트 이미지',
@@ -43,6 +44,25 @@ const projects = [
 const getFigmaEmbedUrl = (url) => (
   `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`
 );
+
+const openMobileWindow = (url, title) => {
+  const width = 390;
+  const height = 844;
+  const left = Math.max(0, Math.round((window.screen.availWidth - width) / 2));
+  const top = Math.max(0, Math.round((window.screen.availHeight - height) / 2));
+  const features = [
+    `width=${width}`,
+    `height=${height}`,
+    `left=${left}`,
+    `top=${top}`,
+    'resizable=yes',
+    'scrollbars=yes',
+    'noopener',
+    'noreferrer',
+  ].join(',');
+
+  window.open(url, title, features);
+};
 
 const introCopyLines = [
   [{ text: '씨앗이 천천히 자라 꽃을 피우듯,' }],
@@ -366,7 +386,15 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
                       target={project.link ? '_blank' : undefined}
                       rel={project.link ? 'noreferrer' : undefined}
                       onClick={(event) => {
-                        if (!project.link) event.preventDefault();
+                        if (!project.link) {
+                          event.preventDefault();
+                          return;
+                        }
+
+                        if (project.previewMode === 'mobile') {
+                          event.preventDefault();
+                          openMobileWindow(project.link, `${project.title} mobile preview`);
+                        }
                       }}
                     >
                       <svg
@@ -379,7 +407,13 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
                       </svg>
                     </a>
                     {project.link && (
-                      <span className="project-link-preview project-link-preview-site" aria-hidden="true">
+                      <span
+                        className={[
+                          'project-link-preview project-link-preview-site',
+                          project.previewMode === 'mobile' ? 'project-link-preview-mobile' : '',
+                        ].filter(Boolean).join(' ')}
+                        aria-hidden="true"
+                      >
                         <iframe
                           title={`${project.title} 사이트 미리보기`}
                           src={project.link}

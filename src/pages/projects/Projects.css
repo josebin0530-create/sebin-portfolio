@@ -287,6 +287,31 @@
   object-fit: cover;
 }
 
+.project-link-preview-site:not(.project-link-preview-mobile) {
+  width: 260px;
+  height: 162px;
+}
+
+.project-link-preview-site:not(.project-link-preview-mobile) iframe {
+  width: 1280px;
+  height: 800px;
+  transform: scale(0.203125);
+  transform-origin: top left;
+}
+
+.project-link-preview-mobile {
+  width: 180px;
+  height: 390px;
+  border-radius: 18px;
+}
+
+.project-link-preview-mobile iframe {
+  width: 390px;
+  height: 844px;
+  transform: scale(0.462);
+  transform-origin: top left;
+}
+
 .project-action-item:hover .project-link-preview,
 .project-action-item:focus-within .project-link-preview {
   opacity: 1;
