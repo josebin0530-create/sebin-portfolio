@@ -41,6 +41,8 @@ const projects = [
   },
 ];
 
+const orderedProjects = [projects[0], projects[2], projects[1]];
+
 const getFigmaEmbedUrl = (url) => (
   `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`
 );
@@ -81,36 +83,37 @@ const introCopyText = introCopyLines
   .map((line) => line.map((segment) => segment.text).join(''))
   .join('\n');
 
-const introCopyCharCount = introCopyLines.reduce(
-  (lineTotal, line) => lineTotal + line.reduce(
-    (segmentTotal, segment) => segmentTotal + Array.from(segment.text).length,
+const introCopyCharCount = Math.max(...introCopyLines.map((line) => (
+  line.reduce(
+    (lineTotal, segment) => lineTotal + Array.from(segment.text).length,
     0
-  ),
-  0
-);
+  )
+)));
 
-const renderTypedSegment = (segment, visibleCount, key) => {
-  const visibleText = Array.from(segment.text).slice(0, visibleCount).join('');
+const renderFillSegment = (segment, visibleCount, key) => {
+  const SegmentTag = segment.strong ? 'strong' : 'span';
 
-  return segment.strong ? (
-    <strong key={key}>{visibleText}</strong>
-  ) : (
-    <span key={key}>{visibleText}</span>
+  return (
+    <SegmentTag key={key}>
+      {Array.from(segment.text).map((character, characterIndex) => (
+        <span
+          key={`${key}-character-${characterIndex}`}
+          className={`project-copy-char${characterIndex < visibleCount ? ' is-filled' : ''}`}
+        >
+          {character === ' ' ? '\u00a0' : character}
+        </span>
+      ))}
+    </SegmentTag>
   );
 };
 
 const getVisibleSegmentCharCount = (typedCount, lineIndex, segmentIndex) => {
-  const charsBeforeSegment = introCopyLines.reduce((total, line, currentLineIndex) => {
-    if (currentLineIndex > lineIndex) return total;
-
-    return total + line.reduce((segmentTotal, segment, currentSegmentIndex) => {
-      if (currentLineIndex === lineIndex && currentSegmentIndex >= segmentIndex) {
-        return segmentTotal;
-      }
-
-      return segmentTotal + Array.from(segment.text).length;
-    }, 0);
-  }, 0);
+  const charsBeforeSegment = introCopyLines[lineIndex]
+    .slice(0, segmentIndex)
+    .reduce(
+      (segmentTotal, segment) => segmentTotal + Array.from(segment.text).length,
+      0
+    );
   const segmentLength = Array.from(introCopyLines[lineIndex][segmentIndex].text).length;
 
   return Math.max(0, Math.min(segmentLength, typedCount - charsBeforeSegment));
@@ -124,9 +127,11 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
   const visibleSectionsRef = useRef(new Set());
   const [isVisible, setIsVisible] = useState(false);
   const [isFlowerVisible, setIsFlowerVisible] = useState(false);
+  const [isIntroReady, setIsIntroReady] = useState(false);
   const [typedIntroCount, setTypedIntroCount] = useState(0);
   const shouldShowSection = active && isVisible;
   const shouldShowFlower = active && isFlowerVisible;
+  const shouldAnimateIntro = active && isIntroReady;
 
   useEffect(() => {
     const visibleSections = visibleSectionsRef.current;
@@ -168,6 +173,40 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
       onActiveChange?.(false);
     };
   }, [active, scrollRootRef, onActiveChange]);
+
+  useEffect(() => {
+    if (!active) {
+      const resetTimer = window.setTimeout(() => {
+        setIsIntroReady(false);
+        setTypedIntroCount(0);
+      }, 0);
+
+      return () => window.clearTimeout(resetTimer);
+    }
+
+    const copySection = copySectionRef.current;
+    if (!copySection) return undefined;
+
+    const scrollRoot = scrollRootRef?.current ?? null;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio >= 0.96) {
+          setIsIntroReady(true);
+          return;
+        }
+
+        if (!entry.isIntersecting || entry.intersectionRatio <= 0.1) {
+          setIsIntroReady(false);
+          setTypedIntroCount(0);
+        }
+      },
+      { root: scrollRoot, threshold: [0, 0.1, 0.96, 1] }
+    );
+
+    observer.observe(copySection);
+
+    return () => observer.disconnect();
+  }, [active, scrollRootRef]);
 
   useEffect(() => {
     if (!active) {
@@ -236,7 +275,7 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
   }, [active, scrollRootRef]);
 
   useEffect(() => {
-    if (!shouldShowSection) {
+    if (!shouldAnimateIntro) {
       return undefined;
     }
 
@@ -263,14 +302,14 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
 
           return currentCount + 1;
         });
-      }, 40);
+      }, 55);
     }, 200);
 
     return () => {
       window.clearTimeout(startTimer);
       if (typeTimer) window.clearInterval(typeTimer);
     };
-  }, [shouldShowSection]);
+  }, [shouldAnimateIntro]);
 
   return (
     <>
@@ -311,7 +350,7 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
             <p aria-label={introCopyText}>
               {introCopyLines.map((line, lineIndex) => (
                 <span key={`line-${lineIndex}`} className="project-copy-line" aria-hidden="true">
-                  {line.map((segment, segmentIndex) => renderTypedSegment(
+                  {line.map((segment, segmentIndex) => renderFillSegment(
                     segment,
                     getVisibleSegmentCharCount(typedIntroCount, lineIndex, segmentIndex),
                     `segment-${lineIndex}-${segmentIndex}`
@@ -331,7 +370,7 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
       >
         <div className="project-list-shell">
           <div ref={projectGridRef} className="project-grid">
-            {projects.map((project) => (
+            {orderedProjects.map((project) => (
               <article key={project.title} className="project-card">
                 <img src={project.flower} className="project-card-flower" alt="" aria-hidden="true" draggable="false" />
                 <span className="project-card-eyebrow">{project.eyebrow}</span>
