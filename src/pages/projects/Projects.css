@@ -126,8 +126,9 @@
 .project-list-shell {
   position: relative;
   z-index: 80;
-  width: min(92vw, 1180px);
-  margin-left: clamp(220px, 24vw, 440px);
+  --project-list-offset: clamp(180px, 21vw, 360px);
+  width: min(calc(100vw - var(--project-list-offset) - clamp(36px, 5vw, 88px)), 1180px);
+  margin-left: var(--project-list-offset);
   margin-right: auto;
 }
 
@@ -359,11 +360,24 @@
 
   .project-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    gap: 16px;
   }
 
   .project-card {
-    min-height: 390px;
+    min-height: 370px;
+    padding: 18px 18px 82px;
+  }
+
+  .project-thumb {
+    margin-top: 30px;
+  }
+
+  .project-card h2 {
+    font-size: clamp(20px, 2.2vw, 26px);
+  }
+
+  .project-card p {
+    font-size: 14px;
   }
 }
 
