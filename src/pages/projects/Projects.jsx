@@ -37,7 +37,7 @@ const projects = [
     image: romandImg,
     imageAlt: '롬앤 프로젝트 이미지',
     link: 'https://josebin0530-create.github.io/romand/',
-    planLink: 'https://www.figma.com/deck/oFyXPpvmCjEh4UMY23cSsU/-%ED%8C%80%ED%94%8C1-2%EC%A1%B0--%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C_rom-nd-%EC%8B%9D%EC%8A%A4%EB%A7%A8-?node-id=2547-1027&t=N8O18RDa5XDNvYJt-1',
+    planLink: 'https://www.figma.com/deck/oFyXPpvmCjEh4UMY23cSsU',
   },
 ];
 
