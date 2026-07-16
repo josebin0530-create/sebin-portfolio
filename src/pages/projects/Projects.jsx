@@ -26,7 +26,7 @@ const projects = [
     flower: flower1Img,
     image: checkcheckImg,
     imageAlt: '책책 프로젝트 이미지',
-    link: '',
+    link: 'https://www.figma.com/proto/3AMKwqdkfAfSWP9O6oFZ8X/%EC%A1%B0%EC%84%B8%EB%B9%88-%EA%B0%9C%EC%9D%B8%EC%95%B1?node-id=550-1890&p=f&viewport=-9754%2C1382%2C0.25&t=yMJd0sidNuelUtJP-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=550%3A1890&show-proto-sidebar=1&page-id=0%3A1',
     planLink: '',
   },
   {
@@ -384,30 +384,27 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
                 <h2>{project.title}</h2>
                 <p>{project.desc}</p>
                 <div className="project-card-actions">
-                  <span className="project-action-item">
-                    <a
-                      className={`project-link-button project-doc-button${project.planLink ? '' : ' is-disabled'}`}
-                      href={project.planLink || '#'}
-                      aria-label={`${project.title} 기획서 보기`}
-                      target={project.planLink ? '_blank' : undefined}
-                      rel={project.planLink ? 'noreferrer' : undefined}
-                      onClick={(event) => {
-                        if (!project.planLink) event.preventDefault();
-                      }}
-                    >
-                      <svg
-                        aria-hidden="true"
-                        viewBox="0 0 24 24"
-                        focusable="false"
+                  {project.planLink && (
+                    <span className="project-action-item">
+                      <a
+                        className="project-link-button project-doc-button"
+                        href={project.planLink}
+                        aria-label={`${project.title} 기획서 보기`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        <path d="M6 3.5H14.5L18 7V20.5H6V3.5Z" />
-                        <path d="M14.5 3.5V7H18" />
-                        <path d="M9 11H15" />
-                        <path d="M9 14.5H15" />
-                        <path d="M9 18H13.5" />
-                      </svg>
-                    </a>
-                    {project.planLink && (
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          focusable="false"
+                        >
+                          <path d="M6 3.5H14.5L18 7V20.5H6V3.5Z" />
+                          <path d="M14.5 3.5V7H18" />
+                          <path d="M9 11H15" />
+                          <path d="M9 14.5H15" />
+                          <path d="M9 18H13.5" />
+                        </svg>
+                      </a>
                       <span className="project-link-preview project-link-preview-deck" aria-hidden="true">
                         <iframe
                           title={`${project.title} 기획서 미리보기`}
@@ -415,8 +412,8 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
                           loading="lazy"
                         />
                       </span>
-                    )}
-                  </span>
+                    </span>
+                  )}
                   <span className="project-action-item">
                     <a
                       className={`project-link-button${project.link ? '' : ' is-disabled'}`}
