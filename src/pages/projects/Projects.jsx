@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './Projects.css';
-import flower1Img from '../aboutme/images/flower_1.png';
 import flower2Img from '../aboutme/images/flower_2.png';
 import flower3Img from '../aboutme/images/flower_3.png';
-import checkcheckImg from './images/checkcheck.png';
 import oneldorakImg from './images/oneldorak.png';
 import romandImg from './images/romand.png';
 
@@ -20,16 +18,6 @@ const projects = [
     planLink: 'https://www.figma.com/deck/UJbjbycQZIvYqNoBI90UXa/-%ED%8C%80%ED%94%8C2-4%EC%A1%B0--%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C_oneuldorak-%EC%98%A4%EB%8A%98%EB%8F%84%EB%9D%BD-?node-id=4098-19290&t=04vgDOG1x8bOxQWJ-1',
   },
   {
-    title: '개인앱 - 책책',
-    eyebrow: 'Personal app',
-    desc: '책을 고르고 기록하는 시간을 더 가볍고 즐겁게 만든 독서 경험 디자인',
-    flower: flower1Img,
-    image: checkcheckImg,
-    imageAlt: '책책 프로젝트 이미지',
-    link: 'https://www.figma.com/proto/3AMKwqdkfAfSWP9O6oFZ8X/%EC%A1%B0%EC%84%B8%EB%B9%88-%EA%B0%9C%EC%9D%B8%EC%95%B1?node-id=550-1890&p=f&viewport=-9754%2C1382%2C0.25&t=yMJd0sidNuelUtJP-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=550%3A1890&show-proto-sidebar=1&page-id=0%3A1',
-    planLink: '',
-  },
-  {
     title: 'rom&nd Global Renewal',
     eyebrow: 'Team project',
     desc: '글로벌 사용자의 탐색 경험을 개선하기 위한 롬앤 공식 웹사이트 리뉴얼 프로젝트',
@@ -41,7 +29,7 @@ const projects = [
   },
 ];
 
-const orderedProjects = [projects[0], projects[2], projects[1]];
+const orderedProjects = [projects[0], projects[1]];
 
 const getFigmaEmbedUrl = (url) => (
   `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`
