@@ -134,9 +134,11 @@
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(180px, 1fr));
-  gap: clamp(18px, 2vw, 34px);
-  width: 100%;
+  grid-template-columns: repeat(2, minmax(300px, 460px));
+  justify-content: start;
+  gap: clamp(42px, 4.2vw, 78px);
+  width: min(100%, 1000px);
+  margin-left: clamp(148px, 14vw, 240px);
 }
 
 .project-card {
@@ -233,7 +235,7 @@
 .project-card-actions {
   position: absolute;
   right: clamp(18px, 1.8vw, 28px);
-  bottom: clamp(18px, 1.8vw, 28px);
+  bottom: clamp(10px, 1.2vw, 18px);
   z-index: 4;
   display: flex;
   align-items: center;
@@ -359,8 +361,10 @@
   }
 
   .project-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(100%, 900px);
+    margin-left: clamp(84px, 9vw, 132px);
+    gap: 40px;
   }
 
   .project-card {
@@ -447,6 +451,7 @@
   .project-grid {
     grid-template-columns: 1fr;
     width: 100%;
+    margin-left: 0;
     gap: 24px;
   }
 
@@ -506,7 +511,7 @@
 
   .project-card-actions {
     right: 18px;
-    bottom: 18px;
+    bottom: 12px;
   }
 }
 
