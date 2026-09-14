@@ -115,9 +115,8 @@ export default function ContactMe({ active = true, scrollRootRef, onActiveChange
       </div>
 
       <div className="contact-flower-wrap" aria-hidden="true">
-        <video autoPlay muted loop playsInline preload="auto">
+        <video autoPlay muted loop playsInline preload="metadata">
           <source src="/main_flower.webm" type="video/webm" />
-          <source src="/main_flower.mov" type="video/quicktime" />
         </video>
       </div>
     </section>
