@@ -150,10 +150,9 @@ export default function Home({
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
         >
           <source src="/main_flower.webm" type="video/webm" />
-          <source src="/main_flower.mov"  type="video/quicktime" />
         </video>
       </div>
 

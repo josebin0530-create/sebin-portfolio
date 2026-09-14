@@ -35,9 +35,9 @@ const getFigmaEmbedUrl = (url) => (
   `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`
 );
 
-const openMobileWindow = (url, title) => {
-  const width = 390;
-  const height = 844;
+const openIphonePreviewWindow = (url, title) => {
+  const width = 393;
+  const height = 852;
   const left = Math.max(0, Math.round((window.screen.availWidth - width) / 2));
   const top = Math.max(0, Math.round((window.screen.availHeight - height) / 2));
   const features = [
@@ -51,7 +51,11 @@ const openMobileWindow = (url, title) => {
     'noreferrer',
   ].join(',');
 
-  window.open(url, title, features);
+  const previewWindow = window.open(url, title, features);
+
+  if (!previewWindow) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
 };
 
 const introCopyLines = [
@@ -317,10 +321,9 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
         >
           <source src="/main_flower.webm" type="video/webm" />
-          <source src="/main_flower.mov" type="video/quicktime" />
         </video>
       </div>
 
@@ -417,7 +420,7 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
 
                         if (project.previewMode === 'mobile') {
                           event.preventDefault();
-                          openMobileWindow(project.link, `${project.title} mobile preview`);
+                          openIphonePreviewWindow(project.link, `${project.title} iPhone preview`);
                         }
                       }}
                     >
@@ -438,10 +441,11 @@ export default function Projects({ active = true, scrollRootRef, onActiveChange 
                         ].filter(Boolean).join(' ')}
                         aria-hidden="true"
                       >
-                        <iframe
-                          title={`${project.title} 사이트 미리보기`}
-                          src={project.link}
+                        <img
+                          src={project.image}
+                          alt=""
                           loading="lazy"
+                          draggable="false"
                         />
                       </span>
                     )}
